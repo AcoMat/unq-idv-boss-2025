@@ -1,11 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://t14o1gpv8no"]
+[gd_scene load_steps=4 format=3 uid="uid://t14o1gpv8no"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/1/level1.tscn" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://sn8ad2y6isgb" path="res://assets/floor.png" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Level1" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(10, 7)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Level1"]
+position = Vector2(579.5, 531)
+scale = Vector2(23.5303, 3.27273)
+texture = ExtResource("2_1bvp3")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Level1"]
+position = Vector2(-101.75, 274.5)
+scale = Vector2(2.93182, 4.40909)
+texture = ExtResource("2_1bvp3")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Level1"]
+position = Vector2(1254, 271)
+scale = Vector2(2.93182, 4.40909)
+texture = ExtResource("2_1bvp3")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Level1"]
+position = Vector2(602, 330)
+scale = Vector2(3.57576, 2.75758)
+texture = ExtResource("2_1bvp3")
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(261, 143)
