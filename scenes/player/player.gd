@@ -12,7 +12,7 @@ var jump_charge := 0.0
 var is_control_enabled = true
 
 #Collision Vars
-@export_range(0.0,1.0) var velocity_percentage_after_wall_hit: float = 0.5
+@export_range(0.0,1.0) var vel_loss_percentage: float = 0.5
 var now_is_falling := false
 
 func _physics_process(delta: float) -> void:
@@ -60,6 +60,8 @@ func _physics_process(delta: float) -> void:
 	# Just landed on floor
 	if was_on_air and is_on_floor():
 		if now_is_falling:
+			# Pj just crashed on the floor
+			# TODO: Improve this measuring the fall velocity, small falls shouldnt make the pj smash into the floor
 			velocity = Vector2.ZERO
 			print("hit the ground")
 			$FallCooldown.start()
@@ -72,11 +74,12 @@ func _physics_process(delta: float) -> void:
 	if !was_on_air and !is_on_floor() and is_control_enabled:
 		now_is_falling = true
 		is_control_enabled = false
+		velocity.x = intertia.x * vel_loss_percentage
 
 
 func apply_knockback(intertia: Vector2):
 	now_is_falling = true
-	velocity.x = intertia.x * -1 * velocity_percentage_after_wall_hit
+	velocity.x = intertia.x * -1 * vel_loss_percentage
 	$KnockDownCooldown.start()
 
 func _on_fall_cooldown_timeout() -> void:
