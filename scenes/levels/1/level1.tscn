@@ -1,93 +1,90 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1daw6cyym3mk"]
+[gd_scene load_steps=2 format=3 uid="uid://d1daw6cyym3mk"]
 
 [ext_resource type="Texture2D" uid="uid://sn8ad2y6isgb" path="res://assets/floor.png" id="1_5a5lf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5a5lf"]
-size = Vector2(67.1654, 65.4712)
-
 [node name="Level1" type="Node2D"]
 
-[node name="Area2D" type="StaticBody2D" parent="."]
+[node name="Platforms" type="Node2D" parent="."]
 
-[node name="Sprite2D7" type="Sprite2D" parent="Area2D"]
-position = Vector2(808, 96)
+[node name="Area2D" type="StaticBody2D" parent="Platforms"]
+
+[node name="Sprite2D7" type="Sprite2D" parent="Platforms/Area2D"]
+position = Vector2(893, 132)
 scale = Vector2(3.40152, 0.742424)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-position = Vector2(808, 96)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D"]
+position = Vector2(893, 132)
 scale = Vector2(3.40152, 0.742424)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
 
-[node name="Area2D2" type="StaticBody2D" parent="."]
-position = Vector2(576, 288)
+[node name="Area2D2" type="StaticBody2D" parent="Platforms"]
 scale = Vector2(4.0497, 0.977529)
 
-[node name="Sprite2D6" type="Sprite2D" parent="Area2D2"]
-scale = Vector2(1, 1)
+[node name="Sprite2D6" type="Sprite2D" parent="Platforms/Area2D2"]
+position = Vector2(156.802, 279.276)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(-7.62939e-06, 0)
-scale = Vector2(0.999999, 1)
-shape = SubResource("RectangleShape2D_5a5lf")
-
-[node name="Area2D6" type="StaticBody2D" parent="."]
-
-[node name="Sprite2D2" type="Sprite2D" parent="Area2D6"]
-position = Vector2(158.75, 550)
-scale = Vector2(4.88636, 3.09091)
-texture = ExtResource("1_5a5lf")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D6"]
-position = Vector2(158.75, 550)
-scale = Vector2(4.88636, 3.09091)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D2"]
+position = Vector2(156.802, 279.276)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
 
-[node name="Area2D4" type="StaticBody2D" parent="."]
+[node name="Area2D6" type="StaticBody2D" parent="Platforms"]
 
-[node name="Sprite2D3" type="Sprite2D" parent="Area2D4"]
-position = Vector2(-96, 391.25)
-scale = Vector2(2.93182, 7.7803)
+[node name="Sprite2D2" type="Sprite2D" parent="Platforms/Area2D6"]
+position = Vector2(213, 583)
+scale = Vector2(4.88636, 4.15152)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D4"]
-position = Vector2(-96, 391.25)
-scale = Vector2(2.93182, 7.7803)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D6"]
+position = Vector2(213, 583)
+scale = Vector2(4.88636, 4.15152)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
 
-[node name="Area2D5" type="StaticBody2D" parent="."]
+[node name="Area2D4" type="StaticBody2D" parent="Platforms"]
 
-[node name="Sprite2D4" type="Sprite2D" parent="Area2D5"]
-position = Vector2(1254, 386.75)
-scale = Vector2(2.93182, 7.91667)
+[node name="Sprite2D3" type="Sprite2D" parent="Platforms/Area2D4"]
+position = Vector2(-0.199902, 360.6)
+scale = Vector2(2.93182, 10.9205)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D5"]
-position = Vector2(1254, 386.75)
-scale = Vector2(2.93182, 7.91667)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D4"]
+position = Vector2(-0.199902, 360.6)
+scale = Vector2(2.93182, 10.9205)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
 
-[node name="Area2D3" type="StaticBody2D" parent="."]
+[node name="Area2D5" type="StaticBody2D" parent="Platforms"]
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D3"]
-position = Vector2(994, 548.5)
-scale = Vector2(4.93939, 3.04545)
+[node name="Sprite2D4" type="Sprite2D" parent="Platforms/Area2D5"]
+position = Vector2(1279.8, 361.3)
+scale = Vector2(2.93182, 10.9337)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D3"]
-position = Vector2(994, 548.5)
-scale = Vector2(4.93939, 3.04545)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D5"]
+position = Vector2(1279.8, 361.3)
+scale = Vector2(2.93182, 10.9337)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
 
-[node name="Area2D7" type="StaticBody2D" parent="."]
+[node name="Area2D3" type="StaticBody2D" parent="Platforms"]
 
-[node name="Sprite2D5" type="Sprite2D" parent="Area2D7"]
-position = Vector2(571.5, 600)
-scale = Vector2(7.86364, 1.5)
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Area2D3"]
+position = Vector2(1055, 584)
+scale = Vector2(4.93939, 4.12121)
 texture = ExtResource("1_5a5lf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D7"]
-position = Vector2(571.5, 600)
-scale = Vector2(7.86364, 1.5)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D3"]
+position = Vector2(1055, 584)
+scale = Vector2(4.93939, 4.12121)
+polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)
+
+[node name="Area2D7" type="StaticBody2D" parent="Platforms"]
+
+[node name="Sprite2D5" type="Sprite2D" parent="Platforms/Area2D7"]
+position = Vector2(633, 634)
+scale = Vector2(7.86364, 2.59848)
+texture = ExtResource("1_5a5lf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Area2D7"]
+position = Vector2(633, 634)
+scale = Vector2(7.86364, 2.59848)
 polygon = PackedVector2Array(-33, -33, -33, 33, 33, 33, 33, -33)

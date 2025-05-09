@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://t14o1gpv8no"]
+[gd_scene load_steps=5 format=3 uid="uid://t14o1gpv8no"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/1/level1.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://d1dy8k65f2aqs" path="res://scenes/levels/2/level2.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b61k1qcrx81ya" path="res://scenes/cameras/cameras.tscn" id="4_lquwl"]
 
 [node name="Main" type="Node2D"]
 
-[node name="Level1" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(10, 7)
-
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(261, 143)
+
+[node name="Sections" type="Node2D" parent="."]
+
+[node name="Level1" parent="Sections" instance=ExtResource("1_0xm2m")]
+
+[node name="level2" parent="Sections" instance=ExtResource("3_1bvp3")]
+position = Vector2(0, -720)
+
+[node name="Cameras" parent="." instance=ExtResource("4_lquwl")]

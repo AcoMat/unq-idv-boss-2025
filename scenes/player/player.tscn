@@ -8,6 +8,7 @@ size = Vector2(24, 26)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dovo2")
+vel_loss_percentage = 0.314
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dovo2")

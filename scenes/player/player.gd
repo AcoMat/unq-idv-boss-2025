@@ -50,12 +50,12 @@ func _physics_process(delta: float) -> void:
 	# Collision check and knockback trigger
 	var was_on_wall: bool = is_on_wall()
 	var was_on_air: bool = !is_on_floor()
-	var intertia = velocity
+	var inertia = velocity
 	# APPLY MOVEMENT
 	move_and_slide()
 	
-	if is_on_wall() and not was_on_wall and !is_control_enabled :
-		apply_knockback(intertia)
+	if is_on_wall() or is_on_ceiling() and not was_on_wall and !is_control_enabled :
+		apply_knockback(inertia, !is_on_ceiling())
 	
 	# Just landed on floor
 	if was_on_air and is_on_floor():
@@ -74,12 +74,15 @@ func _physics_process(delta: float) -> void:
 	if !was_on_air and !is_on_floor() and is_control_enabled:
 		now_is_falling = true
 		is_control_enabled = false
-		velocity.x = intertia.x * vel_loss_percentage
+		velocity.x = inertia.x * vel_loss_percentage
 
 
-func apply_knockback(intertia: Vector2):
+func apply_knockback(inertia: Vector2, change_direction: bool):
 	now_is_falling = true
-	velocity.x = intertia.x * -1 * vel_loss_percentage
+	if(change_direction):
+		velocity.x = inertia.x * -1 * vel_loss_percentage
+	else:
+		velocity.x = inertia.x * vel_loss_percentage
 	$KnockDownCooldown.start()
 
 func _on_fall_cooldown_timeout() -> void:
