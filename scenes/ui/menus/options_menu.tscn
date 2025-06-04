@@ -1,0 +1,118 @@
+[gd_scene load_steps=2 format=3 uid="uid://pt34ecr4kte4"]
+
+[ext_resource type="Script" uid="uid://ddntcq4qx3v6h" path="res://scripts/ui/OptionsMenu.gd" id="1_8sva7"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8sva7")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.417425, 0.419964, 0.6189, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.5
+offset_top = -121.0
+offset_right = 220.5
+offset_bottom = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "OPCIONES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AudioSection" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+alignment = 1
+
+[node name="MasterLabel" type="Label" parent="CenterContainer/VBoxContainer/AudioSection/MasterVolumeContainer"]
+layout_mode = 2
+text = "Volumen General"
+
+[node name="MasterSlider" type="HSlider" parent="CenterContainer/VBoxContainer/AudioSection/MasterVolumeContainer"]
+custom_minimum_size = Vector2(300, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="CenterContainer/VBoxContainer/AudioSection/SFXVolumeContainer"]
+layout_mode = 2
+text = "Efectos de Sonido"
+
+[node name="SFXSlider" type="HSlider" parent="CenterContainer/VBoxContainer/AudioSection/SFXVolumeContainer"]
+custom_minimum_size = Vector2(300, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="CenterContainer/VBoxContainer/AudioSection/MusicVolumeContainer"]
+layout_mode = 2
+text = "Música"
+
+[node name="MusicSlider" type="HSlider" parent="CenterContainer/VBoxContainer/AudioSection/MusicVolumeContainer"]
+custom_minimum_size = Vector2(300, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="Spacer2" type="Control" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DisplaySection" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FullscreenCheck" type="CheckBox" parent="CenterContainer/VBoxContainer/DisplaySection"]
+layout_mode = 2
+text = "Pantalla Completa"
+
+[node name="VSyncCheck" type="CheckBox" parent="CenterContainer/VBoxContainer/DisplaySection"]
+layout_mode = 2
+text = "Sincronización Vertical"
+
+[node name="Spacer3" type="Control" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Volver"
+
+[node name="ResetButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Restablecer"
