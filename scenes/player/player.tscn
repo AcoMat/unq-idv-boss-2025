@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(24, 26)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 10
 script = ExtResource("1_dovo2")
 vel_loss_percentage = 0.314
 
