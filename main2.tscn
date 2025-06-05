@@ -1,0 +1,39 @@
+[gd_scene load_steps=10 format=3 uid="uid://d215u8t58q14s"]
+
+[ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_8ce7h"]
+[ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="3_8ce7h"]
+[ext_resource type="PackedScene" uid="uid://8ynghkqdkncd" path="res://scenes/player/sword/sword.tscn" id="4_3yxjw"]
+[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/enemies/musky/musky.tscn" id="5_elgsa"]
+[ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/enemies/eye/eye.tscn" id="6_sck4r"]
+[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/enemies/mushroom/mushroom.tscn" id="7_0rof8"]
+[ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="8_0rof8"]
+[ext_resource type="PackedScene" uid="uid://cj2j5fqw4s1bm" path="res://scenes/enemies/mushroom/mushroom_projectile.tscn" id="8_w8cd7"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_elgsa"]
+vertices = PackedVector2Array(501.43, 424.023, 158.313, 424.969, 163.703, 248.797, 491.531, 242.188)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(154, 239, 148, 435, 512, 434, 501, 232)])
+
+[node name="Main2" type="Node2D"]
+
+[node name="PickableSword" parent="." instance=ExtResource("3_8ce7h")]
+position = Vector2(772, 423)
+weapon = ExtResource("4_3yxjw")
+
+[node name="Musky" parent="." instance=ExtResource("5_elgsa")]
+position = Vector2(814, 436)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_elgsa")
+
+[node name="Eye" parent="." instance=ExtResource("6_sck4r")]
+position = Vector2(295, 311)
+
+[node name="Mushroom" parent="." instance=ExtResource("7_0rof8")]
+position = Vector2(1060, 358)
+projectile_scene = ExtResource("8_w8cd7")
+
+[node name="Player" parent="." instance=ExtResource("2_8ce7h")]
+position = Vector2(411, 487)
+
+[node name="MainLevel" parent="." instance=ExtResource("8_0rof8")]

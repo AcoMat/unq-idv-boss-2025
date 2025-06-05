@@ -6,8 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(24, 26)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D"] groups=["player"]]
 collision_layer = 10
+collision_mask = 3
+
 script = ExtResource("1_dovo2")
 vel_loss_percentage = 0.314
 
@@ -18,8 +20,6 @@ shape = SubResource("RectangleShape2D_dovo2")
 texture = ExtResource("1_8afob")
 region_enabled = true
 region_rect = Rect2(234, 22, 24, 26)
-
-[node name="KnockDownCooldown" type="Timer" parent="."]
 
 [node name="FallCooldown" type="Timer" parent="."]
 wait_time = 0.5

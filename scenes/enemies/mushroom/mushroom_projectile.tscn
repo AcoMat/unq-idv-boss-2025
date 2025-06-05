@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj2j5fqw4s1bm"]
+
+[ext_resource type="Texture2D" uid="uid://bkx1ebrlf3025" path="res://assets/items/arrow/Just_arrow.png" id="1_bixxd"]
+[ext_resource type="Script" uid="uid://d2wx2rjk08i1x" path="res://scenes/enemies/mushroom/mushroom_projectile.gd" id="1_sngl7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sngl7"]
+radius = 5.0
+
+[node name="MushroomProjectile" type="Node2D"]
+script = ExtResource("1_sngl7")
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_sngl7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_bixxd")
+
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
