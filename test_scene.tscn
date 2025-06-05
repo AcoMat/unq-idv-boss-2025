@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b63rrj220g4ok"]
+[gd_scene load_steps=7 format=3 uid="uid://b63rrj220g4ok"]
 
 [ext_resource type="Script" uid="uid://b6dhlx01j1gcy" path="res://test_scene.gd" id="1_uhqqe"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_sasra"]
 [ext_resource type="PackedScene" uid="uid://bdkhwamj3bljt" path="res://scenes/objects/breakable_platform.tscn" id="3_coq8p"]
 [ext_resource type="Script" uid="uid://b4nwqvw5sy3m4" path="res://scripts/ui/StaminaUI.gd" id="4_coq8p"]
+[ext_resource type="PackedScene" uid="uid://bd3ol1tsx22ye" path="res://scenes/objects/fan.tscn" id="5_2nij2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2nij2"]
 size = Vector2(302, 38)
 
 [node name="TestScene" type="Node2D"]
+light_mask = 3
 position = Vector2(289, 178)
 script = ExtResource("1_uhqqe")
 
@@ -69,4 +71,7 @@ offset_bottom = 52.0
 position = Vector2(38, 22)
 
 [node name="BreakablePlatform2" parent="." instance=ExtResource("3_coq8p")]
-position = Vector2(116, 21)
+position = Vector2(220, 17)
+
+[node name="fan" parent="." instance=ExtResource("5_2nij2")]
+position = Vector2(354, -43)

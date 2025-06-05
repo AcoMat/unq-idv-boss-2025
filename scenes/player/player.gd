@@ -25,9 +25,18 @@ var is_control_enabled = true
 @export var stamina_recovery_delay: float = 0.5        # 🆕 Delay antes de empezar a recuperar
 @export var min_stamina_to_jump: float = 10.0          # Mínimo para poder saltar
 
+# ===================================
+# SISTEMA DE VIENTO SEPARADO
+# ===================================
+var wind_velocity: Vector2 = Vector2.ZERO
+var wind_decay_rate: float = 0.95  # Qué tan rápido se desvanece el viento
+var max_wind_velocity: float = 300.0
+
 var current_stamina: float = 100.0
 var is_stamina_depleted: bool = false
 var time_since_last_stamina_use: float = 0.0           # 🆕 Tiempo desde último uso
+var is_in_wind_zone: bool = false
+var current_wind_force: float = 0.0
 
 # Señales para comunicar con la UI
 signal stamina_changed(current: float, maximum: float)
@@ -75,8 +84,11 @@ func _physics_process(delta: float) -> void:
 	# Sistema de salto con stamina
 	handle_jumping_with_stamina(delta)
 	
-	# Movimiento horizontal
+	# Movimiento horizontal NORMAL (sin cambios)
 	handle_horizontal_movement()
+	
+	# NUEVO: Aplicar viento como fuerza adicional
+	apply_wind_forces(delta)
 	
 	# Lógica de colisiones original
 	handle_collisions()
@@ -337,3 +349,43 @@ func _input(event):
 		print("Depleted: ", is_stamina_depleted)
 		print("Can jump: ", current_stamina >= min_stamina_to_jump)
 		print("====================")
+
+# ===================================
+# INTERACCIÓN CON VENTILADOR
+# ===================================
+func apply_wind_forces(delta: float):
+	"""Aplicar fuerzas de viento como velocidad adicional"""
+	
+	# El viento se desvanece gradualmente cuando no hay ventiladores
+	wind_velocity *= wind_decay_rate
+	
+	# Si el viento es muy pequeño, eliminarlo
+	if wind_velocity.length() < 1.0:
+		wind_velocity = Vector2.ZERO
+	
+	# Sumar viento a la velocidad final CON MULTIPLICADOR
+	velocity += wind_velocity * delta * 10.0  # ⭐ MULTIPLICADOR x10
+	
+	# Debug del viento
+	if wind_velocity.length() > 0:
+		print("🌪️ Viento activo: ", wind_velocity, " -> Vel total: ", velocity)
+
+# MODIFICAR las funciones de interacción con ventilador:
+func enter_wind_zone(ventilador):
+	"""Cuando entra a zona de viento"""
+	print("💨 Entrando a zona de viento")
+
+func exit_wind_zone(ventilador):
+	"""Cuando sale de zona de viento"""
+	print("💨 Saliendo de zona de viento")
+
+# NUEVA función para que el ventilador aplique viento:
+func add_wind_force(force: Vector2):
+	"""Agregar fuerza de viento (llamado por el ventilador)"""
+	wind_velocity += force
+	
+	# Limitar viento máximo
+	if wind_velocity.length() > max_wind_velocity:
+		wind_velocity = wind_velocity.normalized() * max_wind_velocity
+	
+	print("💨 Viento agregado: ", force, " -> Total: ", wind_velocity)
