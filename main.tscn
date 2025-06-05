@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://t14o1gpv8no"]
+[gd_scene load_steps=8 format=3 uid="uid://t14o1gpv8no"]
 
-[ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/1/level1.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://cgv2aial8feme" path="res://scripts/main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://77o5u5boifpr" path="res://scenes/ui/menus/main_menu.tscn" id="2_kek77"]
-[ext_resource type="PackedScene" uid="uid://d1dy8k65f2aqs" path="res://scenes/levels/2/level2.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c48fra54wkoxg" path="res://scenes/ui/menus/pause_menu.tscn" id="3_4c57u"]
-[ext_resource type="PackedScene" uid="uid://cy6gtw8u40ihm" path="res://scenes/levels/3/level3.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b61k1qcrx81ya" path="res://scenes/cameras/cameras.tscn" id="4_lquwl"]
 
 [sub_resource type="GDScript" id="GDScript_272bh"]
@@ -18,6 +16,7 @@ script = ExtResource("1_5vw27")
 script = SubResource("GDScript_272bh")
 
 [node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="MainMenu" parent="UI" instance=ExtResource("2_kek77")]
 
@@ -29,12 +28,6 @@ position = Vector2(261, 143)
 [node name="Sections" type="Node2D" parent="."]
 
 [node name="Level1" parent="Sections" instance=ExtResource("1_0xm2m")]
-
-[node name="level2" parent="Sections" instance=ExtResource("3_1bvp3")]
-position = Vector2(0, -720)
-
-[node name="Level3" parent="Sections" instance=ExtResource("4_7mycd")]
-position = Vector2(0, -1440)
 
 [node name="Cameras" parent="." instance=ExtResource("4_lquwl")]
 visible = false
