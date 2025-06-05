@@ -13,5 +13,6 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("Espada Agarrada")
 	body.equip_weapon(weapon)
 	queue_free()

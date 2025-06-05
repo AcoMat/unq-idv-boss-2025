@@ -5,7 +5,6 @@ var lifes = 3
 @export var speed: float = 200.0
 # Pj weapon
 var equipped_weapon: Node2D = null
-
 # ===================================
 # VARIABLES DE SALTO ORIGINALES
 # ===================================
@@ -76,29 +75,27 @@ func is_player() -> bool:
 func _physics_process(delta: float) -> void:
 	if (!is_on_floor()):
 		velocity.y += gravity * delta
-	
 	# Resetear doble salto al tocar suelo
 	if is_on_floor() and not can_double_jump:
 		can_double_jump = true
 		print("✅ Doble salto disponible")
-	
 	# Manejar sistema de stamina
 	handle_stamina_system(delta)
-	
 	# Sistema de salto con stamina
 	handle_jumping_with_stamina(delta)
-	
 	# Movimiento horizontal NORMAL (sin cambios)
 	handle_horizontal_movement()
-	
+	handle_attack()
 	# NUEVO: Aplicar viento como fuerza adicional
 	apply_wind_forces(delta)
-	
-	# Lógica de colisiones original
-	handle_collisions()
-	
+	# Variables de colisiones original
+	var was_on_wall: bool = is_on_wall()
+	var was_on_air: bool = !is_on_floor()
+	var inertia: Vector2 = velocity
 	# Aplicar movimiento
 	move_and_slide()
+	# Lógica de colisiones original
+	handle_collisions(was_on_wall,was_on_air,inertia)
 
 func handle_stamina_system(delta: float):
 	"""Maneja la recuperación y estado de la stamina - CORREGIDO"""
@@ -274,11 +271,8 @@ func handle_horizontal_movement():
 			input_vector.x = 1
 		velocity.x = input_vector.x * speed
 
-func handle_collisions():
+func handle_collisions(was_on_wall: bool,was_on_air: bool, inertia: Vector2 ):
 	"""Lógica de colisiones original"""
-	var was_on_wall: bool = is_on_wall()
-	var was_on_air: bool = !is_on_floor()
-	var inertia = velocity
 	
 	if is_on_wall() or is_on_ceiling() and not was_on_wall and !is_control_enabled :
 		now_is_falling = true
@@ -415,3 +409,8 @@ func add_wind_force(force: Vector2):
 		wind_velocity = wind_velocity.normalized() * max_wind_velocity
 	
 	print("💨 Viento agregado: ", force, " -> Total: ", wind_velocity)
+
+
+func handle_attack():
+	if equipped_weapon and Input.is_action_just_pressed("attack"):
+		equipped_weapon.attack()

@@ -215,6 +215,7 @@ tile_map_data = PackedByteArray("AAAwABIAAAACAAIAAAAwABEAAAACAAEAAAAwABAAAAACAAE
 tile_set = SubResource("TileSet_l643t")
 
 [node name="Camera1" type="Camera2D" parent="."]
+visible = false
 position = Vector2(641, 288)
 
 [node name="Area2D" type="Area2D" parent="Camera1"]
@@ -226,6 +227,7 @@ position = Vector2(-1, 54)
 shape = SubResource("RectangleShape2D_v3n78")
 
 [node name="Camera2" type="Camera2D" parent="."]
+visible = false
 position = Vector2(641, -407)
 enabled = false
 
@@ -238,6 +240,7 @@ position = Vector2(0, 31)
 shape = SubResource("RectangleShape2D_vju25")
 
 [node name="Camera3" type="Camera2D" parent="."]
+visible = false
 position = Vector2(640, -1112)
 enabled = false
 
@@ -250,6 +253,7 @@ position = Vector2(0, 36)
 shape = SubResource("RectangleShape2D_f6o0p")
 
 [node name="Camera4" type="Camera2D" parent="."]
+visible = false
 position = Vector2(640, -1808)
 enabled = false
 
@@ -262,6 +266,7 @@ position = Vector2(0, 32)
 shape = SubResource("RectangleShape2D_mc8ep")
 
 [node name="Camera5" type="Camera2D" parent="."]
+visible = false
 position = Vector2(640, -2512)
 enabled = false
 
