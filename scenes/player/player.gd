@@ -158,7 +158,6 @@ func handle_jumping_with_stamina(delta: float):
 	
 	# INICIAR carga si presiona salto
 	if Input.is_action_just_pressed("jump") and can_start_charging:
-
 		is_charging_jump = true
 		is_control_enabled = false
 		jump_charge_time = 0.0
@@ -166,7 +165,6 @@ func handle_jumping_with_stamina(delta: float):
 	
 	# CONTINUAR cargando mientras mantiene presionado
 	if is_charging_jump and Input.is_action_pressed("jump") and is_on_floor():
-
 		# Incrementar tiempo de carga
 		jump_charge_time += delta
 		
@@ -188,8 +186,7 @@ func handle_jumping_with_stamina(delta: float):
 			stamina_depleted.emit()
 			execute_timed_jump()
 			return
-
-	
+		
 		# Mantener quieto mientras carga
 		velocity.x = 0
 	
@@ -204,11 +201,9 @@ func handle_jumping_with_stamina(delta: float):
 	# ===================================
 	# SALTO SIN STAMINA (igual que antes)
 	# ===================================
-
 	if Input.is_action_just_pressed("jump") and is_on_floor() and (current_stamina < base_stamina_cost or is_stamina_depleted):
 		velocity.y = -min_jump_force * 0.3
 		can_double_jump = false
-
 		return
 	
 	# ===================================
@@ -217,7 +212,6 @@ func handle_jumping_with_stamina(delta: float):
 	if not is_charging_jump and not is_on_floor():
 		if Input.is_action_just_pressed("jump") and can_double_jump:
 			attempt_double_jump()
-
 
 # ===================================
 # NUEVAS FUNCIONES - AGREGAR ESTAS
@@ -261,7 +255,6 @@ func get_jump_charge_progress() -> float:
 	if not is_charging_jump:
 		return 0.0
 	return clamp(jump_charge_time / max_charge_time, 0.0, 1.0)
-
 
 func execute_charged_jump():
 	# Resetear flags
@@ -408,18 +401,27 @@ func restore_stamina(amount: float):
 # ===================================
 
 # ===================================
-
-
+# INTERACCIÓN CON VENTILADOR
+# ===================================
+func apply_wind_forces(delta: float):
+	"""Aplicar fuerzas de viento como velocidad adicional"""
 	
-
+	# El viento se desvanece gradualmente cuando no hay ventiladores
+	wind_velocity *= wind_decay_rate
+	
+	# Si el viento es muy pequeño, eliminarlo
+	if wind_velocity.length() < 1.0:
+		wind_velocity = Vector2.ZERO
+	
 	# Sumar viento a la velocidad final CON MULTIPLICADOR
 	velocity += wind_velocity * delta * 10.0  # ⭐ MULTIPLICADOR x10
 
 # MODIFICAR las funciones de interacción con ventilador:
 # NUEVA función para que el ventilador aplique viento:
-
 func add_wind_force(force: Vector2):
+	"""Agregar fuerza de viento (llamado por el ventilador)"""
 	wind_velocity += force
+	
 	# Limitar viento máximo
 	if wind_velocity.length() > max_wind_velocity:
 		wind_velocity = wind_velocity.normalized() * max_wind_velocity

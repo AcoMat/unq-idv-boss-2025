@@ -18,7 +18,6 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(836, -83, 1179, -80, 11
 
 [node name="Main" type="Node2D"]
 
-
 [node name="BreakablePlatform" parent="." instance=ExtResource("1_5vw27")]
 position = Vector2(442, 264)
 
@@ -32,7 +31,6 @@ position = Vector2(631, 213)
 weapon = ExtResource("5_efxa6")
 
 [node name="fan" parent="." instance=ExtResource("5_4c57u")]
-
 position = Vector2(515, 202)
 
 [node name="BreakablePlatform2" parent="." instance=ExtResource("1_5vw27")]
@@ -56,8 +54,8 @@ navigation_polygon = SubResource("NavigationPolygon_w48qg")
 
 [node name="StaminaUi" parent="." instance=ExtResource("9_kek77")]
 
-[node name="BreakablePlatform" parent="." instance=ExtResource("1_5vw27")]
+[node name="BreakablePlatform4" parent="." instance=ExtResource("1_5vw27")]
 position = Vector2(426, 490)
 
-[node name="BreakablePlatform2" parent="." instance=ExtResource("1_5vw27")]
+[node name="BreakablePlatform5" parent="." instance=ExtResource("1_5vw27")]
 position = Vector2(437, 263)
