@@ -33,26 +33,14 @@ signal platform_gone(platform: BreakablePlatform)
 
 func _ready():
 	"""Inicialización de la plataforma"""
-	print("BreakablePlatform simple inicializada")
 	
-	# Verificar el Timer ANTES de configurarlo
-	print("🔍 Estado inicial del Timer:")
-	print("  - Autostart: ", break_timer.autostart)
-	print("  - Wait time: ", break_timer.wait_time)
-	print("  - Is stopped: ", break_timer.is_stopped())
-	
-	# FORZAR configuración del timer
-	break_timer.stop()  # Detener si estaba corriendo
+	# Configurar el Timer
+	break_timer.stop()
 	break_timer.wait_time = break_delay
 	break_timer.one_shot = true
-	break_timer.autostart = false  # FORZAR que no se inicie solo
+	break_timer.autostart = false
 	
-	# Verificar después de configurar
-	print("🔧 Después de configurar:")
-	print("  - Autostart: ", break_timer.autostart)
-	print("  - Is stopped: ", break_timer.is_stopped())
-	
-	# Desconectar cualquier conexión previa y reconectar
+	# Conectar señal del timer
 	if break_timer.timeout.is_connected(_on_break_timer_timeout):
 		break_timer.timeout.disconnect(_on_break_timer_timeout)
 	break_timer.timeout.connect(_on_break_timer_timeout)
@@ -66,69 +54,79 @@ func _ready():
 	
 	# Estado inicial
 	current_state = PlatformState.STABLE
-	
-	print("✅ Plataforma lista - esperando al player")
 
 func setup_player_detection():
-	"""Configura la detección del player usando Area2D"""
+	"""Configura la detección del player usando RayCasting balanceado"""
 	
-	print("🔧 Configurando detección del player...")
-	
-	# Crear Area2D para detectar al player
-	var detection_area = Area2D.new()
-	detection_area.name = "PlayerDetection"
-	add_child(detection_area)
-	
-	# Crear CollisionShape2D para el área
-	var area_collision = CollisionShape2D.new()
-	var detection_shape = RectangleShape2D.new()
-	
-	if collision_shape.shape is RectangleShape2D:
-		var platform_shape = collision_shape.shape as RectangleShape2D
-		detection_shape.size = platform_shape.size + Vector2(4, 4)
-		print("   Tamaño detección: ", detection_shape.size)
-	else:
-		detection_shape.size = Vector2(68, 20)
-		print("   Tamaño detección (default): ", detection_shape.size)
-	
-	area_collision.shape = detection_shape
-	detection_area.add_child(area_collision)
-	
-	# Configurar para detectar solo al player
-	detection_area.collision_layer = 0
-	detection_area.collision_mask = 2
-	print("   Collision mask: ", detection_area.collision_mask)
-	
-	# Conectar señales
-	detection_area.body_entered.connect(_on_player_entered)
-	
-	print("✅ Sistema de detección simple configurado")
+	# Crear 3 RayCast2D estratégicamente posicionados
+	for i in range(3):  # 3 rayos: izquierda, centro, derecha
+		var raycast = RayCast2D.new()
+		raycast.name = "PlayerRay" + str(i)
+		add_child(raycast)
+		
+		# Obtener ancho real de la plataforma
+		var platform_width = 64.0  # Ancho por defecto
+		if collision_shape.shape is RectangleShape2D:
+			platform_width = (collision_shape.shape as RectangleShape2D).size.x
+		
+		# Posicionar rayos: izquierda (-30%), centro (0%), derecha (+30%)
+		var offset_x = (i - 1) * (platform_width * 0.3)
+		raycast.position.x = offset_x
+		
+		# Rayo de altura moderada
+		raycast.target_position = Vector2(0, -25)  # 25 pixels hacia arriba
+		
+		# Configurar collision mask para detectar al player
+		raycast.collision_mask = 0b11111111  # Todas las layers
+		
+		raycast.enabled = true
+		raycast.force_raycast_update()
 
-func _on_player_entered(body):
-	"""Se ejecuta cuando el player toca la plataforma"""
+func _physics_process(_delta):
+	"""Chequea constantemente si el player está sobre la plataforma"""
 	
-	# Verificar que sea el player
-	if not is_player(body):
-		print("❌ No es el player: ", body.name)
-		return
-	
-	# Solo activar si la plataforma está estable
+	# Solo verificar si la plataforma está estable
 	if current_state != PlatformState.STABLE:
-		print("⚠️ Plataforma ya activada, estado: ", PlatformState.keys()[current_state])
 		return
 	
-	print("✅ Player tocó la plataforma - Iniciando countdown de ", break_delay, " segundos")
+	# Forzar actualización de todos los rayos
+	for child in get_children():
+		if child.name.begins_with("PlayerRay"):
+			var raycast = child as RayCast2D
+			raycast.force_raycast_update()
+	
+	# Verificar si algún rayo detecta al player
+	var rays_hitting_player = 0
+	var detected_player = null
+	
+	for child in get_children():
+		if child.name.begins_with("PlayerRay"):
+			var raycast = child as RayCast2D
+			
+			if raycast.is_colliding():
+				var collider = raycast.get_collider()
+				
+				# Si es cualquier cuerpo que pueda ser el player, intentar activar
+				if is_player(collider) or collider.name.to_lower().contains("player") or collider.is_in_group("player"):
+					rays_hitting_player += 1
+					detected_player = collider
+	
+	# Solo necesita 1 rayo para activar
+	if rays_hitting_player >= 1:
+		activate_platform()
+
+func activate_platform():
+	"""Activa la secuencia de rotura de la plataforma"""
 	
 	# Cambiar estado
 	current_state = PlatformState.WARNING
 	platform_breaking.emit(self)
 	
-	# INICIAR EL TIMER MANUALMENTE
+	# Iniciar el timer manualmente
 	if not break_timer.is_stopped():
-		break_timer.stop()  # Por si acaso estaba corriendo
+		break_timer.stop()
 	
-	break_timer.start()  # Iniciar countdown
-	print("⏰ Timer iniciado - quedan ", break_timer.time_left, " segundos")
+	break_timer.start()
 	
 	# Efectos visuales de advertencia
 	if warning_effect:
@@ -156,8 +154,6 @@ func start_warning_effects():
 	
 	if not sprite:
 		return
-	
-	print("🚨 Iniciando efectos de advertencia...")
 	
 	# Efecto de parpadeo rojo
 	create_blink_effect()
@@ -194,24 +190,16 @@ func create_shake_effect():
 
 func _on_break_timer_timeout():
 	"""Se ejecuta cuando el timer se agota - desaparecer la plataforma"""
-	print("🚨 ¡ALERTA! Timer timeout ejecutado")
-	print("   Estado actual: ", PlatformState.keys()[current_state])
-	print("   ¿Debería estar en WARNING? ", current_state == PlatformState.WARNING)
 	
 	# Solo proceder si estamos en estado WARNING
 	if current_state == PlatformState.WARNING:
-		print("💥 ¡Timer agotado legítimamente! Plataforma desapareciendo...")
 		disappear_platform()
-	else:
-		print("⚠️ Timer timeout INESPERADO - Estado: ", PlatformState.keys()[current_state])
-		print("   Ignorando timeout...")
 
 func disappear_platform():
 	"""Hace desaparecer la plataforma permanentemente"""
 	
 	# Cambiar estado
 	current_state = PlatformState.GONE
-	print("🗑️ Estado cambiado a GONE")
 	
 	# Emitir señal
 	platform_gone.emit(self)
@@ -224,17 +212,13 @@ func disappear_platform():
 	
 	# Deshabilitar colisión
 	collision_shape.disabled = true
-	print("🚫 Colisión deshabilitada")
 	
 	# Ocultar sprite
 	if sprite:
 		sprite.visible = false
-		print("👻 Sprite ocultado")
 	
 	# Reproducir sonido
 	play_break_sound()
-	
-	print("✅ Plataforma eliminada permanentemente")
 
 func stop_warning_effects():
 	"""Detiene todos los efectos de advertencia"""
@@ -250,8 +234,6 @@ func stop_warning_effects():
 
 func create_break_effects():
 	"""Crea efectos visuales de rotura"""
-	
-	print("🎆 Efectos de rotura activados")
 	
 	# Crear fragmentos que caen
 	create_falling_fragments()
@@ -287,7 +269,7 @@ func play_break_sound():
 		# Aquí cargarías tu archivo de sonido
 		# audio_player.stream = preload("res://sounds/platform_break.ogg")
 		# audio_player.play()
-		print("🔊 Sonido de rotura reproducido")
+		pass
 
 # ===================================
 # MÉTODOS PÚBLICOS ÚTILES

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjokk27aosbwc"]
 
-[ext_resource type="Script" path="res://scripts/ui/StaminaUI.gd" id="1_7hpvk"]
+[ext_resource type="Script" uid="uid://b4nwqvw5sy3m4" path="res://scripts/ui/StaminaUI.gd" id="1_7hpvk"]
 
 [node name="StaminaUi" type="CanvasLayer"]
 

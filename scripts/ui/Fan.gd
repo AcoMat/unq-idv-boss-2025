@@ -1,237 +1,131 @@
 extends Area2D
 
+## Wind Zone Controller
+## 
+## Creates a wind effect that pushes players when they enter the collision area.
+## The wind force is applied continuously while the player remains within the zone.
+## 
+## @author: Your Name
+## @version: 1.0
+
 # ===================================
-# CONFIGURACIÓN SIMPLE
+# EXPORTED PROPERTIES
 # ===================================
+
+## Strength of the wind force applied to players
 @export var wind_force: float = 64.0
+
+## Direction vector indicating wind flow (normalized automatically)
 @export var wind_direction: Vector2 = Vector2.LEFT
+
+## Whether the wind zone is currently active
 @export var is_active: bool = true
-@export var max_push_velocity: float = 250.0
 
 # ===================================
-# VARIABLES
+# PRIVATE VARIABLES
 # ===================================
+
+## Timer for debug output throttling
 var debug_timer: float = 0.0
-var players_in_area: Array = []
 
-func _ready():
-	print("💨 ========== VENTILADOR INICIADO ==========")
-	print("💨 Fuerza: ", wind_force)
-	print("💨 Dirección: ", wind_direction)
-	
-	# FORZAR configuración de capas para coincidir con el player
-	collision_layer = 4   # Capa 3 (ventilador)
-	collision_mask = 1024 # Detecta capa 11 (player está en layer 10, que es bit 1024)
-	monitoring = true
-	monitorable = true
-	
-	print("🔧 Mi Collision Layer: ", collision_layer)
-	print("🔧 Mi Collision Mask: ", collision_mask)
-	print("🔧 Monitoring: ", monitoring)
-	print("🔧 Monitorable: ", monitorable)
-	
-	# Conectar señales
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-	if not body_exited.is_connected(_on_body_exited):
-		body_exited.connect(_on_body_exited)
-	
-	# BUSCAR PLAYER EN LA ESCENA
-	call_deferred("find_players_in_scene")
+# ===================================
+# INITIALIZATION
+# ===================================
 
-func find_character_bodies(node: Node, bodies_array: Array):
-	"""Función auxiliar para encontrar CharacterBody2D recursivamente"""
-	if node is CharacterBody2D:
-		bodies_array.append(node)
-	
-	for child in node.get_children():
-		find_character_bodies(child, bodies_array)
+func _ready() -> void:
+	_setup_collision_detection()
 
-func find_players_in_scene():
-	"""Buscar todos los posibles players"""
-	print("🔍 ========== BUSCANDO PLAYERS ==========")
-	
-	# Método 1: Por grupo
-	var players_by_group = get_tree().get_nodes_in_group("player")
-	print("🔍 Players por grupo 'player': ", players_by_group.size())
-	for p in players_by_group:
-		print("  - ", p.name, " en pos: ", p.global_position)
-		print("    Collision Layer: ", p.collision_layer if "collision_layer" in p else "N/A")
-		print("    Collision Mask: ", p.collision_mask if "collision_mask" in p else "N/A")
-	
-	# Método 2: Por clase CharacterBody2D
-	var character_bodies = []
-	find_character_bodies(get_tree().root, character_bodies)
-	
-	print("🔍 CharacterBody2D encontrados: ", character_bodies.size())
-	for cb in character_bodies:
-		print("  - ", cb.name, " en pos: ", cb.global_position)
-		print("    Collision Layer: ", cb.collision_layer)
-		print("    Collision Mask: ", cb.collision_mask)
-		print("    Grupos: ", cb.get_groups())
-	
-	# Método 3: Distancia al ventilador
-	print("🔍 Mi posición: ", global_position)
-	var nearby_bodies = []
-	for cb in character_bodies:
-		var distance = global_position.distance_to(cb.global_position)
-		print("  - Distancia a ", cb.name, ": ", distance)
-		if distance < 500:  # Dentro de 500 píxeles
-			nearby_bodies.append(cb)
-	
-	print("🔍 Bodies cercanos: ", nearby_bodies.size())
-	print("🔍 ==========================================")
+## Configure collision layers and monitoring settings
+func _setup_collision_detection() -> void:
+	collision_layer = 0              # Wind zone doesn't need to be on any layer
+	collision_mask = 4294967295      # Detect all collision layers
+	monitoring = true                # Enable area detection
+	monitorable = false             # Other areas don't need to detect this
 
-func _physics_process(delta: float):
+# ===================================
+# MAIN LOOP
+# ===================================
+
+func _physics_process(delta: float) -> void:
+	# Skip processing if wind zone is disabled
 	if not is_active:
 		return
 	
-	# Debug extendido cada 2 segundos
+	# Throttle debug output to prevent console spam
+	_update_debug_timer(delta)
+	
+	# Apply wind force to all players currently in the area
+	_process_overlapping_bodies(delta)
+
+## Update debug timer and trigger debug output periodically
+func _update_debug_timer(delta: float) -> void:
 	debug_timer += delta
 	if debug_timer >= 2.0:
 		debug_timer = 0.0
-		debug_ventilador_extendido()
-	
-	# Método alternativo: detectar manualmente por distancia
-	detect_players_manually()
-	
-	# Aplicar viento
-	for player in players_in_area:
-		if is_instance_valid(player):
-			apply_wind_to_player(player, delta)
+		_debug_current_state()
 
-func detect_players_manually():
-	"""Detectar players manualmente por distancia"""
-	var all_bodies = get_tree().get_nodes_in_group("player")
+## Check all bodies in the area and apply wind to players
+func _process_overlapping_bodies(delta: float) -> void:
+	var overlapping_bodies = get_overlapping_bodies()
 	
-	for body in all_bodies:
-		if not body is CharacterBody2D:
-			continue
-			
-		var distance = global_position.distance_to(body.global_position)
-		var is_close = distance < 200  # Ajusta esta distancia según tu ventilador
-		
-		if is_close and not players_in_area.has(body):
-			print("🎯 Player detectado manualmente: ", body.name, " dist: ", distance)
-			_on_body_entered(body)
-		elif not is_close and players_in_area.has(body):
-			print("🎯 Player salió (manual): ", body.name)
-			_on_body_exited(body)
+	for body in overlapping_bodies:
+		if _is_player_character(body):
+			_apply_wind_force(body, delta)
 
-func _on_body_entered(body: Node2D):
-	"""Cuando un cuerpo entra al área del ventilador"""
-	print("📥 BODY ENTERED: ", body.name, " (", body.get_class(), ")")
-	
-	if is_player(body):
-		print("✅ ES PLAYER - agregando a lista")
-		if not players_in_area.has(body):
-			players_in_area.append(body)
-		
-		if body.has_method("enter_wind_zone"):
-			body.enter_wind_zone(self)
-	else:
-		print("❌ NO ES PLAYER")
+# ===================================
+# PLAYER DETECTION
+# ===================================
 
-func _on_body_exited(body: Node2D):
-	"""Cuando un cuerpo sale del área del ventilador"""
-	print("📤 BODY EXITED: ", body.name)
-	
-	if is_player(body):
-		players_in_area.erase(body)
-		if body.has_method("exit_wind_zone"):
-			body.exit_wind_zone(self)
+## Determine if a given body is a player character
+## @param body: The physics body to check
+## @return: True if the body represents a player
+func _is_player_character(body: Node) -> bool:
+	return body.is_in_group("player")
 
-func is_player(body: Node) -> bool:
-	"""Verificar si el cuerpo es el jugador - VERSIÓN EXTENDIDA"""
-	var checks = []
-	
-	# Check 1: Método is_player()
-	var has_method = body.has_method("is_player")
-	checks.append("has_method: " + str(has_method))
-	
-	# Check 2: Grupo "player"
-	var in_group = body.is_in_group("player")
-	checks.append("in_group: " + str(in_group))
-	
-	# Check 3: Nombre contiene "player"
-	var name_check = body.name.to_lower().contains("player")
-	checks.append("name_check: " + str(name_check))
-	
-	# Check 4: Es CharacterBody2D
-	var is_character = body is CharacterBody2D
-	checks.append("is_CharacterBody2D: " + str(is_character))
-	
-	print("🔍 Checks para ", body.name, ": ", checks)
-	
-	var result = has_method or in_group or name_check or is_character
-	print("🔍 Resultado final: ", result)
-	
-	return result
+# ===================================
+# WIND PHYSICS
+# ===================================
 
-func apply_wind_to_player(player: CharacterBody2D, delta: float):
-	"""Aplicar fuerza de viento al jugador usando el nuevo sistema"""
-	print("💨 APLICANDO VIENTO A: ", player.name)
+## Apply wind force to a player character
+## @param player: The player CharacterBody2D to affect
+## @param delta: Frame delta time for smooth movement
+func _apply_wind_force(player: CharacterBody2D, delta: float) -> void:
+	# Calculate frame-independent wind force
+	var wind_impulse = wind_direction.normalized() * wind_force * delta
 	
-	# Calcular fuerza de viento
-	var wind_push = wind_direction.normalized() * wind_force * delta
-	
-	# Usar el nuevo sistema de viento del player
+	# Use player's wind system if available, otherwise apply directly
 	if player.has_method("add_wind_force"):
-		player.add_wind_force(wind_push)
-		print("💨 Usando nuevo sistema de viento")
+		player.add_wind_force(wind_impulse)
 	else:
-		# Fallback al método anterior
-		player.velocity += wind_push
-		player.velocity.x = clamp(player.velocity.x, -600, 600)
-		player.velocity.y = clamp(player.velocity.y, -600, 600)
-		print("💨 Usando método directo")
-	
-	print("💨 Fuerza aplicada: ", wind_push)
+		_apply_direct_velocity_modification(player, wind_impulse)
 
-func debug_ventilador_extendido():
-	"""Debug completo del ventilador"""
-	print("🔧 ========== DEBUG VENTILADOR ==========")
-	print("🔧 Activo: ", is_active)
-	print("🔧 Mi posición: ", global_position)
-	print("🔧 Mi Layer: ", collision_layer)
-	print("🔧 Mi Mask: ", collision_mask)
-	print("🔧 Monitoring: ", monitoring)
+## Fallback method for players without wind system integration
+## @param player: The player to modify
+## @param impulse: The velocity change to apply
+func _apply_direct_velocity_modification(player: CharacterBody2D, impulse: Vector2) -> void:
+	player.velocity += impulse
 	
-	var all_bodies = get_overlapping_bodies()
-	print("🔧 Bodies detectados por área: ", all_bodies.size())
-	
-	for body in all_bodies:
-		print("  📦 ", body.name, " (", body.get_class(), ")")
-		if "collision_layer" in body:
-			print("      Layer: ", body.collision_layer)
-		if "collision_mask" in body:
-			print("      Mask: ", body.collision_mask)
-		print("      Grupos: ", body.get_groups())
-		print("      Es player: ", is_player(body))
-	
-	print("🔧 Players en mi lista: ", players_in_area.size())
-	for p in players_in_area:
-		print("  🎮 ", p.name, " pos: ", p.global_position)
-	
-	# Buscar players en toda la escena
-	var scene_players = get_tree().get_nodes_in_group("player")
-	print("🔧 Players en escena: ", scene_players.size())
-	for sp in scene_players:
-		var dist = global_position.distance_to(sp.global_position)
-		print("  🎮 ", sp.name, " dist: ", dist, " layer: ", sp.collision_layer)
-	
-	print("🔧 =====================================")
+	# Prevent excessive velocity accumulation
+	player.velocity.x = clamp(player.velocity.x, -600, 600)
+	player.velocity.y = clamp(player.velocity.y, -600, 600)
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"):  # Enter
-		debug_ventilador_extendido()
+# ===================================
+# DEBUG UTILITIES
+# ===================================
+
+## Output current wind zone state for debugging
+func _debug_current_state() -> void:
+	var overlapping_bodies = get_overlapping_bodies()
 	
-	if event.is_action_pressed("ui_select"):  # Tab - Forzar detección
-		print("🔄 FORZANDO DETECCIÓN MANUAL...")
-		var players = get_tree().get_nodes_in_group("player")
-		for player in players:
-			var distance = global_position.distance_to(player.global_position)
-			print("🔄 Player ", player.name, " a distancia: ", distance)
-			if distance < 300:  # Si está cerca
-				print("🔄 Forzando entrada de ", player.name)
-				_on_body_entered(player)
+	if overlapping_bodies.size() == 0:
+		return  # Silent when no bodies present
+	
+	# Log players currently affected by wind
+	for body in overlapping_bodies:
+		if _is_player_character(body):
+			pass  # Player found - wind is being applied
+
+## Manual debug trigger for development
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		_debug_current_state()
