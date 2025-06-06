@@ -3,7 +3,7 @@ extends Area2D
 # ===================================
 # CONFIGURACIÓN SIMPLE
 # ===================================
-@export var wind_force: float = 100.0
+@export var wind_force: float = 64.0
 @export var wind_direction: Vector2 = Vector2.LEFT
 @export var is_active: bool = true
 @export var max_push_velocity: float = 250.0

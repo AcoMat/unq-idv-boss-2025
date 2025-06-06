@@ -19,7 +19,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(836, -83, 1179, -80, 11
 [node name="Main" type="Node2D"]
 
 [node name="BreakablePlatform" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(433, 259)
+position = Vector2(495, 452)
 
 [node name="MainLevel" parent="." instance=ExtResource("1_0xm2m")]
 
@@ -31,10 +31,10 @@ position = Vector2(631, 213)
 weapon = ExtResource("5_efxa6")
 
 [node name="fan" parent="." instance=ExtResource("5_4c57u")]
-position = Vector2(749, 202)
+position = Vector2(406, 280)
 
 [node name="BreakablePlatform2" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(363, 257)
+position = Vector2(553, 158)
 
 [node name="Mushroom" parent="." instance=ExtResource("6_efxa6")]
 position = Vector2(1076, 393)
