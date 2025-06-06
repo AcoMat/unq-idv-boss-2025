@@ -12,11 +12,19 @@ var equipped_weapon: Node2D = null
 # Jump Vars
 @onready var gravity: float = gravity_magnitude / 5
 @export var jump_force: float = 250.0
-@export var max_jump_force := 300.0
 @export var charge_rate := 500.0
 var is_charging_jump := false
 var jump_charge := 0.0
 var is_control_enabled = true
+@export var min_jump_force: float = 150.0          # 🆕 Salto mínimo (0.5 seg)
+@export var max_jump_force: float = 400.0          # 🆕 Salto máximo (5 seg)
+@export var min_charge_time: float = 0.5           # 🆕 Tiempo mínimo para saltar
+@export var max_charge_time: float = 5.0           # 🆕 Tiempo máximo de carga
+@export var base_stamina_cost: float = 10.0        # 🆕 Costo base de stamina
+@export var max_stamina_cost: float = 60.0         # 🆕 Costo máximo de stamina
+
+var jump_charge_time: float = 0.0                  # 🆕 Tiempo cargando
+var current_jump_force: float = 0.0                # 🆕 Fuerza actual calculada
 # ===================================
 # SISTEMA DE STAMINA
 # ===================================
@@ -130,69 +138,130 @@ func handle_stamina_system(delta: float):
 	if abs(stamina_before - current_stamina) > 0.1:  # Cambié a 0.1 para más sensibilidad
 		stamina_changed.emit(current_stamina, max_stamina)
 
+# ===================================
+# FUNCIÓN PRINCIPAL - REEMPLAZAR COMPLETAMENTE
+# ===================================
 func handle_jumping_with_stamina(delta: float):
-	"""Sistema de salto integrado con stamina - CORREGIDO"""
+	"""Sistema de salto variable basado en tiempo de carga"""
 	
 	# ===================================
-	# SALTO CARGADO CON STAMINA
+	# SALTO CARGADO CON TIEMPO VARIABLE
 	# ===================================
 	
 	# Verificar si puede iniciar carga de salto
 	var can_start_charging = (
 		is_on_floor() and 
 		not is_charging_jump and 
-		current_stamina >= min_stamina_to_jump and 
+		current_stamina >= base_stamina_cost and 
 		not is_stamina_depleted
 	)
 	
-	# Iniciar carga si está en el suelo y tiene stamina
-	if Input.is_action_pressed("jump") and can_start_charging:
+	# INICIAR carga si presiona salto
+	if Input.is_action_just_pressed("jump") and can_start_charging:
+
 		is_charging_jump = true
 		is_control_enabled = false
-		jump_charge = jump_force
+		jump_charge_time = 0.0
+		current_jump_force = min_jump_force
 	
-	# Continuar cargando si ya está cargando Y tiene stamina
+	# CONTINUAR cargando mientras mantiene presionado
 	if is_charging_jump and Input.is_action_pressed("jump") and is_on_floor():
-		# Verificar si tiene stamina para continuar cargando
-		if current_stamina > 0:
-			jump_charge = min(jump_charge + charge_rate * delta, max_jump_force)
-			
-			# Consumir stamina al cargar
-			var stamina_cost = stamina_per_jump_charge * delta
-			current_stamina = max(0, current_stamina - stamina_cost)
-			stamina_changed.emit(current_stamina, max_stamina)
-			
-			# Si se queda sin stamina, FORZAR salto inmediato con la fuerza actual
-			if current_stamina <= 0:
-				is_stamina_depleted = true
-				stamina_depleted.emit()
-				execute_charged_jump()  # Saltar inmediatamente
-				return
+
+		# Incrementar tiempo de carga
+		jump_charge_time += delta
 		
+		# Calcular fuerza basada en tiempo (interpolación)
+		var time_progress = clamp(jump_charge_time / max_charge_time, 0.0, 1.0)
+		current_jump_force = lerp(min_jump_force, max_jump_force, time_progress)
+		
+		# Calcular costo de stamina basado en fuerza
+		var force_progress = (current_jump_force - min_jump_force) / (max_jump_force - min_jump_force)
+		var stamina_cost_per_frame = lerp(base_stamina_cost, max_stamina_cost, force_progress) * delta / max_charge_time
+		
+		# Consumir stamina gradualmente
+		current_stamina = max(0, current_stamina - stamina_cost_per_frame)
+		stamina_changed.emit(current_stamina, max_stamina)
+		
+		# Si se queda sin stamina, forzar salto
+		if current_stamina <= 0:
+			is_stamina_depleted = true
+			stamina_depleted.emit()
+			execute_timed_jump()
+			return
+
+	
 		# Mantener quieto mientras carga
 		velocity.x = 0
 	
-	# Ejecutar salto cargado al soltar (solo si no se ejecutó por falta de stamina)
+	# EJECUTAR salto al soltar (solo si cargó el tiempo mínimo)
 	if is_charging_jump and not Input.is_action_pressed("jump"):
-		execute_charged_jump()
+		if jump_charge_time >= min_charge_time:
+			execute_timed_jump()
+		else:
+			# Si soltó muy rápido, cancelar salto
+			cancel_jump_charge()
 	
 	# ===================================
-	# SALTO SIN STAMINA (SALTO DÉBIL)
+	# SALTO SIN STAMINA (igual que antes)
 	# ===================================
-	
-	# Si intenta saltar sin stamina, dar un saltito muy pequeño
-	if Input.is_action_just_pressed("jump") and is_on_floor() and (current_stamina < min_stamina_to_jump or is_stamina_depleted):
-		velocity.y = -jump_force * 0.3  # Solo 30% de la fuerza mínima
-		can_double_jump = false  # No permitir doble salto
+
+	if Input.is_action_just_pressed("jump") and is_on_floor() and (current_stamina < base_stamina_cost or is_stamina_depleted):
+		velocity.y = -min_jump_force * 0.3
+		can_double_jump = false
+
 		return
 	
 	# ===================================
-	# DOBLE SALTO CON STAMINA
+	# DOBLE SALTO (sin cambios)
 	# ===================================
-	
 	if not is_charging_jump and not is_on_floor():
 		if Input.is_action_just_pressed("jump") and can_double_jump:
 			attempt_double_jump()
+
+
+# ===================================
+# NUEVAS FUNCIONES - AGREGAR ESTAS
+# ===================================
+func execute_timed_jump():
+	"""Ejecuta el salto con la fuerza calculada por tiempo"""
+	# Resetear flags
+	is_charging_jump = false
+	is_control_enabled = true
+	
+	# Obtener dirección
+	var input_vector := Vector2.ZERO
+	if Input.is_action_pressed("move_left"):
+		input_vector.x = -1
+	elif Input.is_action_pressed("move_right"):
+		input_vector.x = 1
+	
+	# Aplicar salto con fuerza calculada
+	velocity.x = input_vector.x * speed
+	velocity.y = -current_jump_force
+	
+	# Resetear variables
+	jump_charge_time = 0.0
+	current_jump_force = 0.0
+	
+	# Habilitar doble salto
+	can_double_jump = true
+
+func cancel_jump_charge():
+	"""Cancela la carga de salto si se soltó muy rápido"""
+	is_charging_jump = false
+	is_control_enabled = true
+	jump_charge_time = 0.0
+	current_jump_force = 0.0
+
+# ===================================
+# FUNCIÓN PARA UI - AGREGAR ESTA
+# ===================================
+func get_jump_charge_progress() -> float:
+	"""Retorna el progreso de carga del salto (0.0 - 1.0)"""
+	if not is_charging_jump:
+		return 0.0
+	return clamp(jump_charge_time / max_charge_time, 0.0, 1.0)
+
 
 func execute_charged_jump():
 	# Resetear flags
@@ -215,14 +284,6 @@ func execute_charged_jump():
 	can_double_jump = true
 
 func attempt_double_jump():
-	"""Intenta realizar doble salto con verificación de stamina"""
-	
-	# Verificar si tiene suficiente stamina
-	if current_stamina < double_jump_stamina_cost:
-		return
-	
-
-	
 	# Consumir stamina
 	current_stamina = max(0, current_stamina - double_jump_stamina_cost)
 	time_since_last_stamina_use = 0.0  # 🆕 Resetear timer de recuperación
@@ -343,18 +404,19 @@ func restore_stamina(amount: float):
 		stamina_recovered.emit()
 
 # ===================================
-# INTERACCIÓN CON VENTILADOR
+# DEBUG
 # ===================================
-func apply_wind_forces(delta: float):
-	# El viento se desvanece gradualmente cuando no hay ventiladores
-	wind_velocity *= wind_decay_rate
+
+# ===================================
+
+
 	
-	# Si el viento es muy pequeño, eliminarlo
-	if wind_velocity.length() < 1.0:
-		wind_velocity = Vector2.ZERO
-	
-	# 🔧 MULTIPLICADOR AUMENTADO - era x3, ahora x8
-	velocity += wind_velocity * delta * 8.0
+
+	# Sumar viento a la velocidad final CON MULTIPLICADOR
+	velocity += wind_velocity * delta * 10.0  # ⭐ MULTIPLICADOR x10
+
+# MODIFICAR las funciones de interacción con ventilador:
+# NUEVA función para que el ventilador aplique viento:
 
 func add_wind_force(force: Vector2):
 	wind_velocity += force

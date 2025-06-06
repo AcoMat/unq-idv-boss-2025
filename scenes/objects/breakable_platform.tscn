@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cvt4t3n711d24" path="res://assets/map/wood_set/1.png" id="2_ckojn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckojn"]
-size = Vector2(53.75, 51.5)
+
+size = Vector2(54, 51)
 
 [node name="BreakablePlatform" type="StaticBody2D"]
 position = Vector2(0, 22)
@@ -12,12 +13,14 @@ collision_mask = 0
 script = ExtResource("1_gu0ah")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(26.875, 4)
+
+position = Vector2(27, 3.5)
+
 shape = SubResource("RectangleShape2D_ckojn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(27, 4)
-scale = Vector2(0.102, 0.1)
+position = Vector2(27, 3.7)
+scale = Vector2(0.105469, 0.0988281)
 texture = ExtResource("2_ckojn")
 
 [node name="Timer" type="Timer" parent="."]

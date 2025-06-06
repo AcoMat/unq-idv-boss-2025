@@ -1,189 +1,136 @@
 extends Area2D
 
+## Wind Zone Controller
+## 
+## Creates a wind effect that pushes players when they enter the collision area.
+## The wind force is applied continuously while the player remains within the zone.
+## 
+## @author: Your Name
+## @version: 1.0
+
 # ===================================
-# CONFIGURACIÓN SIMPLE
+# EXPORTED PROPERTIES
 # ===================================
-@export var wind_force: float = 300.0  # 🔧 Aumenté de 100 a 300
+
+
+## Strength of the wind force applied to players
+@export var wind_force: float = 64.0
+
+## Direction vector indicating wind flow (normalized automatically)
+
 @export var wind_direction: Vector2 = Vector2.LEFT
+
+## Whether the wind zone is currently active
 @export var is_active: bool = true
-@export var max_push_velocity: float = 250.0
-@export var air_force_multiplier: float = 0.4  # 🔧 Aumenté de 0.2 a 0.4
+
 
 # ===================================
-# VARIABLES
+# PRIVATE VARIABLES
 # ===================================
+
+## Timer for debug output throttling
 var debug_timer: float = 0.0
-var players_in_area: Array = []
 
-func _ready():
-	# 🔧 CONFIGURACIÓN SEGURA: detectar múltiples capas comunes de player
-	collision_layer = 4      # Capa 3 (ventilador)
-	collision_mask = 4 + 2   # Detecta capa 2 (bit 4) + capa 1 (bit 2) por si acaso
-	monitoring = true
-	monitorable = true
-	
-	# Conectar señales
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-	if not body_exited.is_connected(_on_body_exited):
-		body_exited.connect(_on_body_exited)
 
-func _physics_process(delta: float):
+# ===================================
+# INITIALIZATION
+# ===================================
+
+func _ready() -> void:
+	_setup_collision_detection()
+
+## Configure collision layers and monitoring settings
+func _setup_collision_detection() -> void:
+	collision_layer = 0              # Wind zone doesn't need to be on any layer
+	collision_mask = 4294967295      # Detect all collision layers
+	monitoring = true                # Enable area detection
+	monitorable = false             # Other areas don't need to detect this
+
+# ===================================
+# MAIN LOOP
+# ===================================
+
+func _physics_process(delta: float) -> void:
+	# Skip processing if wind zone is disabled
 	if not is_active:
 		return
 	
-	# Debug extendido cada 2 segundos
+	# Throttle debug output to prevent console spam
+	_update_debug_timer(delta)
+	
+	# Apply wind force to all players currently in the area
+	_process_overlapping_bodies(delta)
+
+## Update debug timer and trigger debug output periodically
+func _update_debug_timer(delta: float) -> void:
 	debug_timer += delta
 	if debug_timer >= 2.0:
 		debug_timer = 0.0
-		debug_ventilador_extendido()
-	
-	# 🔧 SOLO usar detección manual para evitar conflictos
-	detect_players_manually_limited()
-	
-	# Aplicar viento solo a players que están realmente en el área
-	for player in players_in_area:
-		if is_instance_valid(player):
-			apply_wind_to_player(player, delta)
+		_debug_current_state()
 
-func detect_players_manually_limited():
-	"""Detectar players manualmente SOLO dentro del área del CollisionShape2D"""
-	var all_bodies = get_tree().get_nodes_in_group("player")
+## Check all bodies in the area and apply wind to players
+func _process_overlapping_bodies(delta: float) -> void:
+	var overlapping_bodies = get_overlapping_bodies()
 	
-	for body in all_bodies:
-		if not body is CharacterBody2D:
-			continue
-		
-		# 🔧 Verificar si está realmente dentro del CollisionShape2D con un pequeño buffer
-		var collision_shape = $CollisionShape2D
-		if collision_shape and collision_shape.shape:
-			# Convertir posición del player a coordenadas locales del Area2D
-			var local_pos = to_local(body.global_position)
-			
-			# Verificar si está dentro del shape
-			var is_inside = false
-			if collision_shape.shape is RectangleShape2D:
-				var rect_shape = collision_shape.shape as RectangleShape2D
-				var half_size = rect_shape.size / 2
-				# 🔧 Agregar buffer de 10 píxeles para evitar flicker
-				var buffer = 10.0
-				is_inside = (abs(local_pos.x) <= (half_size.x + buffer) and abs(local_pos.y) <= (half_size.y + buffer))
-			elif collision_shape.shape is CircleShape2D:
-				var circle_shape = collision_shape.shape as CircleShape2D
-				# 🔧 Agregar buffer para círculos también
-				is_inside = local_pos.length() <= (circle_shape.radius + 10.0)
-			
-			# Actualizar lista según si está dentro o fuera
-			if is_inside and not players_in_area.has(body):
-				_on_body_entered(body)
-			elif not is_inside and players_in_area.has(body):
-				_on_body_exited(body)
+	for body in overlapping_bodies:
+		if _is_player_character(body):
+			_apply_wind_force(body, delta)
 
-func check_area2d_detection():
-	"""Verificar que el Area2D esté detectando correctamente"""
-	var overlapping = get_overlapping_bodies()
+# ===================================
+# PLAYER DETECTION
+# ===================================
+
+## Determine if a given body is a player character
+## @param body: The physics body to check
+## @return: True if the body represents a player
+func _is_player_character(body: Node) -> bool:
+	return body.is_in_group("player")
+
+# ===================================
+# WIND PHYSICS
+# ===================================
+
+## Apply wind force to a player character
+## @param player: The player CharacterBody2D to affect
+## @param delta: Frame delta time for smooth movement
+func _apply_wind_force(player: CharacterBody2D, delta: float) -> void:
+	# Calculate frame-independent wind force
+	var wind_impulse = wind_direction.normalized() * wind_force * delta
 	
-	for body in overlapping:
-		if is_player(body) and not players_in_area.has(body):
-			print("🔧 Area2D detectó player que no estaba en lista: ", body.name)
-			_on_body_entered(body)
-
-func _on_body_entered(body: Node2D):
-	if is_player(body):
-		if not players_in_area.has(body):
-			players_in_area.append(body)
-			print("💨 Player ENTRÓ al ventilador: ", body.name)
-		
-		if body.has_method("enter_wind_zone"):
-			body.enter_wind_zone(self)
-
-func _on_body_exited(body: Node2D):
-	if is_player(body):
-		players_in_area.erase(body)
-		print("💨 Player SALIÓ del ventilador: ", body.name)
-		if body.has_method("exit_wind_zone"):
-			body.exit_wind_zone(self)
-
-func is_player(body: Node) -> bool:
-	# Simplificar detección - más confiable
-	return (
-		body.is_in_group("player") or 
-		body.has_method("is_player") or
-		body.name.to_lower().contains("player")
-	)
-
-func apply_wind_to_player(player: CharacterBody2D, delta: float):
-	# 🆕 Detectar si está en el suelo
-	var is_grounded = player.is_on_floor() if player.has_method("is_on_floor") else true
-	
-	# 🆕 Aplicar multiplicador diferente según si está en suelo o aire
-	var force_multiplier = 1.0 if is_grounded else air_force_multiplier
-	
-	# Calcular fuerza de viento CON el multiplicador
-	var wind_push = wind_direction.normalized() * wind_force * delta * force_multiplier
-	
-	# Usar el nuevo sistema de viento del player
+	# Use player's wind system if available, otherwise apply directly
 	if player.has_method("add_wind_force"):
-		player.add_wind_force(wind_push)
-		print("💨 Viento aplicado (", ("suelo" if is_grounded else "aire"), "): ", wind_push)
+		player.add_wind_force(wind_impulse)
 	else:
-		# Fallback al método anterior
-		player.velocity += wind_push
-		player.velocity.x = clamp(player.velocity.x, -600, 600)
-		player.velocity.y = clamp(player.velocity.y, -600, 600)
-		print("💨 Usando método directo")
+		_apply_direct_velocity_modification(player, wind_impulse)
 
-func debug_ventilador_extendido():
-	print("=== DEBUG VENTILADOR ===")
-	print("Activo: ", is_active)
-	print("Players en área: ", players_in_area.size())
-	print("Collision layer: ", collision_layer, " | mask: ", collision_mask)
-	print("Monitoring: ", monitoring, " | Monitorable: ", monitorable)
+## Fallback method for players without wind system integration
+## @param player: The player to modify
+## @param impulse: The velocity change to apply
+func _apply_direct_velocity_modification(player: CharacterBody2D, impulse: Vector2) -> void:
+	player.velocity += impulse
 	
-	var all_bodies = get_overlapping_bodies()
-	print("Bodies detectados por Area2D: ", all_bodies.size())
-	
-	for body in all_bodies:
-		print("  - ", body.name, " (", body.get_class(), ") - Layer: ", body.collision_layer)
-		if is_player(body):
-			print("    ✅ ES PLAYER")
-		else:
-			print("    ❌ NO ES PLAYER")
-	
-	# Buscar players en toda la escena
-	var scene_players = get_tree().get_nodes_in_group("player")
-	print("Players en escena: ", scene_players.size())
-	
-	for sp in scene_players:
-		var dist = global_position.distance_to(sp.global_position)
-		print("  - ", sp.name, " distancia: ", dist, " | Layer: ", sp.collision_layer)
-	
-	# 🆕 Verificar configuración del CollisionShape2D
-	var collision_shape = $CollisionShape2D
-	if collision_shape:
-		print("CollisionShape2D presente: ", collision_shape.shape != null)
-		if collision_shape.shape:
-			print("  Tipo: ", collision_shape.shape.get_class())
-			if collision_shape.shape is RectangleShape2D:
-				print("  Tamaño: ", collision_shape.shape.size)
-			elif collision_shape.shape is CircleShape2D:
-				print("  Radio: ", collision_shape.shape.radius)
-	else:
-		print("❌ NO HAY CollisionShape2D")
+	# Prevent excessive velocity accumulation
+	player.velocity.x = clamp(player.velocity.x, -600, 600)
+	player.velocity.y = clamp(player.velocity.y, -600, 600)
 
-func force_test_wind():
-	"""Función para probar el viento manualmente"""
-	var players = get_tree().get_nodes_in_group("player")
-	for player in players:
-		var distance = global_position.distance_to(player.global_position)
-		if distance < 300:
-			print("🧪 FORZANDO viento en: ", player.name)
-			if not players_in_area.has(player):
-				players_in_area.append(player)
+# ===================================
+# DEBUG UTILITIES
+# ===================================
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"):  # Enter
-		debug_ventilador_extendido()
+## Output current wind zone state for debugging
+func _debug_current_state() -> void:
+	var overlapping_bodies = get_overlapping_bodies()
 	
-	if event.is_action_pressed("ui_select"):  # Tab - Forzar test
-		force_test_wind()
+	if overlapping_bodies.size() == 0:
+		return  # Silent when no bodies present
+	
+	# Log players currently affected by wind
+	for body in overlapping_bodies:
+		if _is_player_character(body):
+			pass  # Player found - wind is being applied
+
+## Manual debug trigger for development
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		_debug_current_state()
+
