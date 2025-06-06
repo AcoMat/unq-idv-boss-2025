@@ -30,6 +30,7 @@ func connect_to_player():
 		
 		if player.has_signal("stamina_changed"):
 			player.stamina_changed.connect(_on_stamina_changed)
+
 			
 		if player.has_signal("stamina_depleted"):
 			player.stamina_depleted.connect(_on_stamina_depleted)
@@ -41,6 +42,7 @@ func connect_to_player():
 		# Inicializar con valores actuales
 		_on_stamina_changed(player.get_current_stamina(), player.get_max_stamina())
 		
+
 		# Buscar por nombre como backup
 		var all_players = get_tree().get_nodes_in_group("player")
 
@@ -65,6 +67,7 @@ func _on_stamina_changed(current: float, maximum: float):
 		# Actualizar color
 		update_bar_color(percentage)
 		
+
 
 func animate_bar():
 	"""Anima la barra suavemente"""

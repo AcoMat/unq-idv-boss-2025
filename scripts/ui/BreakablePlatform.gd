@@ -57,7 +57,7 @@ func _ready():
 
 func setup_player_detection():
 	"""Configura la detección del player usando RayCasting balanceado"""
-	
+
 	# Crear 3 RayCast2D estratégicamente posicionados
 	for i in range(3):  # 3 rayos: izquierda, centro, derecha
 		var raycast = RayCast2D.new()
@@ -82,6 +82,7 @@ func setup_player_detection():
 		raycast.enabled = true
 		raycast.force_raycast_update()
 
+
 func _physics_process(_delta):
 	"""Chequea constantemente si el player está sobre la plataforma"""
 	
@@ -98,10 +99,13 @@ func _physics_process(_delta):
 	# Verificar si algún rayo detecta al player
 	var rays_hitting_player = 0
 	var detected_player = null
+
+
 	
 	for child in get_children():
 		if child.name.begins_with("PlayerRay"):
 			var raycast = child as RayCast2D
+
 			
 			if raycast.is_colliding():
 				var collider = raycast.get_collider()
@@ -110,13 +114,16 @@ func _physics_process(_delta):
 				if is_player(collider) or collider.name.to_lower().contains("player") or collider.is_in_group("player"):
 					rays_hitting_player += 1
 					detected_player = collider
+
 	
 	# Solo necesita 1 rayo para activar
 	if rays_hitting_player >= 1:
+
 		activate_platform()
 
 func activate_platform():
 	"""Activa la secuencia de rotura de la plataforma"""
+
 	
 	# Cambiar estado
 	current_state = PlatformState.WARNING

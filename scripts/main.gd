@@ -14,8 +14,6 @@ var pause_menu
 var hud
 
 func _ready():
-	print("Main scene iniciada - Configurando juego...")
-	
 	# Buscar elementos de UI
 	find_ui_elements()
 	
@@ -32,23 +30,13 @@ func find_ui_elements():
 		pause_menu = ui.get_node_or_null("PauseMenu") 
 		hud = ui.get_node_or_null("HUD")
 		
-		print("UI encontrados:")
-		print("- MainMenu: ", main_menu != null)
-		print("- PauseMenu: ", pause_menu != null)
-		print("- HUD: ", hud != null)
-
 func setup_game_state():
-	"""Configura el estado inicial del juego"""
-	print("Configurando estado del juego...")
-	
 	# Ocultar menús
 	if main_menu:
 		main_menu.visible = false
-		print("MainMenu ocultado")
 	
 	if pause_menu:
 		pause_menu.visible = false
-		print("PauseMenu ocultado")
 		
 		# Conectar botones del menú de pausa
 		connect_pause_menu_buttons()
@@ -56,17 +44,14 @@ func setup_game_state():
 	# Mostrar HUD del juego
 	if hud:
 		hud.visible = true
-		print("HUD mostrado")
 	
 	# Activar player
 	if player:
 		player.visible = true
 		player.set_process_mode(Node.PROCESS_MODE_INHERIT)
-		print("Player activado")
 	
 	# Asegurar que no esté pausado
 	get_tree().paused = false
-	print("Juego despausado")
 
 func connect_pause_menu_buttons():
 	"""Conecta los botones del menú de pausa"""
@@ -78,30 +63,22 @@ func connect_pause_menu_buttons():
 	
 	if resume_button and not resume_button.pressed.is_connected(resume_game):
 		resume_button.pressed.connect(resume_game)
-		print("ResumeButton conectado")
-	
+
 	if main_menu_button and not main_menu_button.pressed.is_connected(go_to_main_menu):
 		main_menu_button.pressed.connect(go_to_main_menu)
-		print("MainMenuButton conectado")
+
 
 func go_to_main_menu():
-	"""Va al menú principal"""
-	print("Volviendo al menú principal...")
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/ui/menus/main_menu.tscn")
 
 func show_level(level_number: int):
-	"""Muestra un nivel específico"""
-	print("Mostrando nivel: ", level_number)
-	
 	if not sections:
-		print("⚠️ Sections no encontrado")
 		return
 	
 	# Ocultar todos los niveles
 	for child in sections.get_children():
 		child.visible = false
-		print("Ocultando: ", child.name)
 	
 	# Mostrar el nivel solicitado
 	var level_name = "Level" + str(level_number)
@@ -109,12 +86,6 @@ func show_level(level_number: int):
 	
 	if target_level:
 		target_level.visible = true
-		print("✅ Nivel ", level_number, " activado")
-	else:
-		print("❌ Nivel no encontrado: ", level_name)
-		print("Niveles disponibles:")
-		for child in sections.get_children():
-			print("  - ", child.name)
 
 func _input(event):
 	"""Manejo de input del juego"""
@@ -129,7 +100,6 @@ func _input(event):
 				pause_game()
 		else:
 			# Si no hay menú de pausa, ir al menú principal
-			print("No hay menú de pausa, volviendo al menú principal...")
 			get_tree().change_scene_to_file("res://scenes/ui/menus/main_menu.tscn")
 	
 	# Debug: cambiar niveles con números
@@ -143,7 +113,6 @@ func _input(event):
 func pause_game():
 	"""Pausa el juego y muestra el menú de pausa"""
 	if pause_menu:
-		print("Pausando juego...")
 		get_tree().paused = true
 		pause_menu.visible = true
 		pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -151,6 +120,5 @@ func pause_game():
 func resume_game():
 	"""Reanuda el juego y oculta el menú de pausa"""
 	if pause_menu:
-		print("Reanudando juego...")
 		get_tree().paused = false
 		pause_menu.visible = false

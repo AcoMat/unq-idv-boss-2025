@@ -12,14 +12,17 @@ extends Area2D
 # EXPORTED PROPERTIES
 # ===================================
 
+
 ## Strength of the wind force applied to players
 @export var wind_force: float = 64.0
 
 ## Direction vector indicating wind flow (normalized automatically)
+
 @export var wind_direction: Vector2 = Vector2.LEFT
 
 ## Whether the wind zone is currently active
 @export var is_active: bool = true
+
 
 # ===================================
 # PRIVATE VARIABLES
@@ -27,6 +30,7 @@ extends Area2D
 
 ## Timer for debug output throttling
 var debug_timer: float = 0.0
+
 
 # ===================================
 # INITIALIZATION
@@ -129,3 +133,4 @@ func _debug_current_state() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		_debug_current_state()
+
