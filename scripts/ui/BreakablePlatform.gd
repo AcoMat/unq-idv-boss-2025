@@ -70,54 +70,107 @@ func _ready():
 	print("✅ Plataforma lista - esperando al player")
 
 func setup_player_detection():
-	"""Configura la detección del player usando Area2D"""
+	"""Configura la detección del player usando RayCasting balanceado"""
 	
-	print("🔧 Configurando detección del player...")
+	print("🔧 Configurando detección balanceada del player con RayCast...")
 	
-	# Crear Area2D para detectar al player
-	var detection_area = Area2D.new()
-	detection_area.name = "PlayerDetection"
-	add_child(detection_area)
+	# Crear 3 RayCast2D estratégicamente posicionados
+	for i in range(3):  # 3 rayos: izquierda, centro, derecha
+		var raycast = RayCast2D.new()
+		raycast.name = "PlayerRay" + str(i)
+		add_child(raycast)
+		
+		# Obtener ancho real de la plataforma
+		var platform_width = 64.0  # Ancho por defecto
+		if collision_shape.shape is RectangleShape2D:
+			platform_width = (collision_shape.shape as RectangleShape2D).size.x
+		
+		# Posicionar rayos: izquierda (-30%), centro (0%), derecha (+30%)
+		var offset_x = (i - 1) * (platform_width * 0.3)
+		raycast.position.x = offset_x
+		
+		# Rayo de altura moderada - ni muy corto ni muy largo
+		raycast.target_position = Vector2(0, -25)  # 25 pixels hacia arriba
+		
+		# PROBAR MÚLTIPLES COLLISION MASKS para encontrar al player
+		raycast.collision_mask = 0b11111111  # Todas las layers (255)
+		
+		raycast.enabled = true
+		raycast.force_raycast_update()  # Forzar actualización inmediata
+		
+		print("   Rayo ", i, " en X:", offset_x, " alcance: 25px, mask: todas las layers")
 	
-	# Crear CollisionShape2D para el área
-	var area_collision = CollisionShape2D.new()
-	var detection_shape = RectangleShape2D.new()
-	
-	if collision_shape.shape is RectangleShape2D:
-		var platform_shape = collision_shape.shape as RectangleShape2D
-		detection_shape.size = platform_shape.size + Vector2(4, 4)
-		print("   Tamaño detección: ", detection_shape.size)
-	else:
-		detection_shape.size = Vector2(68, 20)
-		print("   Tamaño detección (default): ", detection_shape.size)
-	
-	area_collision.shape = detection_shape
-	detection_area.add_child(area_collision)
-	
-	# Configurar para detectar solo al player
-	detection_area.collision_layer = 0
-	detection_area.collision_mask = 2
-	print("   Collision mask: ", detection_area.collision_mask)
-	
-	# Conectar señales
-	detection_area.body_entered.connect(_on_player_entered)
-	
-	print("✅ Sistema de detección simple configurado")
+	print("✅ Sistema de RayCast balanceado configurado")
 
-func _on_player_entered(body):
-	"""Se ejecuta cuando el player toca la plataforma"""
+func _physics_process(_delta):
+	"""Chequea constantemente si el player está sobre la plataforma"""
 	
-	# Verificar que sea el player
-	if not is_player(body):
-		print("❌ No es el player: ", body.name)
-		return
-	
-	# Solo activar si la plataforma está estable
+	# Solo verificar si la plataforma está estable
 	if current_state != PlatformState.STABLE:
-		print("⚠️ Plataforma ya activada, estado: ", PlatformState.keys()[current_state])
 		return
 	
-	print("✅ Player tocó la plataforma - Iniciando countdown de ", break_delay, " segundos")
+	# Forzar actualización de todos los rayos
+	for child in get_children():
+		if child.name.begins_with("PlayerRay"):
+			var raycast = child as RayCast2D
+			raycast.force_raycast_update()
+	
+	# Verificar si algún rayo detecta al player
+	var rays_hitting_player = 0
+	var detected_player = null
+	var debug_info = []
+	
+	for child in get_children():
+		if child.name.begins_with("PlayerRay"):
+			var raycast = child as RayCast2D
+			var ray_debug = {
+				"name": raycast.name,
+				"enabled": raycast.enabled,
+				"colliding": raycast.is_colliding(),
+				"position": raycast.global_position,
+				"target": raycast.global_position + raycast.target_position,
+				"mask": raycast.collision_mask
+			}
+			
+			if raycast.is_colliding():
+				var collider = raycast.get_collider()
+				ray_debug["collider_name"] = collider.name
+				ray_debug["collider_groups"] = collider.get_groups()
+				ray_debug["collider_layer"] = collider.collision_layer if collider.has_method("set_collision_layer") else "N/A"
+				ray_debug["is_player"] = is_player(collider)
+				
+				# Si es cualquier cuerpo que pueda ser el player, intentar activar
+				if is_player(collider) or collider.name.to_lower().contains("player") or collider.is_in_group("player"):
+					rays_hitting_player += 1
+					detected_player = collider
+					print("🎯 ", raycast.name, " HIT POTENTIAL PLAYER: ", collider.name)
+			
+			debug_info.append(ray_debug)
+	
+	# Debug cada 60 frames (1 segundo aprox)
+	if Engine.get_process_frames() % 60 == 0:
+		print("🔍 DEBUG RAYCAST STATUS:")
+		for info in debug_info:
+			print("  ", info.name, ":")
+			print("    Enabled: ", info.enabled)
+			print("    Colliding: ", info.colliding)
+			if info.has("collider_name"):
+				print("    Collider: ", info.collider_name)
+				print("    Groups: ", info.collider_groups)
+				print("    Layer: ", info.collider_layer)
+				print("    Is Player: ", info.is_player)
+		print("  Total rays hitting player: ", rays_hitting_player)
+		print("  ---")
+	
+	# Solo necesita 1 rayo para activar
+	if rays_hitting_player >= 1:
+		print("✅ Player detectado por ", rays_hitting_player, " rayo(s) - Activando plataforma")
+		activate_platform()
+
+func activate_platform():
+	"""Activa la secuencia de rotura de la plataforma"""
+	
+	print("✅ Activando plataforma - Iniciando countdown de ", break_delay, " segundos")
 	
 	# Cambiar estado
 	current_state = PlatformState.WARNING

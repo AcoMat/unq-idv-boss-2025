@@ -63,7 +63,6 @@ var knockback_force := 150
 
 func _ready():
 	add_to_group("player")
-	print("Player con sistema de stamina cargado")
 	
 	# Inicializar stamina
 	current_stamina = max_stamina
@@ -78,7 +77,6 @@ func _physics_process(delta: float) -> void:
 	# Resetear doble salto al tocar suelo
 	if is_on_floor() and not can_double_jump:
 		can_double_jump = true
-		print("✅ Doble salto disponible")
 	# Manejar sistema de stamina
 	handle_stamina_system(delta)
 	# Sistema de salto con stamina
@@ -122,16 +120,11 @@ func handle_stamina_system(delta: float):
 			
 			var recovery_amount = stamina_recovery_rate * recovery_multiplier * delta
 			current_stamina = min(max_stamina, current_stamina + recovery_amount)
-			
-			# Debug menos spam - solo cada 10 puntos
-			if int(current_stamina) % 10 == 0 and int(stamina_before) != int(current_stamina):
-				print("🔋 Recuperando stamina: ", int(current_stamina), "/", int(max_stamina))
 	
 	# Verificar si se recuperó de estar agotada
 	if is_stamina_depleted and current_stamina >= min_stamina_to_jump:
 		is_stamina_depleted = false
 		stamina_recovered.emit()
-		print("💚 Stamina recuperada - puede saltar de nuevo")
 	
 	# 🔧 ARREGLO: Emitir señal MÁS FRECUENTEMENTE para que la UI se vea suave
 	if abs(stamina_before - current_stamina) > 0.1:  # Cambié a 0.1 para más sensibilidad
@@ -154,7 +147,6 @@ func handle_jumping_with_stamina(delta: float):
 	
 	# Iniciar carga si está en el suelo y tiene stamina
 	if Input.is_action_pressed("jump") and can_start_charging:
-		print("🔄 Iniciando carga de salto...")
 		is_charging_jump = true
 		is_control_enabled = false
 		jump_charge = jump_force
@@ -172,7 +164,6 @@ func handle_jumping_with_stamina(delta: float):
 			
 			# Si se queda sin stamina, FORZAR salto inmediato con la fuerza actual
 			if current_stamina <= 0:
-				print("⚡ Sin stamina - ejecutando salto con fuerza actual: ", jump_charge)
 				is_stamina_depleted = true
 				stamina_depleted.emit()
 				execute_charged_jump()  # Saltar inmediatamente
@@ -191,7 +182,6 @@ func handle_jumping_with_stamina(delta: float):
 	
 	# Si intenta saltar sin stamina, dar un saltito muy pequeño
 	if Input.is_action_just_pressed("jump") and is_on_floor() and (current_stamina < min_stamina_to_jump or is_stamina_depleted):
-		print("😅 Salto débil sin stamina")
 		velocity.y = -jump_force * 0.3  # Solo 30% de la fuerza mínima
 		can_double_jump = false  # No permitir doble salto
 		return
@@ -205,9 +195,6 @@ func handle_jumping_with_stamina(delta: float):
 			attempt_double_jump()
 
 func execute_charged_jump():
-	"""Ejecuta el salto cargado"""
-	print("🚀 Salto ejecutado con fuerza: ", jump_charge)
-	
 	# Resetear flags
 	is_charging_jump = false
 	is_control_enabled = true
@@ -232,10 +219,9 @@ func attempt_double_jump():
 	
 	# Verificar si tiene suficiente stamina
 	if current_stamina < double_jump_stamina_cost:
-		print("⚡ Sin stamina para doble salto (necesita ", double_jump_stamina_cost, ", tiene ", current_stamina, ")")
 		return
 	
-	print("🌟 Doble salto ejecutado!")
+
 	
 	# Consumir stamina
 	current_stamina = max(0, current_stamina - double_jump_stamina_cost)
@@ -285,7 +271,6 @@ func handle_collisions(was_on_wall: bool,was_on_air: bool, inertia: Vector2 ):
 	if was_on_air and is_on_floor():
 		if now_is_falling:
 			velocity = Vector2.ZERO
-			print("💥 Hit the ground")
 			$FallCooldown.start()
 			$Sprite2D.region_rect = Rect2(377,82,29,14)
 			now_is_falling = false
@@ -358,24 +343,9 @@ func restore_stamina(amount: float):
 		stamina_recovered.emit()
 
 # ===================================
-# DEBUG
-# ===================================
-
-func _input(event):
-	if event.is_action_pressed("ui_select"):  # Tab
-		print("=== STAMINA DEBUG ===")
-		print("Current: ", current_stamina, "/", max_stamina)
-		print("Percentage: ", get_stamina_percentage() * 100, "%")
-		print("Depleted: ", is_stamina_depleted)
-		print("Can jump: ", current_stamina >= min_stamina_to_jump)
-		print("====================")
-
-# ===================================
 # INTERACCIÓN CON VENTILADOR
 # ===================================
 func apply_wind_forces(delta: float):
-	"""Aplicar fuerzas de viento como velocidad adicional"""
-	
 	# El viento se desvanece gradualmente cuando no hay ventiladores
 	wind_velocity *= wind_decay_rate
 	
@@ -383,32 +353,14 @@ func apply_wind_forces(delta: float):
 	if wind_velocity.length() < 1.0:
 		wind_velocity = Vector2.ZERO
 	
-	# Sumar viento a la velocidad final CON MULTIPLICADOR
-	velocity += wind_velocity * delta * 10.0  # ⭐ MULTIPLICADOR x10
-	
-	# Debug del viento
-	if wind_velocity.length() > 0:
-		print("🌪️ Viento activo: ", wind_velocity, " -> Vel total: ", velocity)
+	# 🔧 MULTIPLICADOR AUMENTADO - era x3, ahora x8
+	velocity += wind_velocity * delta * 8.0
 
-# MODIFICAR las funciones de interacción con ventilador:
-func enter_wind_zone(ventilador):
-	"""Cuando entra a zona de viento"""
-	print("💨 Entrando a zona de viento")
-
-func exit_wind_zone(ventilador):
-	"""Cuando sale de zona de viento"""
-	print("💨 Saliendo de zona de viento")
-
-# NUEVA función para que el ventilador aplique viento:
 func add_wind_force(force: Vector2):
-	"""Agregar fuerza de viento (llamado por el ventilador)"""
 	wind_velocity += force
-	
 	# Limitar viento máximo
 	if wind_velocity.length() > max_wind_velocity:
 		wind_velocity = wind_velocity.normalized() * max_wind_velocity
-	
-	print("💨 Viento agregado: ", force, " -> Total: ", wind_velocity)
 
 
 func handle_attack():
