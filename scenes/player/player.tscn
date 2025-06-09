@@ -20,8 +20,13 @@ texture = ExtResource("1_8afob")
 region_enabled = true
 region_rect = Rect2(234, 22, 24, 26)
 
-[node name="FallCooldown" type="Timer" parent="."]
+[node name="JustFeltCooldown" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="FallCooldown" to="." method="_on_fall_cooldown_timeout"]
+[node name="DoubleJumpCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="JustFeltCooldown" to="." method="_on_just_felt_cooldown_timeout"]
+[connection signal="timeout" from="DoubleJumpCooldown" to="." method="_on_double_jump_cooldown_timeout"]

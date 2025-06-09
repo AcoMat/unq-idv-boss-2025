@@ -1,16 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpfhmvt0nexn6"]
+[gd_scene load_steps=5 format=3 uid="uid://bpfhmvt0nexn6"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="1_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://bdkhwamj3bljt" path="res://scenes/objects/breakable_platform.tscn" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="4_kek77"]
 [ext_resource type="PackedScene" uid="uid://bd3ol1tsx22ye" path="res://scenes/objects/fan.tscn" id="5_4c57u"]
-[ext_resource type="PackedScene" uid="uid://8ynghkqdkncd" path="res://scenes/player/sword/sword.tscn" id="5_efxa6"]
-[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/enemies/mushroom/mushroom.tscn" id="6_efxa6"]
-[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/enemies/musky/musky.tscn" id="7_dg77c"]
-[ext_resource type="PackedScene" uid="uid://cj2j5fqw4s1bm" path="res://scenes/enemies/mushroom/mushroom_projectile.tscn" id="8_efxa6"]
-[ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/enemies/eye/eye.tscn" id="8_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://cjokk27aosbwc" path="res://scenes/ui/stamina/stamina_ui.tscn" id="9_kek77"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_w48qg"]
 vertices = PackedVector2Array(1169.02, -90.0781, 843.18, -92.9297, 737.906, -403.117, 1169.96, -406.906)
@@ -19,45 +11,14 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(836, -83, 1179, -80, 11
 
 [node name="Main" type="Node2D"]
 
-[node name="BreakablePlatform" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(442, 264)
-
 [node name="MainLevel" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(166, 402)
 
-[node name="PickableSword" parent="." instance=ExtResource("4_kek77")]
-position = Vector2(631, 213)
-weapon = ExtResource("5_efxa6")
-
-[node name="fan" parent="." instance=ExtResource("5_4c57u")]
-position = Vector2(515, 202)
-
-[node name="BreakablePlatform2" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(387, 265)
-
-[node name="BreakablePlatform3" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(405, 500)
-
-[node name="Mushroom" parent="." instance=ExtResource("6_efxa6")]
-position = Vector2(1076, 393)
-projectile_scene = ExtResource("8_efxa6")
-
-[node name="Musky" parent="." instance=ExtResource("7_dg77c")]
-position = Vector2(647, 516)
-
-[node name="Eye" parent="." instance=ExtResource("8_ycdy4")]
-position = Vector2(1078, -167)
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 position = Vector2(1, 0)
 navigation_polygon = SubResource("NavigationPolygon_w48qg")
 
-[node name="StaminaUi" parent="." instance=ExtResource("9_kek77")]
-
-[node name="BreakablePlatform4" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(426, 490)
-
-[node name="BreakablePlatform5" parent="." instance=ExtResource("1_5vw27")]
-position = Vector2(437, 263)
+[node name="fan" parent="." instance=ExtResource("5_4c57u")]
+position = Vector2(353, 390)
