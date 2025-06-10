@@ -1,17 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnssm3h81mrq7"]
+[gd_scene load_steps=3 format=3 uid="uid://wpor24wh75xr"]
 
-[ext_resource type="Script" uid="uid://cfpelcdhlbya5" path="res://scripts/pause_menu.gd" id="1_dd7lr"]
-[ext_resource type="Texture2D" uid="uid://cstcxurjbur8u" path="res://assets/menu/pause.png" id="2_dd7lr"]
+[ext_resource type="Script" uid="uid://d3tbrmhtq7kg5" path="res://scripts/menu.gd" id="1_1bi1t"]
+[ext_resource type="Texture2D" uid="uid://cm06mq36glchs" path="res://assets/menu/unqastillo.png" id="1_tejx5"]
 
-[node name="PauseMenu" type="Control"]
-process_mode = 3
+[node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_dd7lr")
+script = ExtResource("1_1bi1t")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -29,7 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_dd7lr")
+texture = ExtResource("1_tejx5")
 expand_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -47,10 +46,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-[node name="Resume" type="Button" parent="VBoxContainer"]
+[node name="Play" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "RESUME
+text = "PLAY
+"
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "OPTIONS
 "
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
@@ -59,5 +64,6 @@ theme_override_font_sizes/font_size = 50
 text = "QUIT
 "
 
-[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
