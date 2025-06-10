@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bpfhmvt0nexn6"]
+[gd_scene load_steps=12 format=3 uid="uid://bpfhmvt0nexn6"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bdkhwamj3bljt" path="res://scenes/objects/breakable_platform.tscn" id="1_5vw27"]
@@ -10,8 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/enemies/musky/musky.tscn" id="7_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/enemies/eye/eye.tscn" id="8_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://cjokk27aosbwc" path="res://scenes/ui/stamina/stamina_ui.tscn" id="9_kek77"]
-[ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="11_efxa6"]
-[ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause_menu.tscn" id="12_dg77c"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_w48qg"]
 vertices = PackedVector2Array(1169.02, -90.0781, 843.18, -92.9297, 737.906, -403.117, 1169.96, -406.906)
@@ -61,12 +59,3 @@ position = Vector2(426, 490)
 
 [node name="BreakablePlatform5" parent="." instance=ExtResource("1_5vw27")]
 position = Vector2(437, 263)
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_efxa6")
-autoplay = true
-bus = &"Musica"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("12_dg77c")]
