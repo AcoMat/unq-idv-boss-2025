@@ -1,61 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://c48fra54wkoxg"]
+[gd_scene load_steps=3 format=3 uid="uid://cnssm3h81mrq7"]
 
-[ext_resource type="Script" uid="uid://b8u1nxpe3t12b" path="res://scripts/ui/PauseMenu.gd" id="1_5p30d"]
+[ext_resource type="Script" uid="uid://cfpelcdhlbya5" path="res://scripts/pause_menu.gd" id="1_dd7lr"]
+[ext_resource type="Texture2D" uid="uid://cstcxurjbur8u" path="res://assets/menu/pause.png" id="2_dd7lr"]
 
 [node name="PauseMenu" type="Control"]
-process_mode = 2
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5p30d")
+script = ExtResource("1_dd7lr")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.101961, 0.101961, 0.180392, 1)
+color = Color(0.643137, 1, 1, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dd7lr")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -81.5
-offset_right = 48.0
-offset_bottom = 81.5
+offset_left = -158.5
+offset_top = -86.5
+offset_right = 158.5
+offset_bottom = 86.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 22
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="Resume" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "RESUME
+"
 
-[node name="PauseLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "QUIT
+"
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-layout_mode = 2
-text = "Resume"
-
-[node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-layout_mode = 2
-text = "Options"
-
-[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-layout_mode = 2
-text = "Main menu"
-
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-layout_mode = 2
-text = "Salir"
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
