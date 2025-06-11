@@ -1,4 +1,5 @@
 extends Control
+
 @onready var main_buttons: VBoxContainer = $MainButtons
 @onready var options: Panel = $Options
 
@@ -17,3 +18,4 @@ func _on_volume_pressed() -> void:
 
 func _on_back_opstions_pressed() -> void:
 	_ready()
+
