@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://bd3ol1tsx22ye"]
+
+[ext_resource type="Script" uid="uid://brr6sl1mam34e" path="res://scripts/ui/Fan.gd" id="1_kjku7"]
+[ext_resource type="Texture2D" uid="uid://3luwd5unw1t6" path="res://assets/map/waterfall/wateranimate3.png" id="2_2jqkh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_esvne"]
+size = Vector2(64, 132)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jqkh"]
+atlas = ExtResource("2_2jqkh")
+region = Rect2(0, 0, 96, 156)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eab6n"]
+atlas = ExtResource("2_2jqkh")
+region = Rect2(96, 0, 96, 156)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0rob"]
+atlas = ExtResource("2_2jqkh")
+region = Rect2(192, 0, 96, 156)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frbyv"]
+atlas = ExtResource("2_2jqkh")
+region = Rect2(288, 0, 96, 156)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fejym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jqkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eab6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0rob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frbyv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Fan" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_kjku7")
+push_force = 200.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -8)
+shape = SubResource("RectangleShape2D_esvne")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fejym")
+autoplay = "default"
+frame_progress = 0.434609
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

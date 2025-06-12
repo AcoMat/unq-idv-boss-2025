@@ -1,7 +1,7 @@
 extends Area2D
 
-@export var push_direction: Vector2 = Vector2.LEFT
-@export var push_force: float = 700.0
+@export var push_direction: Vector2 = Vector2.DOWN
+@export var push_force: float = 1000.0
 
 var bodies_in_area: Array = []
 

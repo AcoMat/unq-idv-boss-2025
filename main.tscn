@@ -1,24 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpfhmvt0nexn6"]
+[gd_scene load_steps=4 format=3 uid="uid://bpfhmvt0nexn6"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bd3ol1tsx22ye" path="res://scenes/objects/fan.tscn" id="5_4c57u"]
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_w48qg"]
-vertices = PackedVector2Array(1169.02, -90.0781, 843.18, -92.9297, 737.906, -403.117, 1169.96, -406.906)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(836, -83, 1179, -80, 1180, -417, 724, -413)])
+[ext_resource type="PackedScene" uid="uid://bdkhwamj3bljt" path="res://scenes/objects/breakable_platform/breakable_platform.tscn" id="3_h2yge"]
 
 [node name="Main" type="Node2D"]
 
 [node name="MainLevel" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
-position = Vector2(166, 402)
+position = Vector2(312, 410)
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(1, 0)
-navigation_polygon = SubResource("NavigationPolygon_w48qg")
-
-[node name="fan" parent="." instance=ExtResource("5_4c57u")]
-position = Vector2(353, 390)
+[node name="BreakablePlatform" parent="." instance=ExtResource("3_h2yge")]
+position = Vector2(392, 440)

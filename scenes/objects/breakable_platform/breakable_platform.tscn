@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdkhwamj3bljt"]
+
+[ext_resource type="Script" uid="uid://cuxf40k104aae" path="res://scenes/objects/breakable_platform/breakable_platform.gd" id="1_cgfxs"]
+[ext_resource type="Texture2D" uid="uid://c2lq8eemtrlix" path="res://assets/map/wood_set/wood_crate/1.png" id="2_76uht"]
+[ext_resource type="Texture2D" uid="uid://b6oogmkv7rwmn" path="res://assets/map/wood_set/wood_crate/2.png" id="3_1bx5a"]
+[ext_resource type="Texture2D" uid="uid://bt58ljhsdgr17" path="res://assets/map/wood_set/wood_crate/3.png" id="4_nieb3"]
+[ext_resource type="Texture2D" uid="uid://dw2murv4bw5n" path="res://assets/map/wood_set/wood_crate/4.png" id="5_dnnyl"]
+[ext_resource type="Texture2D" uid="uid://bgddobx5w30rl" path="res://assets/map/wood_set/wood_crate/5.png" id="6_utmcq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckojn"]
+size = Vector2(42, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwdtf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_76uht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1bx5a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nieb3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dnnyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_utmcq")
+}],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_76uht")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cgfxs"]
+radius = 1.0
+height = 40.0
+
+[node name="BreakablePlatform" type="StaticBody2D"]
+position = Vector2(0, 22)
+collision_mask = 3
+script = ExtResource("1_cgfxs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_ckojn")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 16)
+rotation = 3.14159
+scale = Vector2(0.115, 0.115)
+sprite_frames = SubResource("SpriteFrames_kwdtf")
+animation = &"break"
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -13)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_cgfxs")
+
+[node name="Respawn" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Respawn" to="." method="_on_respawn_timeout"]
