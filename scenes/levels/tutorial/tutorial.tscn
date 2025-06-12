@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=18 format=4 uid="uid://b2defnc1q4dib"]
 
 [ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="1_6v5o0"]
 [ext_resource type="Texture2D" uid="uid://copr8mm0xllor" path="res://assets/map/tutorial/tutorial_arrows.png" id="3_m6rfe"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="5_mxxi8"]
 [ext_resource type="Texture2D" uid="uid://b3817bulylj41" path="res://assets/map/tutorial/spacebar.png" id="7_63nf7"]
 [ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause_menu.tscn" id="7_mxxi8"]
+[ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="8_mxxi8"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6v5o0"]
 
@@ -374,6 +375,11 @@ texture = ExtResource("7_63nf7")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_mxxi8")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_mxxi8")
+autoplay = true
+bus = &"Musica"
 
 [connection signal="body_entered" from="Cameras/1/Area2D" to="PickableSword" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]
