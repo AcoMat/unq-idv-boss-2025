@@ -1,7 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnssm3h81mrq7"]
+[gd_scene load_steps=9 format=3 uid="uid://cnssm3h81mrq7"]
 
 [ext_resource type="Script" uid="uid://cfpelcdhlbya5" path="res://scripts/pause_menu.gd" id="1_dd7lr"]
 [ext_resource type="Texture2D" uid="uid://cstcxurjbur8u" path="res://assets/menu/pause.png" id="2_dd7lr"]
+[ext_resource type="FontFile" uid="uid://d30raf2xdec3o" path="res://assets/fonts/ARCADECLASSIC.TTF" id="3_idy5m"]
+[ext_resource type="AudioStream" uid="uid://clcft8foxqt5h" path="res://assets/audio/objects/button.mp3" id="3_n4ldv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd7lr"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4ldv"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idy5m"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hf471"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -49,15 +79,24 @@ theme_override_constants/separation = 22
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_idy5m")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_dd7lr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n4ldv")
 text = "RESUME
 "
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_idy5m")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_idy5m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hf471")
 text = "QUIT
 "
+
+[node name="button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_n4ldv")
 
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

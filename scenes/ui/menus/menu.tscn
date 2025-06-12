@@ -1,7 +1,51 @@
-[gd_scene load_steps=3 format=3 uid="uid://wpor24wh75xr"]
+[gd_scene load_steps=11 format=3 uid="uid://wpor24wh75xr"]
 
 [ext_resource type="Script" uid="uid://d3tbrmhtq7kg5" path="res://scripts/menu.gd" id="1_1bi1t"]
 [ext_resource type="Texture2D" uid="uid://cm06mq36glchs" path="res://assets/menu/unqastillo.png" id="1_tejx5"]
+[ext_resource type="FontFile" uid="uid://d30raf2xdec3o" path="res://assets/fonts/ARCADECLASSIC.TTF" id="3_fd0v6"]
+[ext_resource type="AudioStream" uid="uid://clcft8foxqt5h" path="res://assets/audio/objects/button.mp3" id="3_vhl7d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxwq3"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vhl7d"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxu00"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fd0v6"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3vpv"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7ek1"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -48,22 +92,44 @@ theme_override_constants/separation = 22
 
 [node name="Play" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_fd0v6")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_yxwq3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vhl7d")
 text = "PLAY
+"
+
+[node name="Tutorial" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_fd0v6")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_yxwq3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vhl7d")
+text = "Tutorial
 "
 
 [node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_fd0v6")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_cxu00")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fd0v6")
 text = "OPTIONS
 "
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_fd0v6")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_d3vpv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_w7ek1")
 text = "QUIT
 "
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vhl7d")
+
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

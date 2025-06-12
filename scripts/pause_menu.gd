@@ -1,4 +1,5 @@
 extends Control
+@onready var button: AudioStreamPlayer = $button
 
 func _ready():
 	# Inicialmente ocultar el menú
@@ -28,6 +29,8 @@ func testEsc():
 		resume()
 
 func _on_resume_pressed() -> void:
+	button.play()
+	await button.finished
 	resume()
 
 func _on_quit_pressed() -> void:

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bojn3xni7vg4e"
+path="res://.godot/imported/Jump King But Only Sound Effects-yt.savetube.me.mp3-d5e1840609c40eb7e43addebb7afa2b1.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/objects/Jump King But Only Sound Effects-yt.savetube.me.mp3"
+dest_files=["res://.godot/imported/Jump King But Only Sound Effects-yt.savetube.me.mp3-d5e1840609c40eb7e43addebb7afa2b1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

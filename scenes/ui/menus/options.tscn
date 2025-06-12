@@ -1,9 +1,32 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqm51m60ewmcc"]
+[gd_scene load_steps=14 format=3 uid="uid://dqm51m60ewmcc"]
 
 [ext_resource type="Script" uid="uid://hdt0aj7u7glj" path="res://scripts/options.gd" id="1_hfbhb"]
 [ext_resource type="Texture2D" uid="uid://cm06mq36glchs" path="res://assets/menu/unqastillo.png" id="2_ow65a"]
+[ext_resource type="FontFile" uid="uid://d30raf2xdec3o" path="res://assets/fonts/ARCADECLASSIC.TTF" id="3_3wban"]
 [ext_resource type="Script" uid="uid://cbpc0cs1by1sm" path="res://scripts/control_de_audio.gd" id="3_5cle6"]
 [ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="3_ow65a"]
+[ext_resource type="AudioStream" uid="uid://clcft8foxqt5h" path="res://assets/audio/objects/button.mp3" id="5_2cglq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6d2o"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cglq"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wban"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_hfbhb"]
 color = Color(0.964742, 0.964742, 0.964742, 1)
@@ -17,6 +40,12 @@ thickness = 6
 color = Color(0.109105, 0.406884, 0.880387, 1)
 thickness = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vt88a"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -47,8 +76,6 @@ texture = ExtResource("2_ow65a")
 expand_mode = 1
 
 [node name="MainButtons" type="VBoxContainer" parent="."]
-visible = false
-
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,16 +90,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-
 [node name="Volume" type="Button" parent="MainButtons"]
-
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3wban")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6d2o")
+theme_override_styles/normal = SubResource("StyleBoxFlat_2cglq")
 text = "VOLUME
 "
+
 [node name="Back" type="Button" parent="MainButtons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3wban")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6d2o")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3wban")
 text = "BACK
 "
 
@@ -99,6 +131,7 @@ offset_left = -30.5
 offset_right = 30.5
 offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_3wban")
 text = "General"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Options"]
@@ -118,6 +151,7 @@ theme_override_constants/separation = 27
 
 [node name="Label" type="Label" parent="Options/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3wban")
 text = "Volume Of Music"
 
 [node name="ControlDeAudio" type="HSlider" parent="Options/VBoxContainer"]
@@ -133,7 +167,10 @@ audio_bus_name = "Musica"
 
 [node name="BackOpstions" type="Button" parent="Options/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3wban")
 theme_override_font_sizes/font_size = 15
+theme_override_styles/hover = SubResource("StyleBoxFlat_k6d2o")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vt88a")
 text = "BACK
 "
 
@@ -142,8 +179,10 @@ stream = ExtResource("3_ow65a")
 autoplay = true
 bus = &"Musica"
 
+[node name="Button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2cglq")
+
 [connection signal="pressed" from="MainButtons/Volume" to="." method="_on_volume_pressed"]
 [connection signal="pressed" from="MainButtons/Back" to="." method="_on_back_pressed"]
 [connection signal="value_changed" from="Options/VBoxContainer/ControlDeAudio" to="Options/VBoxContainer/ControlDeAudio" method="_on_value_changed"]
 [connection signal="pressed" from="Options/VBoxContainer/BackOpstions" to="." method="_on_back_opstions_pressed"]
-
