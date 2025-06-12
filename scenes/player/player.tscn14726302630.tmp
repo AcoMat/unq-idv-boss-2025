@@ -111,7 +111,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_dovo2")
-vel_loss_percentage = 0.7
+vel_loss_percentage = 0.314
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 4.5)

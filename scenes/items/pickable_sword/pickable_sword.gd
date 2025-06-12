@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var weapon: PackedScene
+var weapon: PackedScene = preload("res://scenes/player/sword/sword.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
