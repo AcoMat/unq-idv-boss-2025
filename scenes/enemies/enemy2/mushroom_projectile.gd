@@ -23,4 +23,12 @@ func _on_lifetime_timer_timeout() -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	queue_free()
+	if body.is_in_group("player"):
+		body.get_attacked(global_position)
+	speed = 0
+	$Sprite2D.play("hit")
+
+
+func _on_sprite_2d_animation_finished() -> void:
+	if $Sprite2D.animation == "hit":
+		queue_free() 

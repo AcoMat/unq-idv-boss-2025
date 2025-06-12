@@ -17,7 +17,6 @@ thickness = 6
 color = Color(0.109105, 0.406884, 0.880387, 1)
 thickness = 6
 
-
 [node name="Options" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -48,7 +47,6 @@ expand_mode = 1
 
 [node name="MainButtons" type="VBoxContainer" parent="."]
 visible = false
-
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,13 +61,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-
 [node name="Volume" type="Button" parent="MainButtons"]
-
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "VOLUME
 "
+
 [node name="Back" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
@@ -146,4 +143,3 @@ bus = &"Musica"
 [connection signal="pressed" from="MainButtons/Back" to="." method="_on_back_pressed"]
 [connection signal="value_changed" from="Options/VBoxContainer/ControlDeAudio" to="Options/VBoxContainer/ControlDeAudio" method="_on_value_changed"]
 [connection signal="pressed" from="Options/VBoxContainer/BackOpstions" to="." method="_on_back_opstions_pressed"]
-
