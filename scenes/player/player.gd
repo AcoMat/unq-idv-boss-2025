@@ -2,6 +2,11 @@ extends CharacterBody2D
 
 @onready var gravity_magnitude : int = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var gravity: float = gravity_magnitude / 1.5
+@onready var shock: AudioStreamPlayer2D = $Shock
+@onready var jump_sound: AudioStreamPlayer2D = $Jump
+@onready var fall: AudioStreamPlayer2D = $Fall
+@onready var sword_sound: AudioStreamPlayer2D = $Sword
+@onready var landing: AudioStreamPlayer2D = $Landing
 
 @export_group("General")
 @export var speed: float = 200.0
@@ -66,7 +71,9 @@ func handle_inputs():
 		handle_movement()
 	# Attack
 	if equipped_weapon and Input.is_action_just_pressed("attack") and is_control_enabled:
+		sword_sound.play()
 		equipped_weapon.attack()
+		
 
 
 func handle_jump_inputs():
@@ -118,6 +125,7 @@ func handle_movement():
 
 func jump(direction: int):
 	$PlayerSprite.play("jump")
+	jump_sound.play()
 	is_charging_jump = false
 	# Obtener dirección
 	var input_vector := Vector2.ZERO
@@ -131,6 +139,7 @@ func jump(direction: int):
 
 
 func double_jump(direction: int):
+	jump_sound.play()
 	# Aplicar doble salto
 	velocity.y = -double_jump_force
 	can_double_jump = false
@@ -150,15 +159,17 @@ func handle_falls():
 			velocity.x = inertia.x * -1 * vel_loss_percentage
 		else:
 			velocity.x = inertia.x * vel_loss_percentage
-		
+		shock.play()
 	# Just landed on floor
 	if was_on_air and is_on_floor():
 		if now_is_falling:
 			velocity = Vector2.ZERO
 			$JustFeltCooldown.start()
 			$PlayerSprite.play("felt")
+			fall.play()
 			now_is_falling = false
 		else:
+			landing.play()
 			is_control_enabled = true
 	
 	# Slip from floor
