@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cg6uqp4fq5s43"
-path="res://.godot/imported/ShriekerMushroom.png-cd6a2cc33323e83a8f93699679d45c8e.ctex"
+uid="uid://clljw25u2fqf8"
+path="res://.godot/imported/Skeleton Walk.png-241185b4e0c0934055e5039b68b4da3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/mushroom/ShriekerMushroom.png"
-dest_files=["res://.godot/imported/ShriekerMushroom.png-cd6a2cc33323e83a8f93699679d45c8e.ctex"]
+source_file="res://assets/enemies/enemy3/Skeleton Walk.png"
+dest_files=["res://.godot/imported/Skeleton Walk.png-241185b4e0c0934055e5039b68b4da3e.ctex"]
 
 [params]
 

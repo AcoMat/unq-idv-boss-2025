@@ -10,7 +10,7 @@ var wander_radius := 200.0
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 var is_wandering = true
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time.d
 func _ready() -> void:
 	gravity_scale = 0
 	wander_center = global_position
@@ -18,6 +18,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if $AttackArea.has_overlapping_bodies() and $AttackCooldown.is_stopped():
+		target.get_pushed(global_position)
+		$AttackCooldown.start()
+		set_collision_mask_value(2, false)
 	if target and not nav.is_navigation_finished():
 		nav.target_position = target.global_position
 		var direction = (nav.get_next_path_position() - global_position).normalized()

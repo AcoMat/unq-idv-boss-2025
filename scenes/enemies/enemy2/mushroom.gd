@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 var current_objetive: Node2D = null
-@export var projectile_scene: PackedScene
+@export var projectile_scene := preload("res://scenes/enemies/enemy2/mushroom_projectile.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

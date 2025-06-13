@@ -188,22 +188,24 @@ func equip_weapon(weapon: PackedScene):
 	equipped_weapon.global_position.y - 1
   
 
-func receive_damage_from(damagePosition: Vector2):
+func get_attacked(damagePosition: Vector2):
+	loss_life()
+	get_pushed(damagePosition)
+
+
+func loss_life():
 	lifes -= 1
 	if lifes < 1:
 		queue_free()
-	
-	if not $FallCooldown.is_stopped():
-		pass
-	var direction := global_position.direction_to(damagePosition) * -1
-	
-	# Aplicar la fuerza de empuje
-	velocity.x = knockback_force
-	if abs(direction.y) < 0.3:
-		velocity.y = -100 # salto pequeño
-	else:
-		velocity.y = -abs(direction.y * knockback_force)
-	
+
+
+func get_pushed(enemy_position: Vector2):
+	# Calcular dirección contraria al enemigo
+	var direction = sign(global_position.x - enemy_position.x)
+	# Aplicar impulso
+	velocity.x = direction * knockback_force
+	velocity.y = -abs(knockback_force) * 0.6 
+	# Desactivar control del jugador
 	is_control_enabled = false
 	now_is_falling = true
 
