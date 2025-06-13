@@ -249,6 +249,16 @@ size = Vector2(872, 469)
 position = Vector2(199, -804)
 texture = ExtResource("4_vju25")
 
+[node name="Sky2" type="Sprite2D" parent="Sky2"]
+position = Vector2(-6, -963)
+rotation = -3.14159
+texture = ExtResource("4_vju25")
+
+[node name="Sky2" type="Sprite2D" parent="Sky2/Sky2"]
+position = Vector2(1.00427, 959)
+rotation = -3.14159
+texture = ExtResource("4_vju25")
+
 [node name="Sky1" type="Sprite2D" parent="."]
 position = Vector2(201, 154)
 rotation = 3.14159
@@ -264,7 +274,6 @@ position = Vector2(788, -2713)
 next_scene_path = "res://scenes/ui/WIP.tscn"
 
 [node name="Cameras" type="Node2D" parent="."]
-visible = false
 script = ExtResource("4_mc8ep")
 
 [node name="Camera1" type="Camera2D" parent="Cameras"]
@@ -347,7 +356,6 @@ shape = SubResource("RectangleShape2D_2glnv")
 
 [node name="Camera7" type="Camera2D" parent="Cameras"]
 position = Vector2(516, -2679)
-enabled = false
 zoom = Vector2(1.5, 1.5)
 
 [node name="Area2D" type="Area2D" parent="Cameras/Camera7"]

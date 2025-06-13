@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=31 format=4 uid="uid://b2defnc1q4dib"]
 
 [ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="1_6v5o0"]
 [ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/map/wood_set/arrow_sign.png" id="1_63nf7"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bexaa3fg461hl" path="res://scenes/levels/tutorial/tutorial_final.gd" id="14_bnul6"]
 [ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/enemies/enemy2/mushroom.tscn" id="15_8grxy"]
 [ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/enemies/enemy1/flyer.tscn" id="16_8grxy"]
+[ext_resource type="Texture2D" uid="uid://7farpmngw75q" path="res://assets/background/blue_sky.jpg" id="17_otg5b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kmgkv"]
 texture = ExtResource("1_6v5o0")
@@ -241,6 +242,11 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(2312, 723, 2745, 722, 2744, 565, 2312, 580)])
 
 [node name="Tutorial" type="Node2D"]
+
+[node name="BlueSky" type="Sprite2D" parent="."]
+position = Vector2(2646, 770)
+scale = Vector2(2.65, 2.65)
+texture = ExtResource("17_otg5b")
 
 [node name="Map" type="Node2D" parent="."]
 
@@ -528,6 +534,7 @@ wait_time = 0.45
 one_shot = true
 
 [node name="Blackout" type="ColorRect" parent="tutorial_final"]
+visible = false
 top_level = true
 offset_left = 3783.0
 offset_top = 1595.0

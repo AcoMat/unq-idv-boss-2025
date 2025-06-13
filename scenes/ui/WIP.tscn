@@ -48,4 +48,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxFlat_1vct6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_0sw6v")
-text = "Menu"
+text = "Continuara"
+
+[connection signal="pressed" from="VBoxContainer/retry" to="." method="_on_retry_pressed"]
