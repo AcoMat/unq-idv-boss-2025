@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://xshss7msdq88"]
+
+[ext_resource type="Script" uid="uid://brqgmssrwof0h" path="res://scenes/objects/door/door.gd" id="1_0y005"]
+[ext_resource type="Texture2D" uid="uid://bgn1vov1gr03s" path="res://assets/map/tutorial/door.png" id="1_uxqtv"]
+[ext_resource type="AudioStream" uid="uid://c8swmx3j00nxy" path="res://assets/audio/objects/open_door.mp3" id="3_vijyo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y005"]
+atlas = ExtResource("1_uxqtv")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vijyo"]
+atlas = ExtResource("1_uxqtv")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrveb"]
+atlas = ExtResource("1_uxqtv")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ij5hy"]
+atlas = ExtResource("1_uxqtv")
+region = Rect2(0, 128, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82fhh"]
+atlas = ExtResource("1_uxqtv")
+region = Rect2(0, 192, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4gckg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0y005")
+}],
+"loop": false,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vijyo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrveb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ij5hy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82fhh")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ce7u"]
+size = Vector2(12, 46)
+
+[node name="Door" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_0y005")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4gckg")
+animation = &"closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_1ce7u")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="OpenDoor" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vijyo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

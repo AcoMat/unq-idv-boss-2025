@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://n30gconqt8n7" path="res://assets/player/base.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bmxj7kg2cscca" path="res://scenes/player/player.gd" id="1_dovo2"]
-[ext_resource type="AudioStream" uid="uid://bjm66qgygnpxe" path="res://assets/audio/objects/Shock.mp3" id="3_gmlin"]
-[ext_resource type="AudioStream" uid="uid://dw0uorn81vek7" path="res://assets/audio/objects/jump.mp3" id="3_p47bc"]
-[ext_resource type="AudioStream" uid="uid://cc4sjofdwyo86" path="res://assets/audio/objects/fall.mp3" id="5_75vfm"]
-[ext_resource type="AudioStream" uid="uid://dy47355yy5rg6" path="res://assets/audio/objects/landing.mp3" id="6_75vfm"]
-[ext_resource type="AudioStream" uid="uid://dtpeiktbu4p2c" path="res://assets/audio/objects/sword-sound.mp3" id="7_0owmy"]
+[ext_resource type="AudioStream" uid="uid://bjm66qgygnpxe" path="res://assets/audio/player/Shock.mp3" id="3_gmlin"]
+[ext_resource type="AudioStream" uid="uid://dw0uorn81vek7" path="res://assets/audio/player/jump.mp3" id="3_p47bc"]
+[ext_resource type="AudioStream" uid="uid://cc4sjofdwyo86" path="res://assets/audio/player/fall.mp3" id="5_75vfm"]
+[ext_resource type="AudioStream" uid="uid://dy47355yy5rg6" path="res://assets/audio/player/landing.mp3" id="6_75vfm"]
+[ext_resource type="AudioStream" uid="uid://dtpeiktbu4p2c" path="res://assets/audio/player/sword-sound.mp3" id="7_0owmy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(24, 27)

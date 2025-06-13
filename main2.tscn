@@ -15,13 +15,14 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(1610, 418, 1609, 609, 1
 [node name="Tutorial" parent="." instance=ExtResource("1_dmrlw")]
 
 [node name="Player" parent="." instance=ExtResource("2_8ce7h")]
-position = Vector2(1649, 605)
+position = Vector2(206, 610)
 
 [node name="Eye" parent="." instance=ExtResource("3_8ce7h")]
-position = Vector2(1754, 541)
+position = Vector2(833, 477)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-963, -40)
 navigation_polygon = SubResource("NavigationPolygon_8ce7h")
 
 [node name="Mushroom" parent="." instance=ExtResource("4_3yxjw")]
-position = Vector2(1911, 594)
+position = Vector2(1368, 531)

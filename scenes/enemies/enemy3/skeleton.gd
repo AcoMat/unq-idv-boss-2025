@@ -1,4 +1,6 @@
 extends StaticBody2D
+@onready var attack_sound: AudioStreamPlayer2D = $"../../../Attack"
+@onready var death_sound: AudioStreamPlayer2D = $"../../../Death"
 
 @export var speed: float = 50.0
 var path_follow: PathFollow2D
@@ -12,7 +14,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if $Cooldown.is_stopped() and not attacking:
+	if path_follow and $Cooldown.is_stopped() and not attacking:
 		path_follow.progress += speed * delta
 		global_position = path_follow.global_position
 		var movement = global_position - last_position
@@ -28,6 +30,7 @@ func attack():
 	attacking = true
 
 func deal_damage():
+	attack_sound.play()
 	if target:
 		target.get_attacked(global_position)
 
@@ -47,6 +50,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 
 func receive_damage():
+	death_sound.play()
 	path_follow = null
 	$HitRange.monitoring = false
 	$AnimatedSprite2D.play("death")

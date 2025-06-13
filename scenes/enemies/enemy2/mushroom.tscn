@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d3ncyokioio7f"]
+[gd_scene load_steps=19 format=3 uid="uid://d3ncyokioio7f"]
 
 [ext_resource type="Script" uid="uid://t5atmdfjpjb1" path="res://scenes/enemies/enemy2/mushroom.gd" id="1_k7m86"]
 [ext_resource type="Texture2D" uid="uid://q3uqfb7iujbb" path="res://assets/enemies/enemy2/Attack3.png" id="2_hfoda"]
+[ext_resource type="AudioStream" uid="uid://d334udwtx42ir" path="res://assets/audio/enemies/mushroom/shoot.mp3" id="3_b8eia"]
+[ext_resource type="AudioStream" uid="uid://6tv0diujcape" path="res://assets/audio/enemies/mushroom/death.mp3" id="4_jh4pb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b8eia"]
 atlas = ExtResource("2_hfoda")
@@ -117,6 +119,12 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_hfoda")
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_b8eia")
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_jh4pb")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=24 format=4 uid="uid://b2defnc1q4dib"]
 
 [ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="1_6v5o0"]
 [ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/map/wood_set/arrow_sign.png" id="1_63nf7"]
@@ -6,13 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://8cimntlpgatm" path="res://assets/map/tutorial/mouse-left-click-png.webp" id="4_63nf7"]
 [ext_resource type="Script" uid="uid://b7fyiph8vxt2w" path="res://scenes/levels/tutorial/cameras.gd" id="5_m6rfe"]
 [ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="5_mxxi8"]
+[ext_resource type="Texture2D" uid="uid://bh6o538uoqjam" path="res://assets/map/tutorial/arrow.png" id="7_5eevr"]
 [ext_resource type="Texture2D" uid="uid://b3817bulylj41" path="res://assets/map/tutorial/spacebar.png" id="7_63nf7"]
-
 [ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause_menu.tscn" id="7_mxxi8"]
-[ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="8_mxxi8"]
 [ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/enemies/enemy3/skeleton.tscn" id="8_mxxi8"]
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6v5o0"]
-
+[ext_resource type="Texture2D" uid="uid://dj3obmiyfmrmd" path="res://assets/map/tutorial/a.png" id="8_tofvi"]
+[ext_resource type="Texture2D" uid="uid://c6v687mxu2a27" path="res://assets/map/tutorial/d.png" id="9_bnul6"]
+[ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/objects/door/door.tscn" id="10_j726a"]
+[ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="14_8grxy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kmgkv"]
 texture = ExtResource("1_6v5o0")
@@ -225,6 +226,9 @@ size = Vector2(662, 372)
 
 [node name="Tutorial" type="Node2D"]
 
+[node name="Door" parent="." instance=ExtResource("10_j726a")]
+position = Vector2(4055, 531)
+
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(3434.92, 547)
 scale = Vector2(0.035, 0.035)
@@ -258,6 +262,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/1/Area2D"]
+position = Vector2(-2, -11)
 shape = SubResource("RectangleShape2D_m6rfe")
 
 [node name="2" type="Camera2D" parent="Cameras"]
@@ -340,6 +345,44 @@ position = Vector2(727, 555)
 scale = Vector2(0.035, 0.035)
 texture = ExtResource("1_63nf7")
 
+[node name="TutorialArrows3" type="Sprite2D" parent="1"]
+self_modulate = Color(1, 1, 1, 0.384314)
+position = Vector2(238, 548)
+rotation = 0.333441
+scale = Vector2(0.152079, 0.191963)
+texture = ExtResource("3_m6rfe")
+
+[node name="Spacebar2" type="Sprite2D" parent="1"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(213, 524)
+scale = Vector2(0.0199112, 0.0242107)
+texture = ExtResource("7_63nf7")
+
+[node name="Arrow" type="Sprite2D" parent="1"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(246, 471)
+scale = Vector2(0.0412056, 0.0296835)
+texture = ExtResource("7_5eevr")
+
+[node name="Arrow2" type="Sprite2D" parent="1"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(194, 472)
+rotation = 3.15032
+scale = Vector2(0.038181, 0.0304667)
+texture = ExtResource("7_5eevr")
+
+[node name="LetterA" type="Sprite2D" parent="1"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(194, 457)
+scale = Vector2(0.0412056, 0.0296835)
+texture = ExtResource("8_tofvi")
+
+[node name="LetterD" type="Sprite2D" parent="1"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(245, 457)
+scale = Vector2(0.0412056, 0.0296835)
+texture = ExtResource("9_bnul6")
+
 [node name="2" type="Node2D" parent="."]
 
 [node name="Mouse-left-click-png" type="Sprite2D" parent="2"]
@@ -378,22 +421,23 @@ position = Vector2(2347, 475)
 scale = Vector2(0.046, 0.046)
 texture = ExtResource("7_63nf7")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_mxxi8")]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_mxxi8")
-autoplay = true
-bus = &"Musica"
 [node name="Sprite2D5" type="Sprite2D" parent="3"]
 position = Vector2(2918, 547)
 scale = Vector2(0.035, 0.035)
 texture = SubResource("CompressedTexture2D_6v5o0")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_mxxi8")]
+visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_8grxy")
+autoplay = true
+bus = &"Musica"
+
 [node name="Skeleton" parent="." instance=ExtResource("8_mxxi8")]
 position = Vector2(1807, 627)
-[connection signal="body_entered" from="Cameras/1/Area2D" to="PickableSword" method="_on_area_2d_body_entered" binds= [0]]
 
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]
 [connection signal="body_entered" from="Cameras/3/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [2]]

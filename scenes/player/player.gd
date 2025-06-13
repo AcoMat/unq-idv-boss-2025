@@ -12,7 +12,7 @@ extends CharacterBody2D
 @export var speed: float = 200.0
 @export var lifes = 3
 var equipped_weapon: Node2D = null
-
+var door = false
 # Jump Vars
 @export_group("Jump")
 @export var charge_rate := 8.0
@@ -39,6 +39,13 @@ var inertia: Vector2 = velocity
 func _ready():
 	add_to_group("player")
 
+func _process(delta):
+	open_door()
+
+func open_door():
+	if door == true:
+		set_physics_process(false)
+		door = false
 
 func _physics_process(delta: float) -> void:
 	# Abstraer a handle physics

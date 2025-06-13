@@ -1,7 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://cgu3nrv7llunp"]
+[gd_scene load_steps=31 format=3 uid="uid://cgu3nrv7llunp"]
 
 [ext_resource type="Script" uid="uid://cuxq8jpeaxe3c" path="res://scenes/enemies/enemy1/flyer.gd" id="1_npffq"]
 [ext_resource type="Texture2D" uid="uid://cs0t2qf17elfs" path="res://assets/enemies/enemy1/Bat_flying_strip22.png" id="2_j1uqj"]
+[ext_resource type="AudioStream" uid="uid://3fb66r6qc6hr" path="res://assets/audio/enemies/flyer/fly.mp3" id="3_2x0iv"]
+[ext_resource type="AudioStream" uid="uid://bmrfm8ls6bi21" path="res://assets/audio/enemies/flyer/death.mp3" id="4_vmmmx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ykha"]
 atlas = ExtResource("2_j1uqj")
@@ -213,6 +215,12 @@ shape = SubResource("CircleShape2D_npffq")
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
+
+[node name="Fly" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2x0iv")
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_vmmmx")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

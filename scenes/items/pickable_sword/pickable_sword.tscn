@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://daj8xxb8wrc40" path="res://scenes/items/pickable_sword/pickable_sword.gd" id="1_kkgai"]
 [ext_resource type="Texture2D" uid="uid://b4k2o25onhbi6" path="res://assets/items/sword/sword_stab/frame_0_delay-0.1s.png" id="2_rlx56"]
-[ext_resource type="AudioStream" uid="uid://cqhxqvafua3vt" path="res://assets/audio/objects/take.mp3" id="3_rlx56"]
+[ext_resource type="AudioStream" uid="uid://cqhxqvafua3vt" path="res://assets/audio/player/take.mp3" id="3_rlx56"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bww6v"]
 radius = 20.0

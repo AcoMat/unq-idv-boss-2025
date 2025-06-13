@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://wpor24wh75xr"]
+[gd_scene load_steps=12 format=3 uid="uid://wpor24wh75xr"]
 
 [ext_resource type="Script" uid="uid://d3tbrmhtq7kg5" path="res://scripts/menu.gd" id="1_1bi1t"]
 [ext_resource type="Texture2D" uid="uid://cm06mq36glchs" path="res://assets/menu/unqastillo.png" id="1_tejx5"]
 [ext_resource type="FontFile" uid="uid://d30raf2xdec3o" path="res://assets/fonts/ARCADECLASSIC.TTF" id="3_fd0v6"]
 [ext_resource type="AudioStream" uid="uid://clcft8foxqt5h" path="res://assets/audio/objects/button.mp3" id="3_vhl7d"]
+[ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="5_w7ek1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxwq3"]
 bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
@@ -126,8 +127,14 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_w7ek1")
 text = "QUIT
 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Button" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_vhl7d")
+bus = &"Efectos de Sonido"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_w7ek1")
+autoplay = true
+bus = &"Musica"
 
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
