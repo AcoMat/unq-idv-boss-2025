@@ -203,7 +203,7 @@ func get_attacked(damagePosition: Vector2):
 func loss_life():
 	lifes -= 1
 	if lifes < 1:
-		queue_free()
+		get_tree().change_scene_to_file("res://scenes/ui/menus/game_over.tscn")
 
 
 func get_pushed(enemy_position: Vector2):

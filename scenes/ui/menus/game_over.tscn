@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://dipq0db523tag"]
+
+[ext_resource type="Script" uid="uid://lrksy02axsv1" path="res://scripts/game_over.gd" id="1_uqh2p"]
+[ext_resource type="Texture2D" uid="uid://dsq83gf7oep6n" path="res://assets/menu/game_over.jpg" id="2_x1xl7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nr6h"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oqugp"]
+bg_color = Color(0.213082, 0.369547, 0.781702, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_uqh2p")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 1282.0
+offset_bottom = 716.0
+size_flags_horizontal = 4
+texture = ExtResource("2_x1xl7")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -214.0
+offset_right = 114.0
+offset_bottom = -145.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="retry" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_7nr6h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oqugp")
+text = "RESTART"
+
+[connection signal="pressed" from="VBoxContainer/retry" to="." method="_on_retry_pressed"]
