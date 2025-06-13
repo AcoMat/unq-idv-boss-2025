@@ -20,8 +20,9 @@ func _on_area_2d_body_entered(body: Node2D, cam_id: int) -> void:
 
 func get_all_cameras_sorted():
 	var get_cameras: Array[Camera2D] = []
+	var get_children = get_children()
 	for child in get_children():
 		if child is Camera2D:
 			get_cameras.append(child)
-	get_cameras.sort_custom(func(a: Camera2D, b: Camera2D): return a.name.to_int() < b.name.to_int())
+	get_cameras.sort_custom(func(a: Camera2D, b: Camera2D): return a.global_position.y > b.global_position.y) #ordeno por altura
 	return get_cameras

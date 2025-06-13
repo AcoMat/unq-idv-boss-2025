@@ -1,5 +1,6 @@
 extends Area2D
 
+@export var next_scene_path: String 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var timer: Timer = $Timer
@@ -17,4 +18,8 @@ func _on_body_entered(body):
 		animated_sprite_2d.play("open")
 		timer.start()
 		await (timer.timeout)
-		get_tree().change_scene_to_file("res://main.tscn")
+		get_tree().change_scene_to_file(next_scene_path)
+
+
+func _on_area_2d_body_entered(body: Node2D, extra_arg_0: int) -> void:
+	pass # Replace with function body.

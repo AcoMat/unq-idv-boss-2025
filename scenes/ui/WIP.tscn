@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://csfh3byho7c5l"]
+
+[ext_resource type="Script" uid="uid://bd2d1u8tktxj4" path="res://scenes/ui/wip.gd" id="1_rpr1p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vct6"]
+bg_color = Color(0.54902, 0.678431, 0.960784, 0.933333)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sw6v"]
+bg_color = Color(0.213082, 0.369547, 0.781702, 0.831373)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="Wip" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_rpr1p")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1287.0
+offset_bottom = 734.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 531.0
+offset_top = 501.0
+offset_right = 740.0
+offset_bottom = 570.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="retry" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_1vct6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0sw6v")
+text = "Menu"

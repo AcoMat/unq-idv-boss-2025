@@ -159,7 +159,7 @@ func double_jump(direction: int):
 func handle_falls():
 	if velocity.y > 0:
 		$PlayerSprite.play("fall")
-	if is_on_wall() or is_on_ceiling() and not was_on_wall and !is_control_enabled :
+	if !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall :
 		now_is_falling = true
 		can_double_jump = false
 		if(!is_on_ceiling()):
@@ -196,6 +196,7 @@ func equip_weapon(weapon: PackedScene):
   
 
 func get_attacked(damagePosition: Vector2):
+	print("Attacked")
 	loss_life()
 	get_pushed(damagePosition)
 

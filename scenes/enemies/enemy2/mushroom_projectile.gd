@@ -23,7 +23,7 @@ func _on_lifetime_timer_timeout() -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and speed != 0:
 		body.get_attacked(global_position)
 	speed = 0
 	$Sprite2D.play("hit")

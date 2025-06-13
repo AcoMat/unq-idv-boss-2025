@@ -100,15 +100,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_vhl7d")
 text = "PLAY
 "
 
-[node name="Tutorial" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_fd0v6")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover = SubResource("StyleBoxFlat_yxwq3")
-theme_override_styles/normal = SubResource("StyleBoxFlat_vhl7d")
-text = "Tutorial
-"
-
 [node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_fd0v6")
@@ -137,6 +128,5 @@ autoplay = true
 bus = &"Musica"
 
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

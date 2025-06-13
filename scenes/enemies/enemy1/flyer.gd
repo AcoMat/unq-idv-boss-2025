@@ -15,11 +15,10 @@ func _ready() -> void:
 	gravity_scale = 0
 	wander_center = global_position
 	death_sound.finished.connect(_on_death_sound_finished)
-	fly_sound.play()  # Inicia el sonido de vuelo
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if $AttackArea.has_overlapping_bodies() and $AttackCooldown.is_stopped():
+	if target and $AttackArea.has_overlapping_bodies() and $AttackCooldown.is_stopped() and $AnimatedSprite2D.visible:
 		target.get_pushed(global_position)
 		$AttackCooldown.start()
 		set_collision_mask_value(2, false)
@@ -56,5 +55,6 @@ func _on_wandering_timer_timeout() -> void:
 	nav.target_position = get_random_wander_point()
 
 func receive_damage():
-	fly_sound.stop()  # Detiene el sonido de vuelo
+	$AnimatedSprite2D.visible = false
+	speed = 0
 	death_sound.play()
