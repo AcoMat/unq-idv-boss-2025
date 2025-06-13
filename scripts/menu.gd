@@ -12,7 +12,7 @@ func play_sound_and_change_scene(scene_path: String) -> void:
 
 
 func _on_play_pressed() -> void:
-	await play_sound_and_change_scene("res://main2.tscn")
+	await play_sound_and_change_scene("res://main_tutorial.tscn")
 	
 func _on_options_pressed() -> void:
 	await play_sound_and_change_scene("res://scenes/ui/menus/options.tscn")

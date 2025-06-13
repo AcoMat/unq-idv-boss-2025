@@ -19,5 +19,5 @@ func start_intro():
 	
 	# Cambiar a cámaras de nivel
 	presentacion.enabled = false
-	$MainLevel.cameras[0].enabled = true
+	$MainLevel/Cameras/Camera1.make_current()
 	player.set_physics_process(true)
