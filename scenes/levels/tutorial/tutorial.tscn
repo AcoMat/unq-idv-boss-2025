@@ -244,8 +244,8 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(2312, 723, 2745, 722, 2
 [node name="Tutorial" type="Node2D"]
 
 [node name="BlueSky" type="Sprite2D" parent="."]
-position = Vector2(2646, 770)
-scale = Vector2(2.65, 2.65)
+position = Vector2(2478.5, 770)
+scale = Vector2(2.82448, 2.65)
 texture = ExtResource("17_otg5b")
 
 [node name="Map" type="Node2D" parent="."]
