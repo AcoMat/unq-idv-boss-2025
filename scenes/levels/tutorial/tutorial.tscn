@@ -1,8 +1,9 @@
-[gd_scene load_steps=31 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=33 format=4 uid="uid://b2defnc1q4dib"]
 
 [ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="1_6v5o0"]
 [ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/map/wood_set/arrow_sign.png" id="1_63nf7"]
 [ext_resource type="Texture2D" uid="uid://cr1brt40oacbu" path="res://assets/background/sky_lightened.png" id="1_f1mil"]
+[ext_resource type="Script" uid="uid://cvn05b7q0fuph" path="res://scenes/levels/tutorial/main_tutorial.gd" id="1_spfcf"]
 [ext_resource type="Texture2D" uid="uid://djogu2jwwm318" path="res://assets/background/parallax/sky/Layers/cloud_lonely.png" id="2_spfcf"]
 [ext_resource type="Texture2D" uid="uid://copr8mm0xllor" path="res://assets/map/tutorial/tutorial_arrows.png" id="3_m6rfe"]
 [ext_resource type="Texture2D" uid="uid://8cimntlpgatm" path="res://assets/map/tutorial/mouse-left-click-png.webp" id="4_63nf7"]
@@ -279,12 +280,16 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(3147, 711, 3255, 409, 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxpd2"]
 size = Vector2(549, 32)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bionb"]
+bg_color = Color(0.0392157, 0.101961, 0.27451, 0.831373)
+
 [node name="Tutorial" type="Node2D"]
+script = ExtResource("1_spfcf")
 
 [node name="Sky" type="Node2D" parent="."]
 
 [node name="SkyLightened" type="Sprite2D" parent="Sky"]
-position = Vector2(1965, 488)
+position = Vector2(1963, 488)
 scale = Vector2(10.3333, 6.84028)
 texture = ExtResource("1_f1mil")
 
@@ -549,6 +554,38 @@ one_shot = true
 [node name="EndFall" type="AudioStreamPlayer2D" parent="tutorial_final"]
 stream = ExtResource("14_jxpd2")
 attenuation = 0.0412346
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 547.0
+offset_top = 49.0
+offset_right = 587.0
+offset_bottom = 89.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer2/Control"]
+layout_mode = 0
+offset_left = -40.0
+offset_right = 247.0
+offset_bottom = 59.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bionb")
+
+[node name="Label" type="Label" parent="CanvasLayer2/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -11.5
+offset_right = 121.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Entrena para escapar del limbo"
 
 [connection signal="body_entered" from="Cameras/1/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]
