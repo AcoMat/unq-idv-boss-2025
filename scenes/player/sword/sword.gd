@@ -1,6 +1,5 @@
 extends Node2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	visible = false
@@ -10,8 +9,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("move_left"):
 		scale = abs(scale) * -1
+		$SwordSprite.flip_v = true
 	elif Input.is_action_pressed("move_right"):
 		scale = abs(scale)
+		$SwordSprite.flip_v = false
 
 
 func attack() -> void:
@@ -19,12 +20,13 @@ func attack() -> void:
 		visible = true
 		$Area2D/CollisionShape2D.disabled = false
 		# Podrian haber mas tipos de ataques
-		stab()
+		cut()
 		$AttackCooldown.start()
 
 
-func stab():
-	$SwordSprite.play("stab")
+func cut():
+	$Sword_attack.play()
+	$SwordSprite.play("cut")
 
 func _on_sword_sprite_animation_finished() -> void:
 	visible = false

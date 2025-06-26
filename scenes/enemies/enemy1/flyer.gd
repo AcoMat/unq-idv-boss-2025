@@ -14,7 +14,6 @@ var is_wandering = true
 func _ready() -> void:
 	gravity_scale = 0
 	wander_center = global_position
-	death_sound.finished.connect(_on_death_sound_finished)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

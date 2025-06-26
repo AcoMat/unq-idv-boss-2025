@@ -5,22 +5,21 @@ extends CharacterBody2D
 @onready var shock: AudioStreamPlayer2D = $Shock
 @onready var jump_sound: AudioStreamPlayer2D = $Jump
 @onready var fall: AudioStreamPlayer2D = $Fall
-@onready var sword_sound: AudioStreamPlayer2D = $Sword
 @onready var landing: AudioStreamPlayer2D = $Landing
 
 @export_group("General")
 @export var speed: float = 200.0
-@export var lifes = 3
+@export var lifes = -1
 var equipped_weapon: Node2D = null
 var door = false
 # Jump Vars
 @export_group("Jump")
 @export var charge_rate := 8.0
-@export var double_jump_force: float = 150.0
+@export var double_jump_force: float = 250.0
 var is_charging_jump := false
 var jump_charge := 0.0
 @export var max_jump_charge := 500.0
-var is_control_enabled = true
+var is_control_enabled = false
 var can_double_jump: bool = false
 # Dirección con buffer para salto
 var buffered_input := 0
@@ -30,7 +29,7 @@ var input_buffer_timer := 0.0
 @export_group("Bounce")
 @export_range(0.0,1.0) var vel_loss_percentage: float = 0.5
 @export var knockback_force := 150
-var now_is_falling := false
+var now_is_falling := true # para que empieze tirado en el piso
 var was_on_wall: bool = is_on_wall()
 var was_on_air: bool = !is_on_floor()
 var inertia: Vector2 = velocity
@@ -78,7 +77,6 @@ func handle_inputs():
 		handle_movement()
 	# Attack
 	if equipped_weapon and Input.is_action_just_pressed("attack") and is_control_enabled:
-		sword_sound.play()
 		equipped_weapon.attack()
 		
 
@@ -192,12 +190,10 @@ func equip_weapon(weapon: PackedScene):
 	equipped_weapon = weapon.instantiate()
 	add_child(equipped_weapon)
 	equipped_weapon.global_position = global_position
-	equipped_weapon.global_position.y - 1
   
 
 func get_attacked(damagePosition: Vector2):
-	print("Attacked")
-	loss_life()
+	#loss_life()
 	get_pushed(damagePosition)
 
 

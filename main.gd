@@ -13,7 +13,7 @@ func _ready():
 func start_intro():
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT)
 	# Terminar un poco arriba del jugador
-	var final_position = Vector2(player.global_position.x, player.global_position.y - 100)
+	var final_position = Vector2(playerglobal_position.x, player.global_position.y - 100)
 	tween.tween_property(presentacion, "global_position", final_position, 4.0)
 	await tween.finished
 	

@@ -358,11 +358,11 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_06hvg"]
-height = 40.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxwq3"]
+size = Vector2(20, 39)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n8pve"]
-radius = 26.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r2mtt"]
+size = Vector2(65.3591, 59.5)
 
 [node name="Skeleton" type="Node2D"]
 
@@ -370,33 +370,34 @@ radius = 26.0
 curve = SubResource("Curve2D_xdtj8")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(-115.718, 0)
 rotation = 3.14159
-progress = 494.29
 rotates = false
 
 [node name="Skeleton" type="StaticBody2D" parent="Path2D/PathFollow2D"]
+position = Vector2(-5.32388e-05, 21)
 collision_layer = 4
 script = ExtResource("1_ihf8u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/Skeleton"]
-position = Vector2(2.99994, 25)
+position = Vector2(4.76837e-07, 4.76837e-07)
 rotation = 3.14159
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_g4dnd")
-animation = &"death"
 autoplay = "default"
+offset = Vector2(2.235, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Skeleton"]
-position = Vector2(-1.00005, 18)
-shape = SubResource("CapsuleShape2D_06hvg")
+shape = SubResource("RectangleShape2D_wxwq3")
 
 [node name="HitRange" type="Area2D" parent="Path2D/PathFollow2D/Skeleton"]
+position = Vector2(9.53674e-07, 2.41774e-12)
 collision_layer = 0
 collision_mask = 2
 
 [node name="HitRange" type="CollisionShape2D" parent="Path2D/PathFollow2D/Skeleton/HitRange"]
-shape = SubResource("CircleShape2D_n8pve")
+visible = false
+position = Vector2(-17, -4.30981e-05)
+shape = SubResource("RectangleShape2D_r2mtt")
 
 [node name="Cooldown" type="Timer" parent="Path2D/PathFollow2D/Skeleton"]
 wait_time = 2.5

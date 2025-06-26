@@ -91,7 +91,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k0mc2"]
-radius = 176.003
+radius = 362.001
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hfoda"]
 size = Vector2(20, 37)
@@ -114,6 +114,7 @@ shape = SubResource("CircleShape2D_k0mc2")
 collision_mask = 3
 
 [node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

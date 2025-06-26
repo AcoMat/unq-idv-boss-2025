@@ -19,9 +19,11 @@ func _process(delta: float) -> void:
 		global_position = path_follow.global_position
 		var movement = global_position - last_position
 		if movement.x > 0:
-			$AnimatedSprite2D.flip_h = false
+			scale = abs(scale)
+			$AnimatedSprite2D.flip_v = false
 		elif movement.x < 0:
-			$AnimatedSprite2D.flip_h = true
+			scale = abs(scale) * -1
+			$AnimatedSprite2D.flip_v = true
 		last_position = global_position
 
 func attack():
@@ -50,10 +52,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 
 func receive_damage():
-	death_sound.play()
-	path_follow = null
-	$HitRange.monitoring = false
-	$AnimatedSprite2D.play("death")
+	if(!$CollisionShape2D.disabled):
+		death_sound.play()
+		$CollisionShape2D.disabled = true
+		path_follow = null
+		$HitRange.monitoring = false
+		$AnimatedSprite2D.play("death")
 
 
 func _on_cooldown_timeout() -> void:

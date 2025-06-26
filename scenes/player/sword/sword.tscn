@@ -1,17 +1,47 @@
-[gd_scene load_steps=12 format=3 uid="uid://8ynghkqdkncd"]
+[gd_scene load_steps=19 format=3 uid="uid://8ynghkqdkncd"]
 
 [ext_resource type="Script" uid="uid://xpqwqsstnaqe" path="res://scenes/player/sword/sword.gd" id="1_3pnyl"]
 [ext_resource type="Texture2D" uid="uid://b4k2o25onhbi6" path="res://assets/items/sword/sword_stab/frame_0_delay-0.1s.png" id="2_cgw3t"]
+[ext_resource type="Texture2D" uid="uid://cv8timrwhgwpq" path="res://assets/items/sword/sword_cut/frame_0_delay-0.1s.png" id="2_qsoy5"]
 [ext_resource type="Texture2D" uid="uid://cvm20oji2uj37" path="res://assets/items/sword/sword_stab/frame_1_delay-0.1s.png" id="3_q35wd"]
+[ext_resource type="Texture2D" uid="uid://bfvv2iwi1lcw7" path="res://assets/items/sword/sword_cut/frame_1_delay-0.1s.png" id="3_ykrpr"]
 [ext_resource type="Texture2D" uid="uid://cp8b85ayismv0" path="res://assets/items/sword/sword_stab/frame_2_delay-0.1s.png" id="4_uqgij"]
+[ext_resource type="Texture2D" uid="uid://dwvqdwx2oap26" path="res://assets/items/sword/sword_cut/frame_2_delay-0.1s.png" id="4_vf3g0"]
+[ext_resource type="Texture2D" uid="uid://brirv67y3mjj0" path="res://assets/items/sword/sword_cut/frame_3_delay-0.1s.png" id="5_lle2f"]
 [ext_resource type="Texture2D" uid="uid://bmi1208o3bui1" path="res://assets/items/sword/sword_stab/frame_3_delay-0.1s.png" id="5_r42wi"]
+[ext_resource type="Texture2D" uid="uid://dcdb5o5gvn07c" path="res://assets/items/sword/sword_cut/frame_4_delay-0.1s.png" id="6_78npw"]
 [ext_resource type="Texture2D" uid="uid://01c3ybeaappg" path="res://assets/items/sword/sword_stab/frame_4_delay-0.1s.png" id="6_mx3jt"]
 [ext_resource type="Texture2D" uid="uid://ccq8equaxvxfo" path="res://assets/items/sword/sword_stab/frame_5_delay-0.1s.png" id="7_44v4n"]
+[ext_resource type="Texture2D" uid="uid://kfchvjmrtv25" path="res://assets/items/sword/sword_cut/frame_5_delay-0.1s.png" id="7_glxu4"]
 [ext_resource type="Texture2D" uid="uid://3a6jjfx3vkwr" path="res://assets/items/sword/sword_stab/frame_6_delay-0.1s.png" id="8_bo3ia"]
 [ext_resource type="Texture2D" uid="uid://ppsq1d4hh44i" path="res://assets/items/sword/sword_stab/frame_7_delay-0.1s.png" id="9_irukq"]
+[ext_resource type="AudioStream" uid="uid://dtpeiktbu4p2c" path="res://assets/audio/player/sword-sound.mp3" id="16_ykrpr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hrhju"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qsoy5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ykrpr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vf3g0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lle2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_78npw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glxu4")
+}],
+"loop": false,
+"name": &"cut",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_cgw3t")
@@ -51,26 +81,28 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3pnyl"]
-radius = 8.0
-height = 58.0
+radius = 14.0
 
 [node name="Sword" type="Node2D"]
 script = ExtResource("1_3pnyl")
 
 [node name="SwordSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(8, 0)
+position = Vector2(9.9375, -0.389999)
+scale = Vector2(1.115, 1.115)
 sprite_frames = SubResource("SpriteFrames_hrhju")
-animation = &"stab"
+animation = &"cut"
 autoplay = "default"
+frame = 3
+frame_progress = 0.746901
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(10, 0)
+position = Vector2(0.937502, 7.61)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(2, 0)
+position = Vector2(9, -8)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3pnyl")
 disabled = true
@@ -78,6 +110,10 @@ disabled = true
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="Sword_attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_ykrpr")
+bus = &"Efectos de Sonido"
 
 [connection signal="animation_finished" from="SwordSprite" to="." method="_on_sword_sprite_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

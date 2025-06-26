@@ -1,17 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbej7wc2q2fa2"]
+[gd_scene load_steps=3 format=3 uid="uid://dbej7wc2q2fa2"]
 
 [ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/levels/main/main_level.tscn" id="1_0xm2m"]
-[ext_resource type="Script" uid="uid://cv27npahanovd" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/player/player.tscn" id="2_h2yge"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_h2yge")
 
 [node name="MainLevel" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
-position = Vector2(223, 382)
-
-[node name="Presentacion" type="Camera2D" parent="."]
-position = Vector2(550, 134)
-zoom = Vector2(1.2, 1.2)
+position = Vector2(212, 401)

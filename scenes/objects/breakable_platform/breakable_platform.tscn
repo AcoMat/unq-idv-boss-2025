@@ -46,7 +46,6 @@ radius = 1.0
 height = 40.0
 
 [node name="BreakablePlatform" type="StaticBody2D"]
-position = Vector2(0, 22)
 collision_mask = 3
 script = ExtResource("1_cgfxs")
 
@@ -72,7 +71,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_cgfxs")
 
 [node name="Respawn" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]

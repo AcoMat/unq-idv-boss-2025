@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://chstifti63yr5"]
+[gd_scene load_steps=18 format=3 uid="uid://chstifti63yr5"]
 
 [ext_resource type="Texture2D" uid="uid://n30gconqt8n7" path="res://assets/player/base.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bmxj7kg2cscca" path="res://scenes/player/player.gd" id="1_dovo2"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://dw0uorn81vek7" path="res://assets/audio/player/jump.mp3" id="3_p47bc"]
 [ext_resource type="AudioStream" uid="uid://cc4sjofdwyo86" path="res://assets/audio/player/fall.mp3" id="5_75vfm"]
 [ext_resource type="AudioStream" uid="uid://dy47355yy5rg6" path="res://assets/audio/player/landing.mp3" id="6_75vfm"]
-[ext_resource type="AudioStream" uid="uid://dtpeiktbu4p2c" path="res://assets/audio/player/sword-sound.mp3" id="7_0owmy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(24, 27)
@@ -131,7 +130,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="DoubleJumpCooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]
@@ -148,10 +147,6 @@ bus = &"Efectos de Sonido"
 
 [node name="Landing" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_75vfm")
-bus = &"Efectos de Sonido"
-
-[node name="Sword" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_0owmy")
 bus = &"Efectos de Sonido"
 
 [connection signal="timeout" from="JustFeltCooldown" to="." method="_on_just_felt_cooldown_timeout"]

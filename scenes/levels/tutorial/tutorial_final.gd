@@ -12,13 +12,13 @@ func _process(delta: float) -> void:
 
 
 func _on_final_body_entered(body: Node2D) -> void:
+	$EndFall.play()
+
+
+func _on_end_fall_finished() -> void:
+	$ColorRect.visible = true
 	$FinalTimer.start()
 
 
 func _on_final_timer_timeout() -> void:
-	if not $Blackout.is_visible_in_tree():
-		$Blackout.visible = true
-		$FinalTimer.wait_time = 1.0
-		$FinalTimer.start()
-	else:
-		get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_file("res://main.tscn")
