@@ -33,7 +33,8 @@ var now_is_falling := true # para que empieze tirado en el piso
 var was_on_wall: bool = is_on_wall()
 var was_on_air: bool = !is_on_floor()
 var inertia: Vector2 = velocity
-
+var is_playing_felt := false
+var is_playing_roll := false
 
 func _ready():
 	add_to_group("player")
@@ -114,6 +115,7 @@ func handle_jump_inputs():
 
 
 func handle_movement():
+	if is_playing_felt: return
 	var input_direction := 0
 	if Input.is_action_pressed("move_left"):
 		$PlayerSprite.play("walk")
@@ -124,7 +126,7 @@ func handle_movement():
 		$PlayerSprite.flip_h = false
 		input_direction += 1
 	else:
-		$PlayerSprite.play("default")
+		$PlayerSprite.play("idle")
 	velocity.x = input_direction * speed
 
 
@@ -144,6 +146,8 @@ func jump(direction: int):
 
 
 func double_jump(direction: int):
+	$PlayerSprite.play("roll")
+	is_playing_roll = true
 	jump_sound.play()
 	# Aplicar doble salto
 	velocity.y = -double_jump_force
@@ -155,7 +159,7 @@ func double_jump(direction: int):
 
 
 func handle_falls():
-	if velocity.y > 0:
+	if velocity.y > 0 and not is_playing_felt and not is_playing_roll:
 		$PlayerSprite.play("fall")
 	if !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall :
 		now_is_falling = true
@@ -171,6 +175,7 @@ func handle_falls():
 			velocity = Vector2.ZERO
 			$JustFeltCooldown.start()
 			$PlayerSprite.play("felt")
+			is_playing_felt = true
 			fall.play()
 			now_is_falling = false
 		else:
@@ -222,5 +227,4 @@ func _on_double_jump_cooldown_timeout() -> void:
 func _on_just_felt_cooldown_timeout() -> void:
 	is_control_enabled = true
 	can_double_jump = false
-
-	
+	is_playing_felt = false

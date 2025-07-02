@@ -289,7 +289,7 @@ script = ExtResource("1_spfcf")
 [node name="Sky" type="Node2D" parent="."]
 
 [node name="SkyLightened" type="Sprite2D" parent="Sky"]
-position = Vector2(1963, 488)
+position = Vector2(1964, 491)
 scale = Vector2(10.3333, 6.84028)
 texture = ExtResource("1_f1mil")
 
@@ -365,8 +365,8 @@ texture = ExtResource("3_m6rfe")
 
 [node name="Spacebar2" type="Sprite2D" parent="Map/1"]
 modulate = Color(1, 1, 1, 0.392157)
-position = Vector2(213, 524)
-scale = Vector2(0.0199112, 0.0242107)
+position = Vector2(216, 515)
+scale = Vector2(0.0878906, 0.0566406)
 texture = ExtResource("7_63nf7")
 
 [node name="Arrow" type="Sprite2D" parent="Map/1"]
@@ -422,14 +422,14 @@ texture = ExtResource("3_m6rfe")
 
 [node name="Spacebar" type="Sprite2D" parent="Map/3"]
 modulate = Color(1, 1, 1, 0.392157)
-position = Vector2(2653, 428)
-scale = Vector2(0.046, 0.046)
+position = Vector2(2712, 411)
+scale = Vector2(0.112844, 0.109914)
 texture = ExtResource("7_63nf7")
 
 [node name="Spacebar2" type="Sprite2D" parent="Map/3"]
 modulate = Color(1, 1, 1, 0.392157)
-position = Vector2(2347, 475)
-scale = Vector2(0.046, 0.046)
+position = Vector2(2384.94, 442.069)
+scale = Vector2(0.120984, 0.0997441)
 texture = ExtResource("7_63nf7")
 
 [node name="Sprite2D5" type="Sprite2D" parent="Map/3"]

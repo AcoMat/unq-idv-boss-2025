@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://n30gconqt8n7"
-path="res://.godot/imported/base.png-b9da5b01ef557bbd07aa879cedd8d85f.ctex"
+uid="uid://dwh1ghs3x7eng"
+path="res://.godot/imported/_Attack.png-e5002b9b17800308c1504cac8ab330c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/base.png"
-dest_files=["res://.godot/imported/base.png-b9da5b01ef557bbd07aa879cedd8d85f.ctex"]
+source_file="res://assets/player/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_Attack.png"
+dest_files=["res://.godot/imported/_Attack.png-e5002b9b17800308c1504cac8ab330c6.ctex"]
 
 [params]
 
