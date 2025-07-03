@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var jump_sound: AudioStreamPlayer2D = $Jump
 @onready var fall: AudioStreamPlayer2D = $Fall
 @onready var landing: AudioStreamPlayer2D = $Landing
+@onready var jump_bar: ProgressBar = $JumpBarUI/JumpBar
 
 @export_group("General")
 @export var speed: float = 200.0
@@ -94,15 +95,19 @@ func handle_jump_inputs():
 		is_charging_jump = true
 		is_control_enabled = false
 		$PlayerSprite.play("prejump")
+		jump_bar.visible = true
 	# CONTINUAR cargando mientras mantiene presionado
 	if is_charging_jump and Input.is_action_pressed("jump"):
 		jump_charge += charge_rate
 		jump_charge = min(jump_charge, max_jump_charge)
+		# Actualizar barra
+		jump_bar.value = (jump_charge / max_jump_charge) * 100
 		# Mantener quieto mientras carga
 		velocity.x = 0
 		
 	# EJECUTAR salto al soltar
 	if is_charging_jump and not Input.is_action_pressed("jump"):
+		jump_bar.visible = false
 		jump(buffered_input)
 	
 	if not is_charging_jump and not is_on_floor() and Input.is_action_just_pressed("jump") and can_double_jump:

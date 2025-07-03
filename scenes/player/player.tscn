@@ -499,5 +499,15 @@ bus = &"Efectos de Sonido"
 stream = ExtResource("6_75vfm")
 bus = &"Efectos de Sonido"
 
+[node name="JumpBarUI" type="CanvasLayer" parent="."]
+
+[node name="JumpBar" type="ProgressBar" parent="JumpBarUI"]
+modulate = Color(0.993291, 0.440082, 0.414082, 1)
+self_modulate = Color(0.992157, 0.439216, 0.415686, 1)
+offset_left = 12.0
+offset_top = 1.0
+offset_right = 105.0
+offset_bottom = 28.0
+
 [connection signal="timeout" from="JustFeltCooldown" to="." method="_on_just_felt_cooldown_timeout"]
 [connection signal="timeout" from="DoubleJumpCooldown" to="." method="_on_double_jump_cooldown_timeout"]
