@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://chstifti63yr5"]
+[gd_scene load_steps=75 format=3 uid="uid://chstifti63yr5"]
 
 [ext_resource type="Script" uid="uid://bmxj7kg2cscca" path="res://scenes/player/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://dwh1ghs3x7eng" path="res://assets/player/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_Attack.png" id="2_fcs02"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cqkgy3xussx6m" path="res://assets/player/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_CrouchFull.png" id="9_fcs02"]
 [ext_resource type="Texture2D" uid="uid://d0wctxq653h5" path="res://assets/player/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_Run.png" id="9_lgqa7"]
 [ext_resource type="Texture2D" uid="uid://bbhqmutv7fxtq" path="res://assets/player/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_Roll.png" id="10_myrg7"]
+[ext_resource type="AudioStream" uid="uid://dalydtgbiilvl" path="res://assets/audio/player/hurt.wav" id="16_myrg7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(24, 38)
@@ -497,6 +498,10 @@ bus = &"Efectos de Sonido"
 
 [node name="Landing" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_75vfm")
+bus = &"Efectos de Sonido"
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_myrg7")
 bus = &"Efectos de Sonido"
 
 [node name="JumpBarUI" type="CanvasLayer" parent="."]

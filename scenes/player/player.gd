@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var fall: AudioStreamPlayer2D = $Fall
 @onready var landing: AudioStreamPlayer2D = $Landing
 @onready var jump_bar: ProgressBar = $JumpBarUI/JumpBar
+@onready var damage: AudioStreamPlayer2D = $Damage
 
 @export_group("General")
 @export var speed: float = 200.0
@@ -203,6 +204,7 @@ func equip_weapon(weapon: PackedScene):
   
 
 func get_attacked(damagePosition: Vector2):
+	damage.play()
 	#loss_life()
 	get_pushed(damagePosition)
 

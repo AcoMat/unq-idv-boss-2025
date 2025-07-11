@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://d1daw6cyym3mk"]
+[gd_scene load_steps=22 format=4 uid="uid://d1daw6cyym3mk"]
 
 [ext_resource type="Script" uid="uid://c4rsrbv3b6e8l" path="res://scenes/levels/main/main_level.gd" id="1_2glnv"]
 [ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="2_2yeks"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bdkhwamj3bljt" path="res://scenes/objects/breakable_platform/breakable_platform.tscn" id="6_16ixw"]
 [ext_resource type="PackedScene" uid="uid://bd3ol1tsx22ye" path="res://scenes/objects/pusher/pusher.tscn" id="7_2glnv"]
 [ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/enemies/enemy2/mushroom.tscn" id="8_c0ok4"]
+[ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="10_c0ok4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vju25"]
 texture = ExtResource("2_2yeks")
@@ -424,6 +425,9 @@ offset_bottom = 9.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "puerta al paraiso mas adelante"
+
+[node name="PickableSword" parent="." instance=ExtResource("10_c0ok4")]
+position = Vector2(239, 391)
 
 [connection signal="body_entered" from="Cameras/Camera1/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/Camera2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]

@@ -5,7 +5,7 @@ extends StaticBody2D
 @export var speed: float = 50.0
 var path_follow: PathFollow2D
 var last_position: Vector2
-
+var is_dead := false
 var target: CharacterBody2D
 var attacking := false
 
@@ -52,14 +52,15 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 
 func receive_damage():
-	if(!$CollisionShape2D.disabled):
+	if not $CollisionShape2D.disabled:
+		is_dead = true
 		death_sound.play()
 		$CollisionShape2D.disabled = true
 		path_follow = null
 		$HitRange.monitoring = false
 		$AnimatedSprite2D.play("death")
 
-
 func _on_cooldown_timeout() -> void:
-	attacking = false
-	$AnimatedSprite2D.play("default")
+	if not is_dead:
+		attacking = false
+		$AnimatedSprite2D.play("default")
