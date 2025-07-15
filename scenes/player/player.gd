@@ -97,6 +97,7 @@ func handle_jump_inputs():
 		is_control_enabled = false
 		$PlayerSprite.play("prejump")
 		jump_bar.visible = true
+		
 	# CONTINUAR cargando mientras mantiene presionado
 	if is_charging_jump and Input.is_action_pressed("jump"):
 		jump_charge += charge_rate
@@ -223,6 +224,7 @@ func get_pushed(enemy_position: Vector2):
 	velocity.y = -abs(knockback_force) * 0.6 
 	# Desactivar control del jugador
 	is_control_enabled = false
+	is_charging_jump = false
 	now_is_falling = true
 
 

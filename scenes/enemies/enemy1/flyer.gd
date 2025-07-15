@@ -10,6 +10,7 @@ var wander_radius := 200.0
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var fly_sound: AudioStreamPlayer2D = $Fly
 var is_wandering = true
+@export var knockback_force := 150
 # Called when the node enters the scene tree for the first time.d
 func _ready() -> void:
 	gravity_scale = 0
@@ -19,6 +20,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if target and $AttackArea.has_overlapping_bodies() and $AttackCooldown.is_stopped() and $AnimatedSprite2D.visible:
 		target.get_pushed(global_position)
+		
 		$AttackCooldown.start()
 		set_collision_mask_value(2, false)
 	if target and not nav.is_navigation_finished():
@@ -57,3 +59,11 @@ func receive_damage():
 	$AnimatedSprite2D.visible = false
 	speed = 0
 	death_sound.play()
+
+func get_pushed(enemy_position: Vector2):
+	# Calcular dirección contraria al enemigo
+	var direction = sign(global_position.x - enemy_position.x)
+	# Aplicar impulso
+	velocity.x = direction * knockback_force
+	velocity.y = -abs(knockback_force) * 0.6 
+	# Desactivar control del jugador

@@ -273,9 +273,9 @@ size = Vector2(948, 534)
 size = Vector2(644.16, 372)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_f1mil"]
-vertices = PackedVector2Array(3263.54, 414.828, 3395.55, 300.18, 3389.84, 393.352, 3311.76, 634.82, 3252.19, 636.203, 3247.76, 670.18, 3258.65, 699.219, 3161.28, 700.773, 3428.31, 461.25, 3393.62, 653.25, 3315.85, 651.203, 3615.33, 387.828, 3726, 529.438, 3726, 634.18, 3570.24, 637.188, 3484.74, 458.891, 3569.24, 678, 3394.61, 678)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7), PackedInt32Array(5, 7, 0, 4), PackedInt32Array(3, 2, 8, 9, 10), PackedInt32Array(11, 12, 13, 14, 15), PackedInt32Array(15, 14, 16, 17, 9, 8)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(3147, 711, 3255, 409, 3407, 277, 3400, 391, 3434, 451, 3482, 449, 3618, 375, 3736, 526, 3736, 644, 3580, 647, 3579, 688, 3385, 688, 3384, 663, 3308, 661, 3304, 645, 3261, 646, 3258, 669, 3273, 709)])
+vertices = PackedVector2Array(3106.11, 461.641, 3085.32, 304.398, 3396.33, 287.594, 3389.84, 393.352, 3160.1, 481, 3271.99, 699.008, 3157.13, 700.828, 3428.31, 461.25, 3384.07, 678, 3570.24, 637.188, 3569.24, 678, 3484.74, 458.891, 3726, 529.438, 3726, 634.18, 3615.33, 387.828)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 4, 3, 7, 8), PackedInt32Array(9, 10, 8, 7, 11), PackedInt32Array(12, 13, 9, 11, 14)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(3147, 711, 3150, 488, 3097, 469, 3074, 295, 3407, 277, 3400, 391, 3434, 451, 3482, 449, 3618, 375, 3736, 526, 3736, 644, 3580, 647, 3579, 688, 3385, 688, 3273, 709)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxpd2"]
 size = Vector2(549, 32)
@@ -526,7 +526,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_f1mil")
 
 [node name="Fliyer" parent="." instance=ExtResource("16_8grxy")]
-position = Vector2(3458, 511)
+position = Vector2(3390, 517)
 
 [node name="tutorial_final" type="Node2D" parent="."]
 position = Vector2(3418, 702)
