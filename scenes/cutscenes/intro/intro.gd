@@ -23,6 +23,6 @@ func _on_ready_timeout() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if(knight_loop):
-		body.global_position = $Marker2D.global_position
+		body.position = $Marker2D.position
 	else:
 		body.queue_free()
