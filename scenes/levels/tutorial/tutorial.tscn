@@ -1,26 +1,25 @@
-[gd_scene load_steps=33 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=32 format=4 uid="uid://b2defnc1q4dib"]
 
-[ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/map/tilesets/GrassLand.png" id="1_6v5o0"]
-[ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/map/wood_set/arrow_sign.png" id="1_63nf7"]
-[ext_resource type="Texture2D" uid="uid://cr1brt40oacbu" path="res://assets/background/sky_lightened.png" id="1_f1mil"]
+[ext_resource type="Texture2D" uid="uid://biwm76ma2rvfc" path="res://assets/levels/map/tilesets/GrassLand.png" id="1_6v5o0"]
+[ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/levels/map/wood_set/arrow_sign.png" id="1_63nf7"]
+[ext_resource type="Texture2D" uid="uid://cr1brt40oacbu" path="res://assets/levels/background/sky_lightened.png" id="1_f1mil"]
 [ext_resource type="Script" uid="uid://cvn05b7q0fuph" path="res://scenes/levels/tutorial/main_tutorial.gd" id="1_spfcf"]
-[ext_resource type="Texture2D" uid="uid://djogu2jwwm318" path="res://assets/background/parallax/sky/Layers/cloud_lonely.png" id="2_spfcf"]
-[ext_resource type="Texture2D" uid="uid://copr8mm0xllor" path="res://assets/map/tutorial/tutorial_arrows.png" id="3_m6rfe"]
-[ext_resource type="Texture2D" uid="uid://8cimntlpgatm" path="res://assets/map/tutorial/mouse-left-click-png.webp" id="4_63nf7"]
+[ext_resource type="Texture2D" uid="uid://djogu2jwwm318" path="res://assets/levels/background/parallax/sky/Layers/cloud_lonely.png" id="2_spfcf"]
+[ext_resource type="Texture2D" uid="uid://copr8mm0xllor" path="res://assets/levels/map/tutorial/tutorial_arrows.png" id="3_m6rfe"]
+[ext_resource type="Texture2D" uid="uid://8cimntlpgatm" path="res://assets/levels/map/tutorial/mouse-left-click-png.webp" id="4_63nf7"]
 [ext_resource type="Script" uid="uid://b7fyiph8vxt2w" path="res://scenes/levels/tutorial/cameras.gd" id="5_m6rfe"]
-[ext_resource type="PackedScene" uid="uid://8bu0kpvq0dsb" path="res://scenes/items/pickable_sword/pickable_sword.tscn" id="5_mxxi8"]
-[ext_resource type="Texture2D" uid="uid://bh6o538uoqjam" path="res://assets/map/tutorial/arrow.png" id="7_5eevr"]
-[ext_resource type="Texture2D" uid="uid://b3817bulylj41" path="res://assets/map/tutorial/spacebar.png" id="7_63nf7"]
-[ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause_menu.tscn" id="7_mxxi8"]
-[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/enemies/enemy3/skeleton.tscn" id="8_mxxi8"]
-[ext_resource type="Texture2D" uid="uid://dj3obmiyfmrmd" path="res://assets/map/tutorial/a.png" id="8_tofvi"]
-[ext_resource type="Texture2D" uid="uid://c6v687mxu2a27" path="res://assets/map/tutorial/d.png" id="9_bnul6"]
+[ext_resource type="Texture2D" uid="uid://bh6o538uoqjam" path="res://assets/levels/map/tutorial/arrow.png" id="7_5eevr"]
+[ext_resource type="Texture2D" uid="uid://b3817bulylj41" path="res://assets/levels/map/tutorial/spacebar.png" id="7_63nf7"]
+[ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause/pause_menu.tscn" id="7_mxxi8"]
+[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/enemy3/skeleton.tscn" id="8_mxxi8"]
+[ext_resource type="Texture2D" uid="uid://dj3obmiyfmrmd" path="res://assets/levels/map/tutorial/a.png" id="8_tofvi"]
+[ext_resource type="Texture2D" uid="uid://c6v687mxu2a27" path="res://assets/levels/map/tutorial/d.png" id="9_bnul6"]
 [ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/gameplay_music.mp3" id="14_8grxy"]
 [ext_resource type="Script" uid="uid://bexaa3fg461hl" path="res://scenes/levels/tutorial/tutorial_final.gd" id="14_bnul6"]
 [ext_resource type="AudioStream" uid="uid://q0ubydtelm2d" path="res://assets/audio/End_Fall.mp3" id="14_jxpd2"]
-[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/enemies/enemy2/mushroom.tscn" id="15_8grxy"]
-[ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/enemies/enemy1/flyer.tscn" id="16_8grxy"]
-[ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/objects/door/door.tscn" id="17_otg5b"]
+[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/entities/enemies/enemy2/mushroom.tscn" id="15_8grxy"]
+[ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/entities/enemies/enemy1/flyer.tscn" id="16_8grxy"]
+[ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/entities/objects/door/door.tscn" id="17_otg5b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kmgkv"]
 resource_name = "grassland"
@@ -400,9 +399,6 @@ texture = ExtResource("9_bnul6")
 position = Vector2(1097, 386)
 scale = Vector2(0.0330646, 0.0330646)
 texture = ExtResource("4_63nf7")
-
-[node name="PickableSword" parent="Map/2" instance=ExtResource("5_mxxi8")]
-position = Vector2(1096, 487)
 
 [node name="3" type="Node2D" parent="Map"]
 

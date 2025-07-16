@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccai3tjfywgb4"]
+
+[ext_resource type="Script" uid="uid://cus35bpk3niqv" path="res://scenes/ui/dialogues/dialog_box.gd" id="1_254ub"]
+[ext_resource type="AudioStream" uid="uid://cqjexd0qb5ce0" path="res://assets/audio/dialog/typewriter tiping.mp3" id="2_72eem"]
+[ext_resource type="Texture2D" uid="uid://bkx1ebrlf3025" path="res://assets/entities/items/arrow/Just_arrow.png" id="3_wlo5p"]
+
+[node name="DialogBox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_254ub")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_wlo5p")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_72eem")
