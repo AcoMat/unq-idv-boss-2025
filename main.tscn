@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://dbej7wc2q2fa2"]
+[gd_scene load_steps=3 format=3 uid="uid://dbej7wc2q2fa2"]
+
+[ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/entities/player/player.tscn" id="1_ig7tw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(916, 261)
 
 [node name="Main" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(616, 511)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(611, 163)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(616, 334)

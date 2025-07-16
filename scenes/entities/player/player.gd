@@ -225,6 +225,7 @@ func get_pushed(enemy_position: Vector2):
 	# Desactivar control del jugador
 	is_control_enabled = false
 	is_charging_jump = false
+	jump_charge = 0
 	now_is_falling = true
 
 

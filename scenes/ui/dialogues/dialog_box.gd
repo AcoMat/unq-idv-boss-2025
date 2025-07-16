@@ -21,8 +21,15 @@ var current_index := 0
 var awaiting_input := false
 
 func _ready() -> void:
+	visible = false
+
+
+func start_dialogue() -> void:
+	visible = true
+	current_index = 0
 	arrow.visible = false
 	await show_text(text_queue[current_index])
+
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):

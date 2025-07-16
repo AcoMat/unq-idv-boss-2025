@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdkhwamj3bljt"]
 
 [ext_resource type="Script" uid="uid://cuxf40k104aae" path="res://scenes/entities/objects/breakable_platform/breakable_platform.gd" id="1_cgfxs"]
-[ext_resource type="Texture2D" uid="uid://c2lq8eemtrlix" path="res://assets/levels/map/wood_set/wood_crate/1.png" id="2_76uht"]
-[ext_resource type="Texture2D" uid="uid://b6oogmkv7rwmn" path="res://assets/levels/map/wood_set/wood_crate/2.png" id="3_1bx5a"]
-[ext_resource type="Texture2D" uid="uid://bt58ljhsdgr17" path="res://assets/levels/map/wood_set/wood_crate/3.png" id="4_nieb3"]
-[ext_resource type="Texture2D" uid="uid://dw2murv4bw5n" path="res://assets/levels/map/wood_set/wood_crate/4.png" id="5_dnnyl"]
-[ext_resource type="Texture2D" uid="uid://bgddobx5w30rl" path="res://assets/levels/map/wood_set/wood_crate/5.png" id="6_utmcq"]
+[ext_resource type="Texture2D" uid="uid://c2lq8eemtrlix" path="res://assets/entities/wood_set/wood_crate/1.png" id="2_76uht"]
+[ext_resource type="Texture2D" uid="uid://b6oogmkv7rwmn" path="res://assets/entities/wood_set/wood_crate/2.png" id="3_1bx5a"]
+[ext_resource type="Texture2D" uid="uid://bt58ljhsdgr17" path="res://assets/entities/wood_set/wood_crate/3.png" id="4_nieb3"]
+[ext_resource type="Texture2D" uid="uid://dw2murv4bw5n" path="res://assets/entities/wood_set/wood_crate/4.png" id="5_dnnyl"]
+[ext_resource type="Texture2D" uid="uid://bgddobx5w30rl" path="res://assets/entities/wood_set/wood_crate/5.png" id="6_utmcq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckojn"]
 size = Vector2(42, 42)
