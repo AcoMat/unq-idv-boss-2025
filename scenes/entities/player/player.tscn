@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://chstifti63yr5"]
+[gd_scene load_steps=38 format=3 uid="uid://chstifti63yr5"]
 
 [ext_resource type="Script" uid="uid://bmxj7kg2cscca" path="res://scenes/entities/player/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://2o4di0k507yw" path="res://assets/entities/player/jump/jump_2.png" id="2_0xxfp"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://dm70m3178e31l" path="res://assets/entities/player/run/run_5.png" id="20_2l7jx"]
 [ext_resource type="Texture2D" uid="uid://di1rpb2mhkj5" path="res://assets/entities/player/run/run_6.png" id="21_dj766"]
 [ext_resource type="Texture2D" uid="uid://bv25awfob4jfn" path="res://assets/entities/player/attacks/attack1/attack1_1.png" id="27_80gid"]
+[ext_resource type="AudioStream" uid="uid://dtpeiktbu4p2c" path="res://assets/audio/player/sword-sound.mp3" id="27_l2s38"]
 [ext_resource type="Texture2D" uid="uid://cd0pwci6k60i7" path="res://assets/entities/player/attacks/attack1/attack1_2.png" id="28_jdidn"]
 [ext_resource type="Texture2D" uid="uid://buv3cbk670m2k" path="res://assets/entities/player/attacks/attack1/attack1_3.png" id="29_c2ktb"]
 [ext_resource type="Texture2D" uid="uid://cbxu8bp78rpi8" path="res://assets/entities/player/attacks/attack1/attack1_4.png" id="30_5tbmh"]
@@ -261,6 +262,9 @@ bus = &"Efectos de Sonido"
 stream = ExtResource("16_myrg7")
 bus = &"Efectos de Sonido"
 
+[node name="Attack" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("27_l2s38")
+
 [node name="AttackAnim" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(10, -8)
@@ -268,9 +272,11 @@ sprite_frames = SubResource("SpriteFrames_daptw")
 animation = &"attack"
 
 [node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(7, -2)
+position = Vector2(9, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0xxfp")
 

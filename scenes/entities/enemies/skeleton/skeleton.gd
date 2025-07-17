@@ -7,17 +7,17 @@ extends EnemyBase
 var direction := -1
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	if not floor_check.is_colliding() or wall_check.is_colliding():
+	super(delta)
+	if not floor_check.is_colliding() or wall_check.is_colliding() and is_on_floor():
 		direction *= -1
 		_flip()
 
 	if abs(velocity.x) < speed:
 		velocity.x = direction * speed
-	move_and_slide()
 	velocity = velocity.lerp(Vector2(direction * speed, 0), 0.1)
+	
+	
+	move_and_slide()
 
 
 func _flip():
@@ -36,6 +36,10 @@ func _flip():
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
+	attack()
+
+
+func attack():
 	speed = 0
 	sprite.visible=false
 	$AttackSprite.visible=true
@@ -44,6 +48,7 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 
 func _on_attack_sprite_animation_finished() -> void:
 	if $AttackSprite.animation == "attack":
+		$Attack.play()
 		for body in $AttackArea.get_overlapping_bodies():
 			body.get_attacked(global_position)
 		$AttackSprite.play("after_attack")
@@ -51,4 +56,9 @@ func _on_attack_sprite_animation_finished() -> void:
 		speed = 60
 		attack_sprite.visible=false
 		sprite.visible = true
-		
+
+
+func die():
+	super()
+	$Death.play()
+	sprite.play("death")

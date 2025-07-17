@@ -74,7 +74,7 @@ func handle_inputs():
 	# Attack
 	if Input.is_action_just_pressed("attack") and is_control_enabled and not is_charging_jump:
 		_attack()
-	if is_control_enabled and is_on_floor() and not is_charging_jump:
+	else: if is_control_enabled and is_on_floor() and not is_charging_jump:
 		handle_movement()
 
 
@@ -84,7 +84,6 @@ func handle_jump_inputs():
 		and not is_charging_jump
 		and is_control_enabled
 	)
-	
 	# INICIAR carga si presiona salto
 	if Input.is_action_just_pressed("jump") and can_start_charging:
 		is_charging_jump = true
@@ -168,7 +167,7 @@ func double_jump(direction: int):
 func handle_falls():
 	if velocity.y > 0 and not is_playing_felt and not is_playing_roll:
 		$PlayerSprite.play("fall")
-	if !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall and not is_attacking:
+	if not is_attacking and !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall :
 		now_is_falling = true
 		can_double_jump = false
 		if(!is_on_ceiling()):
@@ -197,6 +196,7 @@ func handle_falls():
   
 
 func _attack():
+	$Audio/Attack.play()
 	is_attacking = true
 	velocity = Vector2.ZERO
 	is_control_enabled = false

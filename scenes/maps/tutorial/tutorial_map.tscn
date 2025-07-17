@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://q0ubydtelm2d" path="res://assets/audio/misc/End_Fall.mp3" id="14_jxpd2"]
 [ext_resource type="FontFile" uid="uid://di422unobhpha" path="res://assets/fonts/joystix monospace.otf" id="14_upgv8"]
 [ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/entities/enemies/mushroom/mushroom.tscn" id="15_8grxy"]
-[ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/readable_sign/readeable_sign.tscn" id="15_gnnj4"]
+[ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/objects/readable_sign/readeable_sign.tscn" id="15_gnnj4"]
 [ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/entities/enemies/bat/flyer.tscn" id="16_8grxy"]
 [ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/entities/objects/door/door.tscn" id="17_otg5b"]
 
@@ -1656,7 +1656,6 @@ attenuation = 0.0412346
 
 [node name="ReadeableSign" parent="." instance=ExtResource("15_gnnj4")]
 position = Vector2(3337, 473)
-sign_text = "Para escapar del limbo cruze la proxima puerta"
 
 [connection signal="body_entered" from="Cameras/1/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]

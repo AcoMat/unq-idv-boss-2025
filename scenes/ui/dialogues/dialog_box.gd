@@ -7,12 +7,7 @@ extends Control
 signal second_to_last()
 signal finished()
 
-@export var text_queue: Array[String] = [
-	"Hola, esto es un ejemplo de diálogo.",
-	"Puedes avanzar con Enter.",
-	"¡Este es el último mensaje!"
-]
-
+@export var text_queue: Array[String] = ["..."]
 @export var speed := 0.03
 
 var skip_dialogue := false
@@ -45,7 +40,6 @@ func _input(event):
 				await show_text(text_queue[current_index])
 			else:
 				finished.emit()
-				queue_free()
 
 func show_text(text: String) -> void:
 	playing_dialogue = true

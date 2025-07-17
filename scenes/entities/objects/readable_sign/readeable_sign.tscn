@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://4gka2i4syj2l"]
+
+[ext_resource type="Script" uid="uid://bss2sxcntyblc" path="res://scenes/entities/objects/readable_sign/readeable_sign.gd" id="1_671q1"]
+[ext_resource type="Texture2D" uid="uid://b50isoim0f3ev" path="res://assets/entities/wood_set/arrow_sign.png" id="2_jfips"]
+[ext_resource type="PackedScene" uid="uid://ccai3tjfywgb4" path="res://scenes/ui/dialogues/dialog_box.tscn" id="3_av0ru"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i74jf"]
+radius = 12.0416
+
+[node name="ReadeableSign" type="Node2D"]
+script = ExtResource("1_671q1")
+
+[node name="ArrowSign" type="Sprite2D" parent="."]
+position = Vector2(0, -2.38419e-07)
+scale = Vector2(0.046875, 0.046875)
+texture = ExtResource("2_jfips")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_i74jf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DialogBox" parent="CanvasLayer" instance=ExtResource("3_av0ru")]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,20 +1,25 @@
-[gd_scene format=3 uid="uid://dbej7wc2q2fa2"]
+[gd_scene load_steps=5 format=3 uid="uid://dbej7wc2q2fa2"]
+
+[ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/entities/player/player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/skeleton/skeleton.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/objects/readable_sign/readeable_sign.tscn" id="3_h2yge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(924, 110)
 
 [node name="Main" type="Node2D"]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1242.0
-offset_bottom = 684.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(626, 588)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Player" parent="." instance=ExtResource("1_h2yge")]
+position = Vector2(274, 401)
+
+[node name="Skeleton" parent="." instance=ExtResource("2_1bvp3")]
+position = Vector2(652, 505)
+
+[node name="ReadeableSign" parent="." instance=ExtResource("3_h2yge")]
+position = Vector2(445, 522)
