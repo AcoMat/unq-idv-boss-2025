@@ -1553,7 +1553,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_cntqr")
 layout_mode = 2
 theme_override_fonts/font = ExtResource("14_upgv8")
 theme_override_font_sizes/font_size = 12
-text = "Manten  presionado la tecla [espacio] para cargar tu salto"
+text = "Manten  presionado la tecla [espacio] Y UNA TECLA DE DIRECCION para SALTAR"
 autowrap_mode = 2
 
 [node name="PanelContainer4" type="PanelContainer" parent="TutorialText"]

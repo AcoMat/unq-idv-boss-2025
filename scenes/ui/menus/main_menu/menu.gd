@@ -12,6 +12,7 @@ func sound_and_change_scene(scene_path: String) -> void:
 
 func _on_play_pressed() -> void:
 	button.play()
+	$VBoxContainer.queue_free()
 	await button.finished
 	SceneManager.change_scene("res://scenes/cutscenes/intro/intro.tscn")
 

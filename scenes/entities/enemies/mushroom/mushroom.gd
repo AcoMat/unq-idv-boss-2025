@@ -14,7 +14,8 @@ func _physics_process(delta: float) -> void:
 		$RayCast2D.force_raycast_update()
 		if $RayCast2D.is_colliding() and $RayCast2D.get_collider() == current_objetive:
 			shoot()
-	
+	if is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, 500 * delta)
 	move_and_slide()
 
 

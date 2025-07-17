@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://caoey2uow8x1c"]
+[gd_scene load_steps=13 format=3 uid="uid://caoey2uow8x1c"]
 
 [ext_resource type="PackedScene" uid="uid://b2defnc1q4dib" path="res://scenes/maps/tutorial/tutorial_map.tscn" id="1_4x1au"]
 [ext_resource type="Script" uid="uid://ccdfqn06ihcwg" path="res://levels/tutorial/tutorial_level.gd" id="1_ohe04"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/skeleton/skeleton.tscn" id="5_5twqn"]
 [ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/entities/enemies/bat/flyer.tscn" id="6_pyiwh"]
 [ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/entities/enemies/mushroom/mushroom.tscn" id="7_r8lhe"]
+[ext_resource type="PackedScene" uid="uid://cj2j5fqw4s1bm" path="res://scenes/entities/enemies/mushroom/mushroom_projectile.tscn" id="8_muvb3"]
 [ext_resource type="AudioStream" uid="uid://q0ubydtelm2d" path="res://assets/audio/misc/End_Fall.mp3" id="8_u6ybs"]
 [ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/objects/readable_sign/readeable_sign.tscn" id="9_4dic1"]
 
@@ -42,6 +43,7 @@ position = Vector2(4352, 249)
 
 [node name="Mushroom" parent="Enemies" instance=ExtResource("7_r8lhe")]
 position = Vector2(4075, 491)
+projectile_scene = ExtResource("8_muvb3")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Enemies"]
 navigation_polygon = SubResource("NavigationPolygon_jtnbj")
@@ -76,6 +78,10 @@ one_shot = true
 [node name="ReadeableSign" parent="." instance=ExtResource("9_4dic1")]
 position = Vector2(3337, 473)
 sign_text = Array[String](["Salida del LIMBO en la proxima PUERTA"])
+
+[node name="Mushroom" parent="." instance=ExtResource("7_r8lhe")]
+position = Vector2(644, 584)
+projectile_scene = ExtResource("8_muvb3")
 
 [connection signal="body_entered" from="tutorial_final/Final" to="." method="_on_final_body_entered"]
 [connection signal="finished" from="tutorial_final/EndFall" to="." method="_on_end_fall_finished"]

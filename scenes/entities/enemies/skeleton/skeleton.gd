@@ -4,22 +4,72 @@ extends EnemyBase
 @onready var wall_check := $wall_check
 @onready var sprite := $SkeletonSprite
 @onready var attack_sprite := $AttackSprite
+
+enum State {
+	PATROLLING,
+	ATTACKING,
+	DYING
+}
+
+var state: State = State.PATROLLING
 var direction := -1
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	
+	match state:
+		State.PATROLLING:
+			_process_patrolling(delta)
+		State.ATTACKING:
+			_process_attacking(delta)
+		State.DYING:
+			pass # No movimiento al morir
+
+	move_and_slide()
+
+
+# --- Estados ---
+func _process_patrolling(delta: float) -> void:
 	if not floor_check.is_colliding() or wall_check.is_colliding() and is_on_floor():
 		direction *= -1
 		_flip()
 
-	if abs(velocity.x) < speed:
-		velocity.x = direction * speed
 	velocity = velocity.lerp(Vector2(direction * speed, 0), 0.1)
-	
-	
-	move_and_slide()
+
+func _process_attacking(delta: float) -> void:
+	# El ataque en sí no se mueve, se controla desde animación
+	velocity.x = 0
 
 
+# --- Cambio de estados ---
+func _change_state(new_state: State) -> void:
+	if state == new_state:
+		return
+	
+	match new_state:
+		State.PATROLLING:
+			speed = 60
+			sprite.visible = true
+			attack_sprite.visible = false
+
+		State.ATTACKING:
+			speed = 0
+			sprite.visible = false
+			attack_sprite.visible = true
+			attack_sprite.play("attack")
+
+		State.DYING:
+			speed = 0
+			attack_sprite.visible = false
+			attack_sprite.stop()
+			sprite.visible = true
+			sprite.play("death")
+			$Death.play()
+
+	state = new_state
+
+
+# --- Eventos ---
 func _flip():
 	if direction < 0:
 		sprite.flip_h = true
@@ -29,40 +79,30 @@ func _flip():
 		sprite.flip_h = false
 		attack_sprite.flip_h = false
 		attack_sprite.offset.x = 0
-		
+
 	$AttackArea.scale.x *= -1
 	floor_check.target_position.x *= -1
-	wall_check.target_position.x *=  -1
+	wall_check.target_position.x *= -1
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
-	attack()
-
-
-func attack():
-	speed = 0
-	sprite.visible=false
-	$AttackSprite.visible=true
-	$AttackSprite.play("attack")
+	if state != State.DYING:
+		_change_state(State.ATTACKING)
 
 
 func _on_attack_sprite_animation_finished() -> void:
-	if $AttackSprite.animation == "attack":
+	if attack_sprite.animation == "attack":
 		$Attack.play()
 		for body in $AttackArea.get_overlapping_bodies():
 			body.get_attacked(global_position)
-		$AttackSprite.play("after_attack")
-	else:
-		speed = 60
-		attack_sprite.visible=false
-		sprite.visible = true
+		attack_sprite.play("after_attack")
+	elif state != State.DYING:
+		_change_state(State.PATROLLING)
 
 
 func die():
-	$AttackSprite.queue_free()
-	sprite.visible = true
-	$Death.play()
-	sprite.play("death")
+	if state != State.DYING:
+		_change_state(State.DYING)
 
 
 func _on_skeleton_sprite_animation_finished() -> void:

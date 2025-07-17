@@ -10,12 +10,12 @@
 
 [node name="Level1Map" parent="." instance=ExtResource("1_45440")]
 
+[node name="Door" parent="." instance=ExtResource("3_5b03i")]
+position = Vector2(1396, -1752)
+next_scene_path = "res://levels/level_2/level_2.tscn"
+
 [node name="Player" parent="." instance=ExtResource("2_epb64")]
 position = Vector2(209, 371)
-
-[node name="Door" parent="." instance=ExtResource("3_5b03i")]
-position = Vector2(1397, -1756)
-next_scene_path = "res://levels/level_2/level_2.tscn"
 
 [node name="Skeleton" parent="." instance=ExtResource("4_e6u7d")]
 position = Vector2(519, -617)

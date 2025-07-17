@@ -35,7 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://b3xjnuxl71l41" path="res://assets/entities/player/attacks/attack1/attack1_6.png" id="32_avkvk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
-size = Vector2(18, 38)
+size = Vector2(18, 26)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_je7p5"]
 animations = [{
@@ -178,7 +178,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -203,7 +203,7 @@ script = ExtResource("1_dovo2")
 vel_loss_percentage = 0.7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -1)
+position = Vector2(-1, 5)
 shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]

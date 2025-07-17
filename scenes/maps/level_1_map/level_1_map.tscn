@@ -235,13 +235,13 @@ size = Vector2(982, 526)
 size = Vector2(984, 523)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r31pu"]
-size = Vector2(982, 528)
+size = Vector2(891, 516)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_16ixw"]
-size = Vector2(883, 505)
+size = Vector2(883, 509)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2glnv"]
-size = Vector2(605, 303)
+size = Vector2(605, 261.5)
 
 [node name="Level1Map" type="Node2D"]
 
@@ -304,7 +304,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/Camera4/Area2D"]
-position = Vector2(0, 1)
+position = Vector2(-45.5, 7)
 shape = SubResource("RectangleShape2D_r31pu")
 
 [node name="Camera5" type="Camera2D" parent="Cameras"]
@@ -317,7 +317,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/Camera5/Area2D"]
-position = Vector2(-49.5, 19.5)
+position = Vector2(-49.5, 21.5)
 shape = SubResource("RectangleShape2D_16ixw")
 
 [node name="Camera6" type="Camera2D" parent="Cameras"]
@@ -330,6 +330,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/Camera6/Area2D"]
+position = Vector2(0, -20.75)
 shape = SubResource("RectangleShape2D_2glnv")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]

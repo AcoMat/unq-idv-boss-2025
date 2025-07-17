@@ -388,6 +388,7 @@ shape = SubResource("CapsuleShape2D_1sppa")
 target_position = Vector2(-47, 37)
 
 [node name="wall_check" type="RayCast2D" parent="."]
+position = Vector2(0, 21)
 target_position = Vector2(-44, 0)
 
 [node name="AttackArea" type="Area2D" parent="."]

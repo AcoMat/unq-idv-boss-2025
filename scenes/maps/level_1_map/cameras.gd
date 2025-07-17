@@ -24,5 +24,5 @@ func get_all_cameras_sorted():
 	for child in get_children():
 		if child is Camera2D:
 			get_cameras.append(child)
-	get_cameras.sort_custom(func(a: Camera2D, b: Camera2D): return a.global_position.y > b.global_position.y) #ordeno por altura
+	get_cameras.sort_custom(func(a: Camera2D, b: Camera2D): return a.name.to_int() < b.name.to_int())
 	return get_cameras
