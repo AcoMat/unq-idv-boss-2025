@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="2025-boss-final"
-run/main_scene="uid://wpor24wh75xr"
+run/main_scene="uid://di6rca72ctppk"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneManager="*res://singletons/scene_manager/scene_manager.gd"
 
 [display]
 

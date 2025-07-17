@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://m6mulpnkroaf"]
+
+[ext_resource type="PackedScene" uid="uid://d1daw6cyym3mk" path="res://scenes/maps/level_1_map/level_1_map.tscn" id="1_45440"]
+[ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/entities/player/player.tscn" id="2_epb64"]
+[ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/entities/objects/door/door.tscn" id="3_5b03i"]
+[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/skeleton/skeleton.tscn" id="4_e6u7d"]
+[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/entities/enemies/mushroom/mushroom.tscn" id="5_mxc8w"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Level1Map" parent="." instance=ExtResource("1_45440")]
+
+[node name="Door" parent="." instance=ExtResource("3_5b03i")]
+position = Vector2(1396, -1752)
+next_scene_path = "res://levels/level_2/level_2.tscn"
+
+[node name="Player" parent="." instance=ExtResource("2_epb64")]
+position = Vector2(209, 371)
+
+[node name="Skeleton" parent="." instance=ExtResource("4_e6u7d")]
+position = Vector2(519, -617)
+
+[node name="Mushroom" parent="." instance=ExtResource("5_mxc8w")]
+position = Vector2(701, -1461)

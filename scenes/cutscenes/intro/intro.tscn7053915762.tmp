@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://btq21114p4rne"]
+
+[ext_resource type="Script" uid="uid://co1ps73p2wgr0" path="res://scenes/cutscenes/intro/intro.gd" id="1_imtbi"]
+[ext_resource type="PackedScene" uid="uid://ccai3tjfywgb4" path="res://scenes/ui/dialogues/dialog_box.tscn" id="2_bew4d"]
+[ext_resource type="Texture2D" uid="uid://4j4ky0detr8y" path="res://assets/entities/player/jump/jump_3.png" id="3_62qov"]
+[ext_resource type="Texture2D" uid="uid://c2ux4irvj8jbk" path="res://assets/entities/player/jump/jump_4.png" id="4_x4wje"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_826l8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_62qov")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x4wje")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ihlkx"]
+radius = 22.0227
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjt0b"]
+size = Vector2(1200, 76)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62qov"]
+size = Vector2(1276, 20)
+
+[node name="Intro" type="Node2D"]
+script = ExtResource("1_imtbi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DialogBox" parent="CanvasLayer" instance=ExtResource("2_bew4d")]
+
+[node name="Ready" type="Timer" parent="."]
+
+[node name="LoopMarker" type="Marker2D" parent="."]
+position = Vector2(597, 29)
+
+[node name="Knight" type="RigidBody2D" parent="."]
+position = Vector2(639, -60)
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Knight"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_826l8")
+frame_progress = 0.803408
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Knight"]
+shape = SubResource("CircleShape2D_ihlkx")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(626, 817)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -397)
+shape = SubResource("RectangleShape2D_mjt0b")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(630, 633)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_62qov")
+
+[connection signal="timeout" from="Ready" to="." method="_on_ready_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
