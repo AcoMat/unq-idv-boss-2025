@@ -59,6 +59,12 @@ func _on_attack_sprite_animation_finished() -> void:
 
 
 func die():
-	super()
+	$AttackSprite.queue_free()
+	sprite.visible = true
 	$Death.play()
 	sprite.play("death")
+
+
+func _on_skeleton_sprite_animation_finished() -> void:
+	if sprite.animation == "death":
+		queue_free()

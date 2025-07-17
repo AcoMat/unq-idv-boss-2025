@@ -2,7 +2,7 @@ extends Node
 
 var current_scene: Node = null
 var fade_transition := preload("res://singletons/scene_manager/util/fade_to_black.tscn")
-var main_menu_path := "res://main.tscn"
+var main_menu_path := "res://scenes/ui/menus/main_menu/menu.tscn"
 
 
 func _ready():

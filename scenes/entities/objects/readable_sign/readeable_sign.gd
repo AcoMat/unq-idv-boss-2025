@@ -14,7 +14,8 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	dialog_box.start_dialogue()
+	if not dialog_box.visible:
+		dialog_box.start_dialogue()
 
 func _on_dialog_box_finished() -> void:
-	$CanvasLayer/DialogBox.visible = false
+	dialog_box.visible = false

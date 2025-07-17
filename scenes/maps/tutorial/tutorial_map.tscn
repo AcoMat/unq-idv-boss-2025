@@ -1,19 +1,12 @@
-[gd_scene load_steps=26 format=4 uid="uid://b2defnc1q4dib"]
+[gd_scene load_steps=17 format=4 uid="uid://b2defnc1q4dib"]
 
-[ext_resource type="Script" uid="uid://clldqs1kgk1p" path="res://scenes/maps/tutorial/tutorial_map.gd" id="1_m1088"]
 [ext_resource type="Texture2D" uid="uid://dmr05ope06qgp" path="res://assets/tilesets/castle_env.png" id="3_0mlei"]
 [ext_resource type="TileSet" uid="uid://bnnm1vclfxctq" path="res://scenes/maps/tilesets/original_tiles.tres" id="3_upgv8"]
 [ext_resource type="Script" uid="uid://b7fyiph8vxt2w" path="res://scenes/maps/tutorial/cameras.gd" id="5_m6rfe"]
-[ext_resource type="PackedScene" uid="uid://cnssm3h81mrq7" path="res://scenes/ui/menus/pause/pause_menu.tscn" id="7_mxxi8"]
-[ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/skeleton/skeleton.tscn" id="8_mxxi8"]
 [ext_resource type="Texture2D" uid="uid://djbsiiitcgoa6" path="res://assets/ui/dialogs/09 Border 01.png" id="12_gnnj4"]
 [ext_resource type="FontFile" uid="uid://d30raf2xdec3o" path="res://assets/fonts/ARCADECLASSIC.TTF" id="13_24rb5"]
 [ext_resource type="AudioStream" uid="uid://ce52y67lk3pri" path="res://assets/audio/music/gameplay_music.mp3" id="14_8grxy"]
-[ext_resource type="AudioStream" uid="uid://q0ubydtelm2d" path="res://assets/audio/misc/End_Fall.mp3" id="14_jxpd2"]
 [ext_resource type="FontFile" uid="uid://di422unobhpha" path="res://assets/fonts/joystix monospace.otf" id="14_upgv8"]
-[ext_resource type="PackedScene" uid="uid://d3ncyokioio7f" path="res://scenes/entities/enemies/mushroom/mushroom.tscn" id="15_8grxy"]
-[ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/objects/readable_sign/readeable_sign.tscn" id="15_gnnj4"]
-[ext_resource type="PackedScene" uid="uid://cgu3nrv7llunp" path="res://scenes/entities/enemies/bat/flyer.tscn" id="16_8grxy"]
 [ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/entities/objects/door/door.tscn" id="17_otg5b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cntqr"]
@@ -1416,11 +1409,6 @@ size = Vector2(948, 534)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgrr2"]
 size = Vector2(644.16, 372)
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_gnnj4"]
-vertices = PackedVector2Array(3844.17, 330.367, 3812.74, 329.203, 3982.19, 222.602, 3979.91, 275.992, 4270.42, 447.828, 4380.25, 449.82, 4383.69, 579.883, 4131.18, 553.992, 4132.21, 503.68, 4091.12, 356.406, 4085.45, 229, 4381.59, 229, 4376.38, 358.172, 4266.56, 360.188, 4014.79, 507.313, 4015.78, 554.102, 3840.18, 555.891, 4011.17, 343.898, 4075.59, 384.023)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12, 13), PackedInt32Array(14, 15, 16, 0, 3, 17), PackedInt32Array(14, 17, 18, 8), PackedInt32Array(13, 4, 8, 18, 9)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(4075, 219, 4392, 219, 4386, 368, 4277, 370, 4280, 438, 4390, 440, 4394, 591, 4121, 563, 4122, 514, 4025, 517, 4026, 564, 3830, 566, 3834, 340, 3780, 338, 3993, 204, 3990, 274, 4019, 337, 4072, 370, 4081, 354)])
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cntqr"]
 content_margin_left = 47.0
 content_margin_top = 14.0
@@ -1429,11 +1417,7 @@ content_margin_bottom = 14.0
 texture = ExtResource("12_gnnj4")
 region_rect = Rect2(64, 0, 64, 64)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jxpd2"]
-size = Vector2(614, 32)
-
-[node name="Tutorial" type="Node2D"]
-script = ExtResource("1_m1088")
+[node name="TutorialMap" type="Node2D"]
 
 [node name="Map" type="Node2D" parent="."]
 
@@ -1532,35 +1516,10 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/6/Area2D"]
 shape = SubResource("RectangleShape2D_mgrr2")
 
-[node name="Menus" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="PauseMenu" parent="Menus" instance=ExtResource("7_mxxi8")]
-visible = false
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_8grxy")
 autoplay = true
 bus = &"Musica"
-
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="Skeleton" parent="Enemies" instance=ExtResource("8_mxxi8")]
-position = Vector2(1835, 498)
-
-[node name="Fliyer" parent="Enemies" instance=ExtResource("16_8grxy")]
-position = Vector2(4352, 249)
-
-[node name="Mushroom" parent="Enemies" instance=ExtResource("15_8grxy")]
-position = Vector2(4075, 491)
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Enemies"]
-navigation_polygon = SubResource("NavigationPolygon_gnnj4")
-
-[node name="Start" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
-autostart = true
 
 [node name="TutorialText" type="Control" parent="."]
 layout_mode = 3
@@ -1594,7 +1553,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_cntqr")
 layout_mode = 2
 theme_override_fonts/font = ExtResource("14_upgv8")
 theme_override_font_sizes/font_size = 12
-text = "Manten  precionado la tecla [espacio] para cargar tu salto"
+text = "Manten  presionado la tecla [espacio] para cargar tu salto"
 autowrap_mode = 2
 
 [node name="PanelContainer4" type="PanelContainer" parent="TutorialText"]
@@ -1627,44 +1586,9 @@ theme_override_font_sizes/font_size = 17
 text = "Podes hacer un DOBLE SALTO, Apretando [ESPACIO] de nuevo en el aire"
 autowrap_mode = 2
 
-[node name="tutorial_final" type="Node2D" parent="."]
-position = Vector2(4211, 702)
-
-[node name="ColorRect" type="ColorRect" parent="tutorial_final"]
-visible = false
-offset_left = -541.0
-offset_top = -627.0
-offset_right = 353.0
-offset_bottom = -24.0
-color = Color(0, 0, 0, 1)
-
-[node name="Final" type="Area2D" parent="tutorial_final"]
-position = Vector2(-96, 7)
-collision_layer = 0
-collision_mask = 2
-
-[node name="Final" type="CollisionShape2D" parent="tutorial_final/Final"]
-shape = SubResource("RectangleShape2D_jxpd2")
-
-[node name="FinalTimer" type="Timer" parent="tutorial_final"]
-wait_time = 2.5
-one_shot = true
-
-[node name="EndFall" type="AudioStreamPlayer2D" parent="tutorial_final"]
-stream = ExtResource("14_jxpd2")
-attenuation = 0.0412346
-
-[node name="ReadeableSign" parent="." instance=ExtResource("15_gnnj4")]
-position = Vector2(3337, 473)
-sign_text = Array[String](["Salida del LIMBO en la proxima PUERTA"])
-
 [connection signal="body_entered" from="Cameras/1/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]
 [connection signal="body_entered" from="Cameras/3/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [2]]
 [connection signal="body_entered" from="Cameras/4/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [3]]
 [connection signal="body_entered" from="Cameras/5/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [4]]
 [connection signal="body_entered" from="Cameras/6/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [5]]
-[connection signal="timeout" from="Start" to="." method="_on_start_timeout"]
-[connection signal="body_entered" from="tutorial_final/Final" to="." method="_on_final_body_entered"]
-[connection signal="timeout" from="tutorial_final/FinalTimer" to="." method="_on_final_timer_timeout"]
-[connection signal="finished" from="tutorial_final/EndFall" to="tutorial_final" method="_on_end_fall_finished"]
