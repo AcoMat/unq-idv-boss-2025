@@ -1656,6 +1656,7 @@ attenuation = 0.0412346
 
 [node name="ReadeableSign" parent="." instance=ExtResource("15_gnnj4")]
 position = Vector2(3337, 473)
+sign_text = Array[String](["Salida del LIMBO en la proxima PUERTA"])
 
 [connection signal="body_entered" from="Cameras/1/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [0]]
 [connection signal="body_entered" from="Cameras/2/Area2D" to="Cameras" method="_on_area_2d_body_entered" binds= [1]]

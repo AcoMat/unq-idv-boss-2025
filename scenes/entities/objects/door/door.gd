@@ -9,17 +9,11 @@ extends Area2D
 func _ready():
 	animated_sprite_2d.play("closed")
 
-func _on_body_entered(body):
-	if body.is_in_group("player"):
-		print("¡El rey llegó a la puerta!")
-		body.door = true
-		collision_shape_2d.queue_free()
+func _on_body_entered(player):
+	if player.is_in_group("player"):
+		player.is_control_enabled = false
+		player.velocity = Vector2.ZERO
 		open_door.play()
 		animated_sprite_2d.play("open")
-		timer.start()
-		await (timer.timeout)
-		get_tree().change_scene_to_file(next_scene_path)
-
-
-func _on_area_2d_body_entered(body: Node2D, extra_arg_0: int) -> void:
-	pass # Replace with function body.
+		await animated_sprite_2d.animation_finished
+		SceneManager.change_scene(next_scene_path)

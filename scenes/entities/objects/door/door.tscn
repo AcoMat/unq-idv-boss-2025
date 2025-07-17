@@ -67,10 +67,6 @@ animation = &"closed"
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_1ce7u")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
-
 [node name="OpenDoor" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_vijyo")
 

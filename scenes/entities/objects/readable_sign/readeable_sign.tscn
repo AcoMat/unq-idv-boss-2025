@@ -27,3 +27,4 @@ shape = SubResource("CircleShape2D_i74jf")
 [node name="DialogBox" parent="CanvasLayer" instance=ExtResource("3_av0ru")]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="finished" from="CanvasLayer/DialogBox" to="." method="_on_dialog_box_finished"]

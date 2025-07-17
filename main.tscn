@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbej7wc2q2fa2"]
+[gd_scene load_steps=6 format=3 uid="uid://dbej7wc2q2fa2"]
 
 [ext_resource type="PackedScene" uid="uid://chstifti63yr5" path="res://scenes/entities/player/player.tscn" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ctj1sw74m2h7t" path="res://scenes/entities/enemies/skeleton/skeleton.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://4gka2i4syj2l" path="res://scenes/entities/objects/readable_sign/readeable_sign.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://xshss7msdq88" path="res://scenes/entities/objects/door/door.tscn" id="4_1bvp3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
 size = Vector2(924, 110)
 
 [node name="Main" type="Node2D"]
+
+[node name="Door" parent="." instance=ExtResource("4_1bvp3")]
+position = Vector2(895, 502)
+next_scene_path = "res://main.tscn"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

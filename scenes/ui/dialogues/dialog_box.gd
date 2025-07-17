@@ -40,6 +40,7 @@ func _input(event):
 				await show_text(text_queue[current_index])
 			else:
 				finished.emit()
+				visible = false
 
 func show_text(text: String) -> void:
 	playing_dialogue = true
