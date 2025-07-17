@@ -55,7 +55,7 @@ func get_random_wander_point() -> Vector2:
 func _on_wandering_timer_timeout() -> void:
 	nav.target_position = get_random_wander_point()
 
-func receive_damage():
+func get_attacked():
 	$AnimatedSprite2D.visible = false
 	speed = 0
 	death_sound.play()

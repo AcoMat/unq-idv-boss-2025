@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends EnemyBase
 
 var current_objetive: Node2D = null
 @export var projectile_scene := preload("res://scenes/entities/enemies/mushroom/mushroom_projectile.tscn")
@@ -10,8 +10,10 @@ func _ready() -> void:
 	death_sound.finished.connect(_on_death_sound_finished)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 	if current_objetive:
 		$RayCast2D.enabled = true
 		$RayCast2D.target_position = current_objetive.global_position - $RayCast2D.global_position
@@ -31,6 +33,10 @@ func shoot():
 		$ShootCooldown.start()
 
 
+func get_attacked(enemy_position: Vector2):
+	super(enemy_position)
+	death_sound.play()
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	current_objetive = body
 
@@ -41,6 +47,3 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 func _on_death_sound_finished():
 	queue_free()
-
-func receive_damage():
-	death_sound.play()

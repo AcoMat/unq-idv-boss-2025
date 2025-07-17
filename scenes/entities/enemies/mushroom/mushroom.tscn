@@ -96,7 +96,7 @@ radius = 362.001
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hfoda"]
 size = Vector2(20, 37)
 
-[node name="Mushroom" type="RigidBody2D"]
+[node name="Mushroom" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_k7m86")
 

@@ -1,66 +1,54 @@
-extends StaticBody2D
-@onready var attack_sound: AudioStreamPlayer2D = $"../../../Attack"
-@onready var death_sound: AudioStreamPlayer2D = $"../../../Death"
+extends EnemyBase
 
-@export var speed: float = 50.0
-var path_follow: PathFollow2D
-var last_position: Vector2
-var is_dead := false
-var target: CharacterBody2D
-var attacking := false
+@onready var floor_check := $floor_check
+@onready var wall_check := $wall_check
+@onready var sprite := $SkeletonSprite
+@onready var attack_sprite := $AttackSprite
+var direction := -1
 
-func _ready() -> void:
-	path_follow = get_parent()
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	if not floor_check.is_colliding() or wall_check.is_colliding():
+		direction *= -1
+		_flip()
 
-
-func _process(delta: float) -> void:
-	if path_follow and $Cooldown.is_stopped() and not attacking:
-		path_follow.progress += speed * delta
-		global_position = path_follow.global_position
-		var movement = global_position - last_position
-		if movement.x > 0:
-			scale = abs(scale)
-			$AnimatedSprite2D.flip_v = false
-		elif movement.x < 0:
-			scale = abs(scale) * -1
-			$AnimatedSprite2D.flip_v = true
-		last_position = global_position
-
-func attack():
-	$AnimatedSprite2D.play("attack")
-	$Cooldown.start()
-	attacking = true
-
-func deal_damage():
-	attack_sound.play()
-	if target:
-		target.get_attacked(global_position)
-
-func _on_hit_range_body_entered(body: Node2D) -> void:
-	target = body
-	attack()
-
-func _on_hit_range_body_exited(body: Node2D) -> void:
-	target = null
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-	if $AnimatedSprite2D.animation == "attack":
-		$AnimatedSprite2D.play("return_attack")
-		deal_damage()
-	if $AnimatedSprite2D.animation == "death":
-		queue_free()
+	if abs(velocity.x) < speed:
+		velocity.x = direction * speed
+	move_and_slide()
+	velocity = velocity.lerp(Vector2(direction * speed, 0), 0.1)
 
 
-func receive_damage():
-	if not $CollisionShape2D.disabled:
-		is_dead = true
-		death_sound.play()
-		$CollisionShape2D.disabled = true
-		path_follow = null
-		$HitRange.monitoring = false
-		$AnimatedSprite2D.play("death")
+func _flip():
+	if direction < 0:
+		sprite.flip_h = true
+		attack_sprite.flip_h = true
+		attack_sprite.offset.x = -20
+	else:
+		sprite.flip_h = false
+		attack_sprite.flip_h = false
+		attack_sprite.offset.x = 0
+		
+	$AttackArea.scale.x *= -1
+	floor_check.target_position.x *= -1
+	wall_check.target_position.x *=  -1
 
-func _on_cooldown_timeout() -> void:
-	if not is_dead:
-		attacking = false
-		$AnimatedSprite2D.play("default")
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	speed = 0
+	sprite.visible=false
+	$AttackSprite.visible=true
+	$AttackSprite.play("attack")
+
+
+func _on_attack_sprite_animation_finished() -> void:
+	if $AttackSprite.animation == "attack":
+		for body in $AttackArea.get_overlapping_bodies():
+			body.get_attacked(global_position)
+		$AttackSprite.play("after_attack")
+	else:
+		speed = 60
+		attack_sprite.visible=false
+		sprite.visible = true
+		

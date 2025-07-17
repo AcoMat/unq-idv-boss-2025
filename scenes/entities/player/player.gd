@@ -2,18 +2,16 @@ extends CharacterBody2D
 
 @onready var gravity_magnitude : int = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var gravity: float = gravity_magnitude / 1.5
-@onready var shock: AudioStreamPlayer2D = $Shock
-@onready var jump_sound: AudioStreamPlayer2D = $Jump
-@onready var fall: AudioStreamPlayer2D = $Fall
-@onready var landing: AudioStreamPlayer2D = $Landing
+@onready var shock: AudioStreamPlayer2D = $Audio/Shock
+@onready var jump_sound: AudioStreamPlayer2D = $Audio/Jump
+@onready var fall: AudioStreamPlayer2D = $Audio/Fall
+@onready var landing: AudioStreamPlayer2D = $Audio/Landing
 @onready var jump_bar: ProgressBar = $JumpBarUI/JumpBar
-@onready var damage: AudioStreamPlayer2D = $Damage
+@onready var damage: AudioStreamPlayer2D = $Audio/Damage
 
 @export_group("General")
 @export var speed: float = 200.0
 @export var lifes = -1
-var equipped_weapon: Node2D = null
-var door = false
 # Jump Vars
 @export_group("Jump")
 @export var charge_rate := 8.0
@@ -34,6 +32,7 @@ var input_buffer_timer := 0.0
 var now_is_falling := true # para que empieze tirado en el piso
 var was_on_wall: bool = is_on_wall()
 var was_on_air: bool = !is_on_floor()
+var is_attacking = false
 var inertia: Vector2 = velocity
 var is_playing_felt := false
 var is_playing_roll := false
@@ -42,12 +41,8 @@ func _ready():
 	add_to_group("player")
 
 func _process(delta):
-	open_door()
+	pass
 
-func open_door():
-	if door == true:
-		set_physics_process(false)
-		door = false
 
 func _physics_process(delta: float) -> void:
 	# Abstraer a handle physics
@@ -60,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	# Aplicar movimiento
 	move_and_slide()
 	handle_inputs()
-	# Lógica de colisiones original	
+	# Lógica de colisiones original
 	handle_falls()
 
 
@@ -76,12 +71,11 @@ func handle_inputs():
 	# Jump
 	handle_jump_inputs()
 	# Movement
+	# Attack
+	if Input.is_action_just_pressed("attack") and is_control_enabled and not is_charging_jump:
+		_attack()
 	if is_control_enabled and is_on_floor() and not is_charging_jump:
 		handle_movement()
-	# Attack
-	if equipped_weapon and Input.is_action_just_pressed("attack") and is_control_enabled:
-		equipped_weapon.attack()
-		
 
 
 func handle_jump_inputs():
@@ -127,11 +121,17 @@ func handle_movement():
 	if Input.is_action_pressed("move_left"):
 		$PlayerSprite.play("walk")
 		$PlayerSprite.flip_h = true
+		$AttackAnim.flip_h = true
+		$AttackAnim.offset.x = -21
 		input_direction -= 1
+		$AttackArea.scale.x = -1
 	elif Input.is_action_pressed("move_right"):
 		$PlayerSprite.play("walk")
 		$PlayerSprite.flip_h = false
+		$AttackAnim.flip_h = false
+		$AttackAnim.offset.x = 0
 		input_direction += 1
+		$AttackArea.scale.x = 1
 	else:
 		$PlayerSprite.play("idle")
 	velocity.x = input_direction * speed
@@ -168,7 +168,7 @@ func double_jump(direction: int):
 func handle_falls():
 	if velocity.y > 0 and not is_playing_felt and not is_playing_roll:
 		$PlayerSprite.play("fall")
-	if !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall :
+	if !is_control_enabled and is_on_wall() or is_on_ceiling() and not was_on_wall and not is_attacking:
 		now_is_falling = true
 		can_double_jump = false
 		if(!is_on_ceiling()):
@@ -194,15 +194,28 @@ func handle_falls():
 		now_is_falling = true
 		is_control_enabled = false
 		velocity.x = inertia.x * vel_loss_percentage
-
-
-func equip_weapon(weapon: PackedScene):
-	if equipped_weapon:
-		equipped_weapon.queue_free()
-	equipped_weapon = weapon.instantiate()
-	add_child(equipped_weapon)
-	equipped_weapon.global_position = global_position
   
+
+func _attack():
+	is_attacking = true
+	velocity = Vector2.ZERO
+	is_control_enabled = false
+	$PlayerSprite.visible = false
+	$AttackAnim.visible = true
+	$AttackAnim.play("attack")
+
+func _on_attack_anim_animation_finished() -> void:
+	if $AttackAnim.animation == "attack":
+		for body in $AttackArea.get_overlapping_bodies():
+			if body.has_method("get_attacked"):
+				body.get_attacked(global_position)
+		$AttackAnim.play("returning")
+	else:
+		$PlayerSprite.visible = true
+		$AttackAnim.visible = false
+		is_control_enabled = true
+		is_attacking = false
+	
 
 func get_attacked(damagePosition: Vector2):
 	damage.play()
