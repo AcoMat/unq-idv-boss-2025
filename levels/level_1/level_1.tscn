@@ -12,7 +12,7 @@
 
 [node name="Door" parent="." instance=ExtResource("3_5b03i")]
 position = Vector2(1396, -1752)
-next_scene_path = "res://levels/level_2/level_2.tscn"
+next_scene_path = "res://scenes/ui/menus/wip/wip.tscn"
 
 [node name="Player" parent="." instance=ExtResource("2_epb64")]
 position = Vector2(209, 371)
@@ -21,4 +21,4 @@ position = Vector2(209, 371)
 position = Vector2(519, -617)
 
 [node name="Mushroom" parent="." instance=ExtResource("5_mxc8w")]
-position = Vector2(701, -1461)
+position = Vector2(551, -1731)

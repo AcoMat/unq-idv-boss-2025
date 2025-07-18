@@ -35,7 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://b3xjnuxl71l41" path="res://assets/entities/player/attacks/attack1/attack1_6.png" id="32_avkvk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
-size = Vector2(18, 26)
+size = Vector2(18, 34)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_je7p5"]
 animations = [{
@@ -203,13 +203,13 @@ script = ExtResource("1_dovo2")
 vel_loss_percentage = 0.7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.16667, 1.16667)
 sprite_frames = SubResource("SpriteFrames_je7p5")
-animation = &"prejump"
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="JustFeltCooldown" type="Timer" parent="."]
 wait_time = 0.5
@@ -267,11 +267,13 @@ stream = ExtResource("27_l2s38")
 
 [node name="AttackAnim" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(10, -8)
+position = Vector2(12, -10)
+scale = Vector2(1.16923, 1.16923)
 sprite_frames = SubResource("SpriteFrames_daptw")
 animation = &"attack"
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 4
 

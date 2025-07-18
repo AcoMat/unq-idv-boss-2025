@@ -17,8 +17,6 @@ func _physics_process(delta: float) -> void:
 
 
 func get_pushed(enemy_position: Vector2):
-	print(enemy_position)
-	print(global_position)
 	# Calcular dirección contraria al enemigo
 	var direction = sign(global_position.x - enemy_position.x)
 	# Aplicar impulso

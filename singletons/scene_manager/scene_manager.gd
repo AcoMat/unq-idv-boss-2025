@@ -16,7 +16,9 @@ func change_scene(path: String):
 	transition.fade_out()
 	await transition.fade_finished
 	if current_scene != null and is_instance_valid(current_scene):
-		current_scene.queue_free()
+		for child in get_tree().root.get_children():
+			if child != self:
+				child.queue_free()
 		# Wait for a frame to ensure the old scene is freed before adding the new one.
 		await get_tree().process_frame
 	var new_scene_resource = load(path)

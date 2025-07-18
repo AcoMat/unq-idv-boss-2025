@@ -23,7 +23,8 @@ func _physics_process(delta: float) -> void:
 		State.ATTACKING:
 			_process_attacking(delta)
 		State.DYING:
-			pass # No movimiento al morir
+			if is_on_floor():
+				velocity.x = move_toward(velocity.x, 0, 500 * delta)
 
 	move_and_slide()
 
@@ -37,8 +38,8 @@ func _process_patrolling(delta: float) -> void:
 	velocity = velocity.lerp(Vector2(direction * speed, 0), 0.1)
 
 func _process_attacking(delta: float) -> void:
-	# El ataque en sí no se mueve, se controla desde animación
-	velocity.x = 0
+	if is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, 500 * delta)
 
 
 # --- Cambio de estados ---
@@ -54,6 +55,7 @@ func _change_state(new_state: State) -> void:
 
 		State.ATTACKING:
 			speed = 0
+			velocity = Vector2.ZERO
 			sprite.visible = false
 			attack_sprite.visible = true
 			attack_sprite.play("attack")
@@ -70,6 +72,17 @@ func _change_state(new_state: State) -> void:
 
 
 # --- Eventos ---
+func get_attacked(attacker_position: Vector2) -> void:
+	get_pushed(attacker_position)
+	health -= 1
+	if health < 1:
+		die()
+	# Girar hacia el atacante
+	var new_direction = sign(attacker_position.x - global_position.x)
+	if new_direction != direction:
+		direction = new_direction
+		_flip()
+
 func _flip():
 	if direction < 0:
 		sprite.flip_h = true

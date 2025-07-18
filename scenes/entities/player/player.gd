@@ -251,3 +251,12 @@ func _on_just_felt_cooldown_timeout() -> void:
 	is_control_enabled = true
 	can_double_jump = false
 	is_playing_felt = false
+
+
+func _on_readeable_sign_open_sign() -> void:
+	is_control_enabled = false
+	velocity = Vector2.ZERO
+
+
+func _on_readeable_sign_close_sign() -> void:
+	is_control_enabled = true
